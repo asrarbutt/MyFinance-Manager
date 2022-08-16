@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class testController {
+public class MytestController {
 
     @GetMapping(path = "hallo")
     public String getHallo(){
-        return "hallo world";
+        return "it My Capstone project";
     }
 }
