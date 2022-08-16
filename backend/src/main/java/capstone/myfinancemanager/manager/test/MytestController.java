@@ -8,6 +8,6 @@ public class MytestController {
 
     @GetMapping(path = "hallo")
     public String getHallo(){
-        return "it My Capstone project";
+        return "My capstone project";
     }
 }
