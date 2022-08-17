@@ -37,5 +37,4 @@ public class User {
     @NotEmpty
     private Instant userRegistrationTime;
 
-
 }
