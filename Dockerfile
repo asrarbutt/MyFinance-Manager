@@ -6,4 +6,4 @@ LABEL maintainer="asrarbutt1986@gmail.com"
 
 ADD backend/target/myfinance-manager.jar myfinance-manager.jar
 
-CMD [ "sh", "-c", "java -myfinanceimage.port=$PORT -jar /myfinance-manager.jar" ]
+CMD [ "sh", "-c", "java -Dserver.port=$PORT -jar /myfinance-manager.jar" ]
