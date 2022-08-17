@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
@@ -19,13 +20,22 @@ public class User {
 
     @Id
     @NotNull(message = "Name is mandatory")
-    String name;
-    @Email(message = "Email is mandatory")
+    @NotEmpty
+    private String name;
+
+    @Email(message = "Email not valid")
     @NotNull
-    String email;
+    @NotEmpty
+    private String email;
+
     @NotNull(message = "Password is mandatory")
-    String password;
-    @NotNull(message = "Password is mandatory")
-    Instant userRegistrationTime;
+    @NotEmpty
+    private String password;
+    private String repeatPassword;
+
+    @NotNull(message = "Date is mandatory")
+    @NotEmpty
+    private Instant userRegistrationTime;
+
 
 }
