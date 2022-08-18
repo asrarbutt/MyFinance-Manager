@@ -18,15 +18,16 @@ import java.time.Instant;
 @Builder
 public class User {
 
-    @Id
-    @NotNull(message = "Name is mandatory")
-    @NotEmpty
-    private String name;
 
+    @Id
     @Email(message = "Email not valid")
     @NotNull
     @NotEmpty
     private String email;
+
+    @NotNull(message = "Name is mandatory")
+    @NotEmpty
+    private String name;
 
     @NotNull(message = "Password is mandatory")
     @NotEmpty
