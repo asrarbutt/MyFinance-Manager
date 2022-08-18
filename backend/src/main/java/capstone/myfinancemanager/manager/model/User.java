@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Data
@@ -17,7 +18,6 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class User {
-
 
     @Id
     @Email(message = "Email not valid")
@@ -31,6 +31,7 @@ public class User {
 
     @NotNull(message = "Password is mandatory")
     @NotEmpty
+    @Size(min = 6, message = "passwort min length 6")
     private String password;
     private String repeatPassword;
 
