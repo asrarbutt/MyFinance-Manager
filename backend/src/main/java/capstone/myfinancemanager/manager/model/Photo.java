@@ -17,7 +17,6 @@ public class Photo {
 
     @Id
     @NotNull
-    @NotEmpty
     private String id;
 
     @NotNull
