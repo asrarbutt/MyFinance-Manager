@@ -1,7 +1,7 @@
 package capstone.myfinancemanager.manager.service;
 
 import capstone.myfinancemanager.manager.exceptions.PasswordNotMatchException;
-import capstone.myfinancemanager.manager.exceptions.UserExceptionRepsone;
+import capstone.myfinancemanager.manager.exceptions.UserExistsException;
 import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.respository.UserRepo;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UserServiceImp {
     public User registerNewUser(User user) {
 
         if (userRepo.findById(user.getEmail()).isPresent()) {
-            throw new UserExceptionRepsone(HttpStatus.BAD_REQUEST, "User Exists. Please choose another E-Mail");
+            throw new UserExistsException(HttpStatus.BAD_REQUEST, "User Exists. Please choose another E-Mail");
         } else if (!user.getPassword().equals(user.getRepeatPassword())) {
             throw new PasswordNotMatchException(HttpStatus.BAD_REQUEST, "Passwords do not match");
 
