@@ -37,6 +37,7 @@ public class User {
 
     @NotNull(message = "Date is mandatory")
     @NotEmpty
-    private Instant userRegistrationTime;
+    private Instant userRegistrationDate;
+
 
 }
