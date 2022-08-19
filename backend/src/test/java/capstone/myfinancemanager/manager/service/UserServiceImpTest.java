@@ -15,13 +15,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class UserServiceImpTest {
-
     private final UserRepo userRepo = mock(UserRepo.class);
     private final UserServiceImp userServiceImp = new UserServiceImp(userRepo);
-    private final User expectedTestUser = userServiceImp.addNewUser("testuser@test.com", "testuser", "123456789", "123456789");
+    private final User expectedTestUser = userServiceImp.addNewUser("testuser@test.com", "testuser", "123456789");
     private final User newUser = new User("testuser@test.com", "testuser", "98765431", "98765431", null);
     private final User userWithNotMatchPassword = new User("testuser@test.com", "testuser", "98765431", "987654391", null);
-
 
     @Test
     void shouldCreateUser() {
@@ -30,8 +28,8 @@ class UserServiceImpTest {
         User actual = userServiceImp.registerNewUser(newUser);
 
         //Then
-        Assertions.assertEquals(expectedTestUser.getEmail(), actual.getEmail());
-
+        Assertions.assertEquals(
+                expectedTestUser.getEmail(), actual.getEmail());
     }
 
     @Test
@@ -41,22 +39,30 @@ class UserServiceImpTest {
         when(userRepo.findById(newUser.getEmail())).thenReturn(Optional.of(newUser));
 
         //Then
-        UserExistsException tho = assertThrows(UserExistsException.class, () -> userServiceImp.registerNewUser(newUser), "Throws Exception, if the User Exists");
-        System.out.println(tho.getMessage());
+        UserExistsException tho = assertThrows(
+                UserExistsException.class,
+                () -> userServiceImp.registerNewUser(newUser),
+                "Throws Exception, if the User Exists");
 
-        assertTrue(tho.getMessage().contains("User Exists. Please choose another E-Mail"));
+        assertTrue(
+                tho.getMessage()
+                        .contains("User Exists. Please choose another E-Mail"));
     }
 
     @Test
     void shouldNotCreateUser_passwordNotMatch() {
 
         //When
-        doThrow(PasswordNotMatchException.class)
-                .when(userRepo)
-                .save(userWithNotMatchPassword);
+        doThrow(PasswordNotMatchException.class).when(userRepo).save(userWithNotMatchPassword);
         //Then
-        PasswordNotMatchException tho = assertThrows(PasswordNotMatchException.class, () -> userServiceImp.registerNewUser(userWithNotMatchPassword), "Throws Exception, Password not match");
-        assertTrue(tho.getMessage().contains("Passwords do not match"));
+        PasswordNotMatchException passwordNotMatchException = assertThrows(
+                PasswordNotMatchException.class,
+                () -> userServiceImp.registerNewUser(userWithNotMatchPassword),
+                "Throws Exception, Password not match");
+        assertTrue(
+                passwordNotMatchException
+                        .getMessage()
+                        .contains("Passwords do not match"));
 
     }
 }
