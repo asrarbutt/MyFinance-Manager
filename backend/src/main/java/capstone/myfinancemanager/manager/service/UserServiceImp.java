@@ -1,5 +1,7 @@
 package capstone.myfinancemanager.manager.service;
 
+
+import capstone.myfinancemanager.manager.dto.UserDto;
 import capstone.myfinancemanager.manager.exceptions.PasswordNotMatchException;
 import capstone.myfinancemanager.manager.exceptions.UserExistsException;
 import capstone.myfinancemanager.manager.model.User;
@@ -18,25 +20,20 @@ public class UserServiceImp {
         this.userRepo = userRepo;
     }
 
+    public User registerNewUser(UserDto userDto) {
 
-    public User registerNewUser(User user) {
-
-        if (userRepo.findById(user.getEmail()).isPresent()) {
+        if (userRepo.findById(userDto.getEmail()).isPresent()) {
             throw new UserExistsException("User Exists. Please choose another E-Mail");
-        } else if (!user.getPassword().equals(user.getRepeatPassword())) {
+        } else if (!userDto.getPassword().equals(userDto.getRepeatPassword())) {
             throw new PasswordNotMatchException("Passwords do not match");
-
         }
-        return userRepo.save(addNewUser(user.getEmail(), user.getName(), user.getPassword()));
-    }
 
-    public User addNewUser(String email, String name, String password) {
-        return User.builder()
-                .email(email)
-                .name(name)
-                .password(password)
-                .userRegistrationDate(Instant.now())
-                .build();
-    }
+        User user = new User(userDto.getEmail());
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
+        user.setUserRegistrationDate(Instant.now());
 
+        return userRepo.save(user);
+    }
 }
+
