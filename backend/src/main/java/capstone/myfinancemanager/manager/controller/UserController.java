@@ -1,7 +1,7 @@
 package capstone.myfinancemanager.manager.controller;
 
-import capstone.myfinancemanager.manager.dto.UserDto;
 import capstone.myfinancemanager.manager.model.User;
+import capstone.myfinancemanager.manager.model.dto.UserDto;
 import capstone.myfinancemanager.manager.service.UserServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
