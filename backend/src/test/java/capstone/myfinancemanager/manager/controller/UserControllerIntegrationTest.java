@@ -1,5 +1,6 @@
 package capstone.myfinancemanager.manager.controller;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,10 +29,10 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                     "email": "asra55pasdasdppr2@gmail.com",
-                                         "name": "Rose",
-                                         "password": "123456789",
-                                         "repeatPassword": "123456789"
+                                     "email": "testemail@gmail.com",
+                                         "name": "testname",
+                                         "password": "test-password",
+                                         "repeatPassword": "test-password"
                                 }
                                  """)
                 )
@@ -40,8 +41,7 @@ class UserControllerIntegrationTest {
 
 
         String content = result.getResponse().getContentAsString();
-        System.out.println(content + "l.dasdasdfaskjujjjjj");
-
+        Assertions.assertTrue(content.contains("testname"));
 
     }
 
