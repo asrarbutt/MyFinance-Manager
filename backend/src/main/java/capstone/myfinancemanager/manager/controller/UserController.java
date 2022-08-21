@@ -1,5 +1,6 @@
 package capstone.myfinancemanager.manager.controller;
 
+import capstone.myfinancemanager.manager.dto.UserDto;
 import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.service.UserServiceImp;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,21 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> registerNewUser(@RequestBody User newUser) {
+    public ResponseEntity<UserDto> registerNewUser(@RequestBody UserDto newUserDto) {
 
-        User registerNewUser = userServiceImp.registerNewUser(newUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registerNewUser);
+        User registerNewUser = userServiceImp.registerNewUser(newUserDto);
 
+        return ResponseEntity.status(HttpStatus.CREATED).body(buildNewUserDto(registerNewUser.getEmail(), registerNewUser.getName(), registerNewUser.getPassword(), registerNewUser.getPassword()));
+
+    }
+
+    public UserDto buildNewUserDto(String email, String name, String password, String repeatPassword) {
+        return UserDto.builder()
+                .email(email)
+                .name(name)
+                .password(password)
+                .repeatPassword(repeatPassword)
+                .build();
     }
 
 
