@@ -1,5 +1,6 @@
 package capstone.myfinancemanager.manager.service;
 
+import capstone.myfinancemanager.manager.dto.UserDto;
 import capstone.myfinancemanager.manager.exceptions.PasswordNotMatchException;
 import capstone.myfinancemanager.manager.exceptions.UserExistsException;
 import capstone.myfinancemanager.manager.model.User;
@@ -12,53 +13,59 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class UserServiceImpTest {
     private final UserRepo userRepo = mock(UserRepo.class);
     private final UserServiceImp userServiceImp = new UserServiceImp(userRepo);
-    private final User expectedTestUser = userServiceImp.addNewUser("testuser@test.com", "testuser", "123456789");
-    private final User newUser = new User("testuser@test.com", "testuser", "98765431", "98765431", null);
-    private final User userWithNotMatchPassword = new User("testuser@test.com", "testuser", "98765431", "987654391", null);
+    private final UserDto newUserDto = new UserDto("testuser@test.com", "testusername", "test-password", "test-password");
+    private final User registeredUser = User.builder()
+            .email(newUserDto.getEmail())
+            .name(newUserDto.getName())
+            .password(newUserDto.getPassword())
+            .build();
+
+    private final UserDto userWithNotMatchPassword = new UserDto("testuser@test.com", "testusername", "test-password", "test-password1");
 
     @Test
     void shouldCreateUser() {
         //When
-        when(userRepo.save(any(User.class))).thenReturn(expectedTestUser);
-        User actual = userServiceImp.registerNewUser(newUser);
+        when(userRepo.save(any(User.class))).thenReturn(registeredUser);
+        User actual = userServiceImp.registerNewUser(newUserDto);
 
         //Then
         Assertions.assertEquals(
-                expectedTestUser.getEmail(), actual.getEmail());
+                registeredUser.getEmail(), actual.getEmail());
     }
 
     @Test
     void shouldNotCreateUser_UserExists() {
 
         //When
-        when(userRepo.findById(newUser.getEmail())).thenReturn(Optional.of(newUser));
+        when(userRepo.findById(newUserDto.getEmail()))
+                .thenReturn(Optional.of(registeredUser));
 
         //Then
-        UserExistsException tho = assertThrows(
+        UserExistsException userExistsException = assertThrows(
                 UserExistsException.class,
-                () -> userServiceImp.registerNewUser(newUser),
+                () -> userServiceImp.registerNewUser(newUserDto),
                 "Throws Exception, if the User Exists");
 
         assertTrue(
-                tho.getMessage()
+                userExistsException.getMessage()
                         .contains("User Exists. Please choose another E-Mail"));
     }
 
     @Test
     void shouldNotCreateUser_passwordNotMatch() {
 
-        //When
-        doThrow(PasswordNotMatchException.class).when(userRepo).save(userWithNotMatchPassword);
         //Then
         PasswordNotMatchException passwordNotMatchException = assertThrows(
                 PasswordNotMatchException.class,
                 () -> userServiceImp.registerNewUser(userWithNotMatchPassword),
                 "Throws Exception, Password not match");
+
         assertTrue(
                 passwordNotMatchException
                         .getMessage()
