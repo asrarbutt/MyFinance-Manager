@@ -34,11 +34,11 @@ public class User {
     @Size(min = 6, message = "passwort min length 6")
     private String password;
 
-    private String repeatPassword;
-
     @NotNull(message = "Date is mandatory")
     @NotEmpty
     private Instant userRegistrationDate;
 
-
+    public User(String email) {
+        this.email = email;
+    }
 }
