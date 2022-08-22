@@ -13,7 +13,7 @@ export default function RegistrationsPage() {
     const [userRepeatPassword, setUserRepeatPassword] = useState<string>("");
     const [, setEmailError] = useState<string>("");
     const [, setPasswordError] = useState<string>("");
-    const [, setLoading] = useState(true || false);
+    const [, setLoading] = useState<boolean>(true);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 
