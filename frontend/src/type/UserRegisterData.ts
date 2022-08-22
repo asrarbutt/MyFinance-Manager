@@ -1,4 +1,4 @@
-export default interface UserDataType {
+export default interface UserRegisterData {
     email: string,
     name: string,
     password: string,
