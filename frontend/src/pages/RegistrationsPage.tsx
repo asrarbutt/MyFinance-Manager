@@ -1,7 +1,13 @@
 import {Box, Button, TextField} from "@mui/material";
 import "./RegistrationsPage.css";
+import {FormEvent} from "react";
 
 export default function RegistrationsPage() {
+
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+    }
 
 
     return (
@@ -9,7 +15,7 @@ export default function RegistrationsPage() {
             <h1>Registrieren</h1>
             <h3>Es geht schnell, einfach und kostenlos</h3>
 
-            <form className="signUp-form">
+            <form onSubmit={handleSubmit} className="signUp-form">
                 <TextField label="E-Mail" type="email" variant="filled"/>
                 <TextField label="Name" type="name" variant="outlined"/>
                 <TextField label="Password" type="password" variant="outlined"/>
