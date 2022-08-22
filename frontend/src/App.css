@@ -1,0 +1,13 @@
+:root {
+    --brightBlue: #62b6cb;
+    --brightGreen: #83C5BE;
+    --white: #EDF6F9;
+}
+
+body {
+    margin: 0;
+    background-color: var(--white);
+    min-height: auto;
+
+
+}

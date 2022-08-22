@@ -1,20 +1,16 @@
-import React, {useState} from 'react';
 import './App.css';
-import axios from "axios";
+
+import AllRoutes from "./components/AllRoutes";
+
 
 function App() {
 
-const [message, setMessage]=useState();
+    return (
+        <div>
+            <AllRoutes/>
 
-    axios.get("/hallo")
-        .then(response => response.data)
-        .then(setMessage)
-
-  return (
-    <div className="App">
-<h1>{message}</h1>
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;
