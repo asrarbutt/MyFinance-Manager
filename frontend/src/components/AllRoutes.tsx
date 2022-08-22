@@ -11,7 +11,7 @@ export default function AllRoutes() {
             <Routes>
                 <Route path={"/"} element={<Home/>}/>
                 <Route path={"/auth/login"} element={<LoginPage/>}/>
-                <Route path={"/auth/Signup"} element={<RegistrationsPage/>}/>
+                <Route path={"/auth/register"} element={<RegistrationsPage/>}/>
             </Routes>
 
         </>
