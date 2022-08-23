@@ -36,8 +36,10 @@ export default function RegistrationsPage() {
                 toast.success("Account Created!")
             })
             .catch(error => {
-                console.log(error.response.data.error)
+                console.log(error)
                 setErrorMessage(error.response.data.error)
+                toast.error(error.response.data.error);
+
             })
     }
 
