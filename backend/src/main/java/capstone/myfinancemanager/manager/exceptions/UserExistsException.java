@@ -1,8 +1,10 @@
 package capstone.myfinancemanager.manager.exceptions;
 
-public class UserExistsException extends IllegalStateException {
+public class UserExistsException extends RuntimeException {
 
-    public UserExistsException(String s) {
-        super(s);
+    public UserExistsException(String exceptionMessage) {
+
+        super(exceptionMessage, null, false, false);
+
     }
 }
