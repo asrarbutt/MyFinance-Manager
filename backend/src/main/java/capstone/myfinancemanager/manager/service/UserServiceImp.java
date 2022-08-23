@@ -3,21 +3,21 @@ package capstone.myfinancemanager.manager.service;
 
 import capstone.myfinancemanager.manager.exceptions.PasswordNotMatchException;
 import capstone.myfinancemanager.manager.exceptions.UserExistsException;
+import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.model.dto.UserDto;
 import capstone.myfinancemanager.manager.respository.UserRepo;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-
 @Service
 public class UserServiceImp {
 
     private final UserRepo userRepo;
+    private final Timestamp timestamp;
 
-
-    public UserServiceImp(UserRepo userRepo) {
+    public UserServiceImp(UserRepo userRepo, Timestamp timestamp) {
         this.userRepo = userRepo;
+        this.timestamp = timestamp;
     }
 
     public User registerNewUser(UserDto userDto) {
@@ -31,7 +31,7 @@ public class UserServiceImp {
         User user = new User(userDto.getEmail());
         user.setName(userDto.getName());
         user.setPassword(userDto.getPassword());
-        user.setUserRegistrationDate(Instant.now());
+        user.setUserRegistrationDate(timestamp.now());
 
         return userRepo.save(user);
     }
