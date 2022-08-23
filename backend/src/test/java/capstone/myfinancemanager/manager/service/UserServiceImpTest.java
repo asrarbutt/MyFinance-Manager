@@ -2,41 +2,47 @@ package capstone.myfinancemanager.manager.service;
 
 import capstone.myfinancemanager.manager.exceptions.PasswordNotMatchException;
 import capstone.myfinancemanager.manager.exceptions.UserExistsException;
+import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.model.dto.UserDto;
 import capstone.myfinancemanager.manager.respository.UserRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class UserServiceImpTest {
     private final UserRepo userRepo = mock(UserRepo.class);
-    private final UserServiceImp userServiceImp = new UserServiceImp(userRepo);
+    private final Timestamp timestampService = mock(Timestamp.class);
+    private final UserServiceImp userServiceImp = new UserServiceImp(userRepo, timestampService);
     private final UserDto newUserDto = new UserDto("testuser@test.com", "testusername", "test-password", "test-password");
-    private final User registeredUser = User.builder()
+    private final User registeredUserWithDate = User.builder()
             .email(newUserDto.getEmail())
             .name(newUserDto.getName())
             .password(newUserDto.getPassword())
+            .userRegistrationDate(Instant.parse("2022-08-23T09:22:41.255023Z"))
             .build();
 
     private final UserDto userWithNotMatchPassword = new UserDto("testuser@test.com", "testusername", "test-password", "test-password1");
 
     @Test
     void shouldCreateUser() {
+
         //When
-        when(userRepo.save(any(User.class))).thenReturn(registeredUser);
+        when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
+        when(userRepo.save(registeredUserWithDate)).thenReturn(registeredUserWithDate);
+
         User actual = userServiceImp.registerNewUser(newUserDto);
 
         //Then
         Assertions.assertEquals(
-                registeredUser.getEmail(), actual.getEmail());
+                registeredUserWithDate, actual);
     }
 
     @Test
@@ -44,7 +50,7 @@ class UserServiceImpTest {
 
         //When
         when(userRepo.findById(newUserDto.getEmail()))
-                .thenReturn(Optional.of(registeredUser));
+                .thenReturn(Optional.of(registeredUserWithDate));
 
         //Then
         UserExistsException userExistsException = assertThrows(
