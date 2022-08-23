@@ -8,15 +8,26 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import {useNavigate} from "react-router-dom";
 
-const pages = ['Login', 'Registrieren', 'About'];
 const settings = ['Profil', 'Konto', 'Logout'];
 
 const MyNavBar = () => {
+
+    const navigate = useNavigate();
+
+    const goToLogin = () => {
+        navigate('/auth/login')
+        handleCloseNavMenu()
+    }
+    const goToRegister = () => {
+        navigate('/auth/register')
+        handleCloseNavMenu()
+    }
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -87,11 +98,16 @@ const MyNavBar = () => {
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={goToLogin}>
+
+                                <Typography textAlign="center">Login</Typography>
+                            </MenuItem>
+
+                            <MenuItem onClick={goToRegister}>
+
+                                <Typography textAlign="center">Registrieren</Typography>
+                            </MenuItem>
+
                         </Menu>
                     </Box>
                     <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
@@ -114,15 +130,7 @@ const MyNavBar = () => {
                         MyFinance-Manager
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block'}}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+
                     </Box>
 
                     <Box sx={{flexGrow: 0}}>
