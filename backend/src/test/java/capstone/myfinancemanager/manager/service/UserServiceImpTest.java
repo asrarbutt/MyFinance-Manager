@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -76,6 +76,17 @@ class UserServiceImpTest {
                 passwordNotMatchException
                         .getMessage()
                         .contains("Passwords do not match"));
+
+    }
+
+    @Test
+    void shouldNotCreateUser_givenUsernameExists() {
+
+        //when
+        when(userRepo.findAll()).thenReturn(List.of(registeredUserWithDate));
+        User actual = userServiceImp.registerNewUser(newUserDto);
+        //then
+        assertEquals(registeredUserWithDate.getEmail(), newUserDto.getEmail());
 
     }
 }
