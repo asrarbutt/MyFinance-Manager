@@ -100,10 +100,51 @@ class UserControllerIntegrationTest {
                                 }
                                  """)
                 )
-                .andExpect(status().is(400))
-                .andReturn();
+                .andExpect(status().is(400));
 
 
     }
 
+
+    @DirtiesContext
+    @Test
+    void shouldNotRegisterUser_passShortThen6() throws Exception {
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                 {
+                                     "email": "testemail@gmail.com",
+                                         "name": "testname",
+                                         "password": "test",
+                                         "repeatPassword": "test"
+                                }
+                                 """)
+                )
+                .andExpect(status().is(400));
+
+    }
+
+    @DirtiesContext
+    @Test
+    void shouldNotRegisterUser_invalidEmail() throws Exception {
+
+        MvcResult result = mockMvc.perform(post("/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                 {
+                                     "email": "testemail",
+                                         "name": "testname",
+                                         "password": "test-password",
+                                         "repeatPassword": "test-password"
+                                }
+                                 """)
+                )
+                .andExpect(status().is(400))
+                .andReturn();
+
+        String exception = result.getResponse().getContentAsString();
+        Assertions.assertTrue(exception.contains("Email not valid"));
+
+    }
 }
