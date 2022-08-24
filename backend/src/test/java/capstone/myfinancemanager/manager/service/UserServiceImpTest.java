@@ -84,9 +84,13 @@ class UserServiceImpTest {
 
         //when
         when(userRepo.findAll()).thenReturn(List.of(registeredUserWithDate));
-        User actual = userServiceImp.registerNewUser(newUserDto);
+        when(userRepo.findById(newUserDto.getEmail())).thenReturn(Optional.of(registeredUserWithDate));
+        UserExistsException exception = assertThrows(UserExistsException.class, () -> {
+            userServiceImp.registerNewUser(newUserDto);
+        });
+
         //then
-        assertEquals(registeredUserWithDate.getEmail(), newUserDto.getEmail());
+        assertEquals("User Exists. Please choose another E-Mail", exception.getMessage());
 
     }
 }
