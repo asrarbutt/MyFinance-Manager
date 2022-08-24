@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth/register")
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> registerNewUser(@RequestBody UserDto newUserDto) {
+    public ResponseEntity<UserDto> registerNewUser(@Valid @RequestBody UserDto newUserDto) {
 
         User registerNewUser = userServiceImp.registerNewUser(newUserDto);
 

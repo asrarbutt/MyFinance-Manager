@@ -1,7 +1,12 @@
 package capstone.myfinancemanager.manager.exceptions;
 
-public class PasswordNotMatchException extends IllegalStateException {
-    public PasswordNotMatchException(String s) {
-        super(s);
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class PasswordNotMatchException extends RuntimeException {
+    public PasswordNotMatchException(String exceptionMessage) {
+
+        super(exceptionMessage, null, false, false);
     }
 }

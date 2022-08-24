@@ -1,8 +1,14 @@
 package capstone.myfinancemanager.manager.exceptions;
 
-public class UserExistsException extends IllegalStateException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public UserExistsException(String s) {
-        super(s);
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class UserExistsException extends RuntimeException {
+
+    public UserExistsException(String exceptionMessage) {
+
+        super(exceptionMessage, null, false, false);
+
     }
 }
