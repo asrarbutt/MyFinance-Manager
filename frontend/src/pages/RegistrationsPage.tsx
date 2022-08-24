@@ -1,15 +1,17 @@
 import {Box, Button, TextField} from "@mui/material";
 import "./RegistrationsPage.css";
-import {FormEvent, useState} from "react";
+import {FormEvent, useContext, useState} from "react";
 
-import axios from "axios";
+
 import {toast} from "react-toastify";
-import UserRegisterData from "../model/UserRegisterData";
 import {useNavigate} from "react-router-dom";
+import AuthContext from "../context/authentication/AuthContext";
+
 
 export default function RegistrationsPage() {
 
     const navigate = useNavigate();
+    const {register} = useContext(AuthContext);
     const [userEmail, setUserEmail] = useState<string>("");
     const [userName, setUserName] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
@@ -20,38 +22,30 @@ export default function RegistrationsPage() {
 
         event.preventDefault();
 
-
-
-        const newUser: UserRegisterData = {
-            "email": userEmail,
-            "name": userName,
-            "password": userPassword,
-
-        }
-
-        axios.post("/auth/register", newUser)
-            .then((reponse) => reponse.data)
-            .then(() => {
-                setUserEmail("");
-                setUserName("");
-                setUserPassword("");
-                setUserRepeatPassword("");
-                setErrorMessage("")
-                toast.success("Account Created!")
-                navigate("/");
-            })
+        register(userEmail, userName, userPassword, userRepeatPassword).then(() => {
+            if (userPassword !== userRepeatPassword)
+                toast.error('Passwords do not match')
+            setUserEmail("");
+            setUserName("");
+            setUserPassword("");
+            setUserRepeatPassword("");
+            setErrorMessage("")
+            toast.success("Account Created!")
+            navigate("/");
+        })
             .catch(error => {
                 setErrorMessage(error.response.data.message)
                 toast.error(error.response.data.message);
+                console.log(error.response.data.message)
 
-            })
+            });
     }
 
     return (
         <Box className="signUp">
             <h1>Registrieren</h1>
             <h3>Es geht schnell, einfach und kostenlos</h3>
-            <Box sx={{mt: 4}}>{errorMessage}</Box>
+            {errorMessage && <Box>{errorMessage}</Box>}
 
             <form onSubmit={handleSubmit} className="signUp-form">
                 <TextField required label="E-Mail" type="email" variant="filled" value={userEmail}
