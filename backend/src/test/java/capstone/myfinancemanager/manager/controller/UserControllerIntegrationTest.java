@@ -107,7 +107,8 @@ class UserControllerIntegrationTest {
                 .andReturn();
 
         String exception = resultException.getResponse().getContentAsString();
-        System.out.println(exception);
+
+
         Assertions.assertTrue(exception.contains("Passwords do not match"));
 
     }
@@ -135,6 +136,29 @@ class UserControllerIntegrationTest {
 
         Assertions.assertTrue(exception.contains("passwort min length 6"));
     }
+
+    @DirtiesContext
+    @Test
+    void shouldNotRegisterUser_passwordEmpty() throws Exception {
+
+        MvcResult resultException = mockMvc.perform(post("/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                 {
+                                     "email": "testemail@gmail.com",
+                                         "name": "testname",
+                                         "password": "",
+                                         "repeatPassword": ""
+                                }
+                                 """)
+                )
+                .andExpect(status().is(400))
+                .andReturn();
+
+        String exception = resultException.getResponse().getContentAsString();
+        Assertions.assertTrue(exception.contains("passwort min length 6, must not be empty"));
+    }
+
 
     @DirtiesContext
     @Test
