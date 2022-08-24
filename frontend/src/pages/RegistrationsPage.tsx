@@ -4,10 +4,12 @@ import {FormEvent, useState} from "react";
 
 import axios from "axios";
 import {toast} from "react-toastify";
-import UserRegisterData from "../type/UserRegisterData";
+import UserRegisterData from "../model/UserRegisterData";
+import {useNavigate} from "react-router-dom";
 
 export default function RegistrationsPage() {
 
+    const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState<string>("");
     const [userName, setUserName] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
@@ -18,11 +20,14 @@ export default function RegistrationsPage() {
 
         event.preventDefault();
 
+        if (userPassword === userRepeatPassword)
+            toast.error("Passwords not match")
+
         const newUser: UserRegisterData = {
             "email": userEmail,
             "name": userName,
             "password": userPassword,
-            "repeatPassword": userRepeatPassword,
+
         }
 
         axios.post("/auth/register", newUser)
@@ -34,6 +39,7 @@ export default function RegistrationsPage() {
                 setUserRepeatPassword("");
                 setErrorMessage("")
                 toast.success("Account Created!")
+                navigate("/");
             })
             .catch(error => {
                 setErrorMessage(error.response.data.error)
