@@ -70,7 +70,7 @@ class UserControllerIntegrationTest {
         Assertions.assertTrue(content.contains("testname"));
 
 
-        mockMvc.perform(post("/auth/register")
+        MvcResult resultException = mockMvc.perform(post("/auth/register")
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -81,7 +81,10 @@ class UserControllerIntegrationTest {
                                 }
                                  """)
                 )
-                .andExpect(status().is(400));
+                .andExpect(status().is(400)).andReturn();
+
+        String exception = resultException.getResponse().getContentAsString();
+        Assertions.assertTrue(exception.contains("User Exists. Please choose another E-Mail"));
 
     }
 
@@ -89,19 +92,23 @@ class UserControllerIntegrationTest {
     @Test
     void shouldNotRegisterUser_passDoNotMatch() throws Exception {
 
-        mockMvc.perform(post("/auth/register")
+        MvcResult resultException = mockMvc.perform(post("/auth/register")
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
                                      "email": "testemail@gmail.com",
                                          "name": "testname",
-                                         "password": "test",
+                                         "password": "test-p",
                                          "repeatPassword": "test-password"
                                 }
                                  """)
                 )
-                .andExpect(status().is(400));
+                .andExpect(status().is(400))
+                .andReturn();
 
+        String exception = resultException.getResponse().getContentAsString();
+        System.out.println(exception);
+        Assertions.assertTrue(exception.contains("Passwords do not match"));
 
     }
 
@@ -110,7 +117,7 @@ class UserControllerIntegrationTest {
     @Test
     void shouldNotRegisterUser_passShortThen6() throws Exception {
 
-        mockMvc.perform(post("/auth/register")
+        MvcResult resultException = mockMvc.perform(post("/auth/register")
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -121,8 +128,12 @@ class UserControllerIntegrationTest {
                                 }
                                  """)
                 )
-                .andExpect(status().is(400));
+                .andExpect(status().is(400))
+                .andReturn();
 
+        String exception = resultException.getResponse().getContentAsString();
+
+        Assertions.assertTrue(exception.contains("passwort min length 6"));
     }
 
     @DirtiesContext
@@ -133,7 +144,7 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                     "email": "testemail",
+                                     "email": "test",
                                          "name": "testname",
                                          "password": "test-password",
                                          "repeatPassword": "test-password"
@@ -145,6 +156,29 @@ class UserControllerIntegrationTest {
 
         String exception = result.getResponse().getContentAsString();
         Assertions.assertTrue(exception.contains("Email not valid"));
+
+    }
+
+    @DirtiesContext
+    @Test
+    void shouldNotRegisterUser_invalidEmail_empty() throws Exception {
+
+        MvcResult result = mockMvc.perform(post("/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                 {
+                                     "email": "",
+                                         "name": "testname",
+                                         "password": "test-password",
+                                         "repeatPassword": "test-password"
+                                }
+                                 """)
+                )
+                .andExpect(status().is(400))
+                .andReturn();
+
+        String exception = result.getResponse().getContentAsString();
+        Assertions.assertTrue(exception.contains("must not be empty"));
 
     }
 }
