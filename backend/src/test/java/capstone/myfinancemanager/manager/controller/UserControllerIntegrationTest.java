@@ -32,6 +32,14 @@ class UserControllerIntegrationTest {
         );
     }
 
+    private static Stream<Arguments> shouldNotRegisterUser_passDoNotMatch_passShortThen6() {
+        return Stream.of(
+
+                Arguments.of("test-p", "Passwords do not match"),
+                Arguments.of("test", "Password min length 6")
+        );
+    }
+
     @DirtiesContext
     @Test
     void shouldRegisterUser() throws Exception {
@@ -99,9 +107,11 @@ class UserControllerIntegrationTest {
 
     }
 
+
     @DirtiesContext
-    @Test
-    void shouldNotRegisterUser_passDoNotMatch() throws Exception {
+    @ParameterizedTest
+    @MethodSource
+    void shouldNotRegisterUser_passDoNotMatch_passShortThen6(String key, String value) throws Exception {
 
         MvcResult resultException = mockMvc.perform(post("/auth/register")
                         .contentType(APPLICATION_JSON)
@@ -109,10 +119,10 @@ class UserControllerIntegrationTest {
                                  {
                                      "email": "testemail@gmail.com",
                                          "name": "testname",
-                                         "password": "test-p",
+                                         "password": "<ID>",
                                          "repeatPassword": "test-password"
                                 }
-                                 """)
+                                 """.replaceFirst("<ID>", key))
                 )
                 .andExpect(status().is(400))
                 .andReturn();
@@ -120,32 +130,8 @@ class UserControllerIntegrationTest {
         String exception = resultException.getResponse().getContentAsString();
 
 
-        Assertions.assertTrue(exception.contains("Passwords do not match"));
+        Assertions.assertTrue(exception.contains(value));
 
-    }
-
-
-    @DirtiesContext
-    @Test
-    void shouldNotRegisterUser_passShortThen6() throws Exception {
-
-        MvcResult resultException = mockMvc.perform(post("/auth/register")
-                        .contentType(APPLICATION_JSON)
-                        .content("""
-                                 {
-                                     "email": "testemail@gmail.com",
-                                         "name": "testname",
-                                         "password": "test",
-                                         "repeatPassword": "test"
-                                }
-                                 """)
-                )
-                .andExpect(status().is(400))
-                .andReturn();
-
-        String exception = resultException.getResponse().getContentAsString();
-
-        Assertions.assertTrue(exception.contains("passwort min length 6"));
     }
 
     @DirtiesContext
@@ -156,7 +142,7 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                     "email": "testemail@gmail.com",
+                                          "email": "testemail@gmail.com",
                                          "name": "testname",
                                          "password": "",
                                          "repeatPassword": ""
@@ -167,7 +153,10 @@ class UserControllerIntegrationTest {
                 .andReturn();
 
         String exception = resultException.getResponse().getContentAsString();
-        Assertions.assertTrue(exception.contains("passwort min length 6, must not be empty"));
+        System.out.println(exception);
+
+        Assertions.assertTrue(exception.contains("Password min length"));
+        Assertions.assertTrue(exception.contains("must not be empty"));
     }
 
 

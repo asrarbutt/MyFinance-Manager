@@ -28,7 +28,7 @@ public class UserDto {
 
     @NotNull(message = "Password is mandatory")
     @NotEmpty
-    @Size(min = 6, message = "passwort min length 6")
+    @Size(min = 6, message = "Password min length 6")
     private String password;
 
     private String repeatPassword;
