@@ -43,6 +43,67 @@ class UserControllerIntegrationTest {
         String content = result.getResponse().getContentAsString();
         Assertions.assertTrue(content.contains("testname"));
 
+
+    }
+
+
+    @DirtiesContext
+    @Test
+    void shouldNotRegisterUser_UserExists() throws Exception {
+
+        MvcResult result = mockMvc.perform(post("/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                 {
+                                     "email": "testemail@gmail.com",
+                                         "name": "testname",
+                                         "password": "test-password",
+                                         "repeatPassword": "test-password"
+                                }
+                                 """)
+                )
+                .andExpect(status().is(201))
+                .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        Assertions.assertTrue(content.contains("testname"));
+
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                 {
+                                     "email": "testemail@gmail.com",
+                                         "name": "testname",
+                                         "password": "test-password",
+                                         "repeatPassword": "test-password"
+                                }
+                                 """)
+                )
+                .andExpect(status().is(400));
+
+    }
+
+    @DirtiesContext
+    @Test
+    void shouldNotRegisterUser_passDoNotMatch() throws Exception {
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                 {
+                                     "email": "testemail@gmail.com",
+                                         "name": "testname",
+                                         "password": "test",
+                                         "repeatPassword": "test-password"
+                                }
+                                 """)
+                )
+                .andExpect(status().is(400))
+                .andReturn();
+
+
     }
 
 }
