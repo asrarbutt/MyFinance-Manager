@@ -133,6 +133,7 @@ class UserControllerIntegrationTest {
         Assertions.assertTrue(exception.contains(value));
 
     }
+
     @DirtiesContext
     @Test
     void shouldNotRegisterUser_passwordEmpty() throws Exception {
@@ -141,7 +142,7 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                     "email": "testemail@gmail.com",
+                                          "email": "testemail@gmail.com",
                                          "name": "testname",
                                          "password": "",
                                          "repeatPassword": ""
@@ -151,10 +152,11 @@ class UserControllerIntegrationTest {
                 .andExpect(status().is(400))
                 .andReturn();
 
-
         String exception = resultException.getResponse().getContentAsString();
         System.out.println(exception);
-        Assertions.assertTrue(exception.contains("Password min length 6, must not be empty"));
+
+        Assertions.assertTrue(exception.contains("Password min length"));
+        Assertions.assertTrue(exception.contains("must not be empty"));
     }
 
 
