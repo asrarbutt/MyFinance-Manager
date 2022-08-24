@@ -20,8 +20,7 @@ export default function RegistrationsPage() {
 
         event.preventDefault();
 
-        if (userPassword === userRepeatPassword)
-            toast.error("Passwords not match")
+
 
         const newUser: UserRegisterData = {
             "email": userEmail,
@@ -42,12 +41,11 @@ export default function RegistrationsPage() {
                 navigate("/");
             })
             .catch(error => {
-                setErrorMessage(error.response.data.error)
-                toast.error(error.response.data.error);
+                setErrorMessage(error.response.data.message)
+                toast.error(error.response.data.message);
 
             })
     }
-
 
     return (
         <Box className="signUp">
