@@ -2,12 +2,17 @@ package capstone.myfinancemanager.manager.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.util.stream.Stream;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,6 +25,12 @@ class UserControllerIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
+    private static Stream<Arguments> shouldNotRegisterUser_invalidEmail_emptyParameter() {
+        return Stream.of(
+                Arguments.of("", "must not be empty"),
+                Arguments.of("test", "Email not valid")
+        );
+    }
 
     @DirtiesContext
     @Test
@@ -161,48 +172,28 @@ class UserControllerIntegrationTest {
 
 
     @DirtiesContext
-    @Test
-    void shouldNotRegisterUser_invalidEmail() throws Exception {
+    @ParameterizedTest
+    @MethodSource
+    void shouldNotRegisterUser_invalidEmail_emptyParameter(String key, String value) throws Exception {
 
         MvcResult result = mockMvc.perform(post("/auth/register")
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                     "email": "test",
+                                     "email": "<ID>",
                                          "name": "testname",
                                          "password": "test-password",
                                          "repeatPassword": "test-password"
                                 }
-                                 """)
+                                 """.replaceFirst("<ID>", key))
                 )
                 .andExpect(status().is(400))
                 .andReturn();
 
         String exception = result.getResponse().getContentAsString();
-        Assertions.assertTrue(exception.contains("Email not valid"));
+        Assertions.assertTrue(exception.contains(value));
 
     }
 
-    @DirtiesContext
-    @Test
-    void shouldNotRegisterUser_invalidEmail_empty() throws Exception {
 
-        MvcResult result = mockMvc.perform(post("/auth/register")
-                        .contentType(APPLICATION_JSON)
-                        .content("""
-                                 {
-                                     "email": "",
-                                         "name": "testname",
-                                         "password": "test-password",
-                                         "repeatPassword": "test-password"
-                                }
-                                 """)
-                )
-                .andExpect(status().is(400))
-                .andReturn();
-
-        String exception = result.getResponse().getContentAsString();
-        Assertions.assertTrue(exception.contains("must not be empty"));
-
-    }
 }
