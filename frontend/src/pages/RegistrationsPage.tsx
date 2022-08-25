@@ -23,16 +23,20 @@ export default function RegistrationsPage() {
         event.preventDefault();
 
         register(userEmail, userName, userPassword, userRepeatPassword).then(() => {
-            if (userPassword !== userRepeatPassword)
+            if (userPassword !== userRepeatPassword) {
                 toast.error('Passwords do not match')
+            } else {
 
-            setUserEmail("");
-            setUserName("");
-            setUserPassword("");
-            setUserRepeatPassword("");
-            setErrorMessage("")
-            toast.success("Account Created!")
-            navigate("/");
+                setUserEmail("");
+                setUserName("");
+                setUserPassword("");
+                setUserRepeatPassword("");
+                setErrorMessage("")
+                toast.success("Account Created!")
+                navigate("/");
+            }
+
+
         })
             .catch(error => {
                 setErrorMessage(error.response.data.message)
