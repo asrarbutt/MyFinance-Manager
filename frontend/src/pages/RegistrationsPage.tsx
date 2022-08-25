@@ -25,6 +25,7 @@ export default function RegistrationsPage() {
         register(userEmail, userName, userPassword, userRepeatPassword).then(() => {
             if (userPassword !== userRepeatPassword)
                 toast.error('Passwords do not match')
+
             setUserEmail("");
             setUserName("");
             setUserPassword("");
