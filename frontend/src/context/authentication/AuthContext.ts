@@ -5,6 +5,6 @@ export interface IContext {
     register: (email: string, name: string, password: string, repeatPassword: string) => Promise<Response>;
 }
 
-export const AutoContext = createContext({} as IContext);
+export const AuthContext = createContext({} as IContext);
 
-export default AutoContext;
+export default AuthContext;
