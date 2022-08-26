@@ -1,31 +1,43 @@
 import MyCard from "./MyCard";
-import {Box} from "@mui/system";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
 import {toast} from "react-toastify";
+import TransactionData from "../model/TransactionData";
 
 export default function MyCardList() {
 
     const {getAllTransactions} = useContext(TransactionContext);
 
+    const [allTransactions, setAllTransactions] = useState<TransactionData[]>([]);
 
     useEffect(() => {
 
+
         getAllTransactions()
+            .then(data => {
+                return setAllTransactions(data)
+            })
             .catch(error => {
 
                 toast.error(error.message)
 
             });
 
-    }, [])
+    }, [])// eslint-disable-line
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-            <MyCard/>
+        <>
+            {
+                allTransactions.length !== 0 ? (
+                    allTransactions.map(t =>
+                        allTransactions.length !== 0 ? <MyCard allTransaction={t}/> :
+                            <h1>Keine Transaktionen Vorhanden</h1>
+                    )
+                ) : (<h1>Keine Transaktion vorhanden</h1>)
+            }
 
 
-        </Box>
+        </>
 
     );
 
