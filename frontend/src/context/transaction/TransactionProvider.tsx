@@ -11,7 +11,7 @@ export default function TransactionProvider({children}: Param) {
     const getAllTransactions = () => {
 
 
-        return axios.get("/transaction").then((response) => {
+        return axios.get("/transactions").then((response) => {
             return response.data
         })
 
