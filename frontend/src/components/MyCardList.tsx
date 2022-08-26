@@ -12,7 +12,6 @@ export default function MyCardList() {
 
     useEffect(() => {
 
-
         getAllTransactions()
             .then(data => {
                 return setAllTransactions(data)
@@ -39,6 +38,4 @@ export default function MyCardList() {
         </>
 
     );
-
-
 }
