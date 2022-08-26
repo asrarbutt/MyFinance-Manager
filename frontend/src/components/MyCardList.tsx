@@ -30,8 +30,7 @@ export default function MyCardList() {
             {
                 allTransactions.length !== 0 ? (
                     allTransactions.map(t =>
-                        allTransactions.length !== 0 ? <MyCard allTransaction={t}/> :
-                            <h1>Keine Transaktionen Vorhanden</h1>
+                        <MyCard allTransaction={t}/>
                     )
                 ) : (<h1>Keine Transaktion vorhanden</h1>)
             }
