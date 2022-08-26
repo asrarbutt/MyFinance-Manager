@@ -2,6 +2,7 @@ package capstone.myfinancemanager.manager.service;
 
 import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.respository.TransactionRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,10 +26,14 @@ class TransactionServiceImpTest {
 
 
     private final List<Transaction> testTransactions = List.of(
-            new Transaction(UUID.randomUUID().toString(), "Essen", 25.0, testDate, "TestCategory", "testmail@test.com", false, "1"),
-            new Transaction(UUID.randomUUID().toString(), "Tanken ", 25.0, Instant.now(), "TestCategory", "testmail@test.com", false, "1")
+            new Transaction(UUID.randomUUID().toString(), "Essen", 25.0, testDate, "TestCategory", "testmail@test.com", false, "url"),
+            new Transaction(UUID.randomUUID().toString(), "Tanken", 25.0, testDate, "TestCategory", "testmail@test.com", false, "url")
     );
 
+    private final List<TransactionDto> testTransactionsDto = List.of(
+            new TransactionDto("Essen", 25.0, testDate, "TestCategory", false, "url"),
+            new TransactionDto("Tanken", 25.0, testDate, "TestCategory", false, "url")
+    );
 
     @Test
     void getAllTransactions() {
@@ -36,10 +41,10 @@ class TransactionServiceImpTest {
         //when
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
         when(transactionRepo.findAll()).thenReturn(testTransactions);
-        List<Transaction> actual = transactionServiceImp.getAllTransactions();
+        List<TransactionDto> actual = transactionServiceImp.getAllTransactions();
 
         //then
-        Assertions.assertArrayEquals(testTransactions.toArray(), actual.toArray());
+        Assertions.assertArrayEquals(testTransactionsDto.toArray(), actual.toArray());
 
 
     }

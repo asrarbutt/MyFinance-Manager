@@ -1,6 +1,6 @@
 package capstone.myfinancemanager.manager.controller;
 
-import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.service.TransactionServiceImp;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class TransactionController {
     private final TransactionServiceImp transactionServiceImp;
 
     @GetMapping
-    public List<Transaction> getAllTransactions() {
+    public List<TransactionDto> getAllTransactions() {
         return transactionServiceImp.getAllTransactions();
     }
 
