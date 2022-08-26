@@ -15,19 +15,19 @@ import java.time.Instant;
 public class Transaction {
 
     @Id
-    String id;
+    private String id;
     @NotNull
-    String description;
+    private String description;
     @NotNull
     @PositiveOrZero
-    double amount;
+    private double amount;
     @NotNull
-    Instant transactionDate;
+    private Instant transactionDate;
     @NotNull
-    String category;
+    private String category;
     @NotNull
-    String userEmail;
+    private String userEmail;
     boolean isIncome;
     @NotNull
-    String pictureId;
+    private String pictureId;
 }
