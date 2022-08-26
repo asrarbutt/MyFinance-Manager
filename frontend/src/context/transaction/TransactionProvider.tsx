@@ -13,7 +13,7 @@ export default function TransactionProvider({children}: Param) {
 
         return axios.get("/transaction").then((response) => {
             return response.data
-        }).then()
+        })
 
     }
 
