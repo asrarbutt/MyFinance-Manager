@@ -8,10 +8,8 @@ import Button from '@mui/material/Button';
 
 export default function MyCard() {
     return (
-        <Card sx={{width: '50rem', minWidth: 245, ml: 5, mr: 5}}>
+        <Card sx={{width: 700, minWidth: 245, ml: 5, mr: 5}}>
             <CardContent>
-
-
                 <CardActions>
                     <Button size="small">Learn More</Button>
                 </CardActions>
