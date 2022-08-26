@@ -24,5 +24,5 @@ export default function AuthProvider({children}: Param) {
             {children}
         </AuthContext.Provider>
     )
-
 }
+

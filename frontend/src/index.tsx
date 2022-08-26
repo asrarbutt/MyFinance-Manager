@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import {HashRouter} from "react-router-dom";
 import AuthProvider from "./context/authentication/AuthProvider";
+import TransactionProvider from "./context/transaction/TransactionProvider";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -13,7 +14,9 @@ root.render(
 
         <HashRouter>
             <AuthProvider>
-                <App/>
+                <TransactionProvider>
+                    <App/>
+                </TransactionProvider>
             </AuthProvider>
 
         </HashRouter>
