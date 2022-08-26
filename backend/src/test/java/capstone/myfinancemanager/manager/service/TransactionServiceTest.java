@@ -15,12 +15,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-class TransactionServiceImpTest {
+class TransactionServiceTest {
 
     private final TransactionRepo transactionRepo = mock(TransactionRepo.class);
 
     private final Timestamp timestampService = mock(Timestamp.class);
-    private final TransactionServiceImp transactionServiceImp = new TransactionServiceImp(transactionRepo);
+    private final TransactionService transactionService = new TransactionService(transactionRepo);
 
     private final Instant testDate = Instant.parse("2022-08-23T09:22:41.255023Z");
 
@@ -41,7 +41,7 @@ class TransactionServiceImpTest {
         //when
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
         when(transactionRepo.findAll()).thenReturn(testTransactions);
-        List<TransactionDto> actual = transactionServiceImp.getAllTransactions();
+        List<TransactionDto> actual = transactionService.getAllTransactions();
 
         //then
         Assertions.assertArrayEquals(testTransactionsDto.toArray(), actual.toArray());

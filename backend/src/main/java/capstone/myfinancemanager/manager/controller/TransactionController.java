@@ -1,7 +1,7 @@
 package capstone.myfinancemanager.manager.controller;
 
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
-import capstone.myfinancemanager.manager.service.TransactionServiceImp;
+import capstone.myfinancemanager.manager.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +11,14 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/transactions")
 public class TransactionController {
 
-    private final TransactionServiceImp transactionServiceImp;
+    private final TransactionService transactionService;
 
     @GetMapping
     public List<TransactionDto> getAllTransactions() {
-        return transactionServiceImp.getAllTransactions();
+        return transactionService.getAllTransactions();
     }
 
 }

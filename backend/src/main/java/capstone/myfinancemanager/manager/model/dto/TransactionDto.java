@@ -13,10 +13,10 @@ import java.time.Instant;
 @Builder
 public class TransactionDto {
 
-    String description;
-    double amount;
-    Instant transactionDate;
-    String category;
-    boolean isIncome;
-    String pictureId;
+    private String description;
+    private double amount;
+    private Instant transactionDate;
+    private String category;
+    private boolean isIncome;
+    private String pictureId;
 }

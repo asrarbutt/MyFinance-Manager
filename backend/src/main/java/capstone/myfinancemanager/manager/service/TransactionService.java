@@ -3,15 +3,15 @@ package capstone.myfinancemanager.manager.service;
 
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.respository.TransactionRepo;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
-public class TransactionServiceImp {
+public class TransactionService {
 
     private final TransactionRepo transactionRepo;
 

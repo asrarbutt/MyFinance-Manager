@@ -19,16 +19,12 @@ const StlyeEditIcon = styled(EditIcon)`
   font-size: 2rem;
  `;
 
-
 type MyCardProps = {
 
     allTransaction: TransactionData;
-
 }
 
-
 export default function MyCard(props: MyCardProps) {
-
 
     return (
         <Card sx={{width: 900, height: '20', minWidth: 245, ml: 5, mr: 5, borderRadius: '15px'}}>

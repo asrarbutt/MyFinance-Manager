@@ -26,7 +26,7 @@ class TransactionControllerIntegrationTest {
 
         mockMvc
                 .perform(
-                        MockMvcRequestBuilders.get("/transaction")
+                        MockMvcRequestBuilders.get("/transactions")
                 )
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(0)));
