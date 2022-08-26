@@ -46,6 +46,10 @@ export default function MyCard(props: MyCardProps) {
                     {props.allTransaction.category}
                 </Typography>
 
+                <Typography sx={{fontSize: 14}} color="text.secondary">
+                    {props.allTransaction.transactionDate}
+                </Typography>
+
                 <Box>
                     <IconButton>
                         <StlyeDeleteIcon/>
