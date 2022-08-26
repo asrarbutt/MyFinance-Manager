@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class UserServiceImpTest {
+class UserServiceTest {
     private final UserRepo userRepo = mock(UserRepo.class);
     private final Timestamp timestampService = mock(Timestamp.class);
-    private final UserServiceImp userServiceImp = new UserServiceImp(userRepo, timestampService);
+    private final UserService userService = new UserService(userRepo, timestampService);
     private final UserDto newUserDto = new UserDto("testuser@test.com", "testusername", "test-password", "test-password");
     private final User registeredUserWithDate = User.builder()
             .email(newUserDto.getEmail())
@@ -38,7 +38,7 @@ class UserServiceImpTest {
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
         when(userRepo.save(registeredUserWithDate)).thenReturn(registeredUserWithDate);
 
-        User actual = userServiceImp.registerNewUser(newUserDto);
+        User actual = userService.registerNewUser(newUserDto);
 
         //Then
         Assertions.assertEquals(
@@ -55,7 +55,7 @@ class UserServiceImpTest {
         //Then
         UserExistsException userExistsException = assertThrows(
                 UserExistsException.class,
-                () -> userServiceImp.registerNewUser(newUserDto),
+                () -> userService.registerNewUser(newUserDto),
                 "Throws Exception, if the User Exists");
 
         assertTrue(
@@ -69,7 +69,7 @@ class UserServiceImpTest {
         //Then
         PasswordNotMatchException passwordNotMatchException = assertThrows(
                 PasswordNotMatchException.class,
-                () -> userServiceImp.registerNewUser(userWithNotMatchPassword),
+                () -> userService.registerNewUser(userWithNotMatchPassword),
                 "Throws Exception, Password not match");
 
         assertTrue(
@@ -86,7 +86,7 @@ class UserServiceImpTest {
         when(userRepo.findAll()).thenReturn(List.of(registeredUserWithDate));
         when(userRepo.findById(newUserDto.getEmail())).thenReturn(Optional.of(registeredUserWithDate));
         UserExistsException exception = assertThrows(UserExistsException.class, () -> {
-            userServiceImp.registerNewUser(newUserDto);
+            userService.registerNewUser(newUserDto);
         });
 
         //then
