@@ -2,6 +2,7 @@ import MyCard from "./MyCard";
 import {Box} from "@mui/system";
 import {useContext, useEffect} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
+import {toast} from "react-toastify";
 
 export default function MyCardList() {
 
@@ -9,7 +10,14 @@ export default function MyCardList() {
 
 
     useEffect(() => {
-        getAllTransactions().then(data => console.log(data));
+
+        getAllTransactions()
+            .catch(error => {
+
+                toast.error(error.message)
+
+            });
+
     }, [])
 
     return (
