@@ -10,12 +10,12 @@ import capstone.myfinancemanager.manager.respository.UserRepo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImp {
+public class UserService {
 
     private final UserRepo userRepo;
     private final Timestamp timestamp;
 
-    public UserServiceImp(UserRepo userRepo, Timestamp timestamp) {
+    public UserService(UserRepo userRepo, Timestamp timestamp) {
         this.userRepo = userRepo;
         this.timestamp = timestamp;
     }
