@@ -3,13 +3,14 @@ package capstone.myfinancemanager.manager.service;
 
 import capstone.myfinancemanager.manager.model.RandomUUIDGenerator;
 import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.dto.AddTransactionDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.respository.TransactionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class TransactionService {
@@ -24,6 +25,7 @@ public class TransactionService {
                 .stream()
                 .map(t ->
                         new TransactionDto(
+                                t.getUserEmail(),
                                 t.getDescription(),
                                 t.getAmount(),
                                 t.getTransactionDate(),
@@ -33,18 +35,18 @@ public class TransactionService {
                 .toList();
     }
 
-    public Transaction addTransaction(TransactionDto newTransactionDto) {
+    public Transaction addTransaction(AddTransactionDto addNewTransactionDto) {
 
-        Transaction newTransaction = new Transaction();
-        newTransaction.setId(randomUUIDGenerator.getRandomId());
-        newTransaction.setDescription(newTransactionDto.getDescription());
-        newTransaction.setAmount(newTransactionDto.getAmount());
-        newTransaction.setTransactionDate(Instant.now());
-        newTransaction.setCategory(newTransactionDto.getCategory());
-        newTransaction.setPictureId(newTransactionDto.getPictureId());
-        newTransaction.setIncome(newTransactionDto.isIncome());
-        newTransaction.setUserEmail("kommt aus dem login");
+        Transaction transactionCreated = Transaction.builder()
+                .id(randomUUIDGenerator.getRandomId())
+                .userEmail(addNewTransactionDto.getUserEmail())
+                .description(addNewTransactionDto.getDescription())
+                .amount(addNewTransactionDto.getAmount())
+                .transactionDate(addNewTransactionDto.getTransactionDate())
+                .category(addNewTransactionDto.getCategory())
+                .pictureId(addNewTransactionDto.getPictureId())
+                .build();
 
-        return transactionRepo.save(newTransaction);
+        return transactionRepo.save(transactionCreated);
     }
 }

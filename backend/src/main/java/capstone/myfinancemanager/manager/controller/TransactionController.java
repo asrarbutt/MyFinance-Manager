@@ -1,5 +1,7 @@
 package capstone.myfinancemanager.manager.controller;
 
+import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.dto.AddTransactionDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.service.TransactionService;
 import lombok.AllArgsConstructor;
@@ -7,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
+import javax.validation.Valid;
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,37 +25,23 @@ public class TransactionController {
     }
 
 
-    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionDto newTransactionDto) {
-
-        transactionService.addTransaction(newTransactionDto);
+    @PostMapping
+    public ResponseEntity<TransactionDto> addTransaction(@Valid @RequestBody AddTransactionDto newTransactionCreation) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(buildNewTransactionDto(
-                        newTransactionDto.getDescription(),
-                        newTransactionDto.getAmount(),
-                        newTransactionDto.getTransactionDate(),
-                        newTransactionDto.getCategory(),
-                        newTransactionDto.isIncome(),
-                        newTransactionDto.getPictureId()
-                ));
+                .body(buildNewTransactionDto(transactionService.addTransaction(newTransactionCreation)));
     }
 
-    public TransactionDto buildNewTransactionDto(
-            String description,
-            double amount,
-            Instant transactionDate,
-            String category,
-            boolean isIncome,
-            String pictureId) {
+    public TransactionDto buildNewTransactionDto(Transaction transaction) {
         return TransactionDto.builder()
-                .description(description)
-                .amount(amount)
-                .transactionDate(transactionDate)
-                .category(category)
-                .isIncome(isIncome)
-                .pictureId(pictureId)
+                .userEmail(transaction.getUserEmail())
+                .description(transaction.getDescription())
+                .amount(transaction.getAmount())
+                .transactionDate(transaction.getTransactionDate())
+                .category(transaction.getCategory())
+                .isIncome(transaction.isIncome())
+                .pictureId(transaction.getPictureId())
                 .build();
 
     }
