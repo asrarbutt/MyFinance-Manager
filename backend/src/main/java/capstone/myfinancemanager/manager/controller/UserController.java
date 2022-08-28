@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<UserDto> registerNewUser(@Valid @RequestBody UserDto newUserDto) {
 
         User registerNewUser = userService.registerNewUser(newUserDto);
@@ -28,12 +28,12 @@ public class UserController {
 
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     String login() {
         return getUsername();
     }
 
-    @GetMapping("/me")
+    @GetMapping("me")
     String getUsername() {
         return SecurityContextHolder
                 .getContext()
@@ -50,6 +50,4 @@ public class UserController {
                 .repeatPassword(repeatPassword)
                 .build();
     }
-
-
 }
