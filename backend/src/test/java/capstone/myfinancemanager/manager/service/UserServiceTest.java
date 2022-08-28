@@ -8,6 +8,7 @@ import capstone.myfinancemanager.manager.model.dto.UserDto;
 import capstone.myfinancemanager.manager.respository.UserRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
 import java.util.List;
@@ -20,12 +21,13 @@ import static org.mockito.Mockito.when;
 class UserServiceTest {
     private final UserRepo userRepo = mock(UserRepo.class);
     private final Timestamp timestampService = mock(Timestamp.class);
-    private final UserService userService = new UserService(userRepo, timestampService);
+    private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
+    private final UserService userService = new UserService(userRepo, timestampService, passwordEncoder);
     private final UserDto newUserDto = new UserDto("testuser@test.com", "testusername", "test-password", "test-password");
     private final User registeredUserWithDate = User.builder()
             .email(newUserDto.getEmail())
             .name(newUserDto.getName())
-            .password(newUserDto.getPassword())
+            .password("password_encode")
             .userRegistrationDate(Instant.parse("2022-08-23T09:22:41.255023Z"))
             .build();
 
@@ -35,6 +37,7 @@ class UserServiceTest {
     void shouldCreateUser() {
 
         //When
+        when(passwordEncoder.encode(newUserDto.getPassword())).thenReturn("password_encode");
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
         when(userRepo.save(registeredUserWithDate)).thenReturn(registeredUserWithDate);
 
