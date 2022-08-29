@@ -6,6 +6,7 @@ import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.model.dto.UserDto;
 import capstone.myfinancemanager.manager.respository.UserRepo;
+import capstone.myfinancemanager.manager.security.AppUserDetailsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
+
+
     private final UserRepo userRepo = mock(UserRepo.class);
+
+    AppUserDetailsService appUserDetailsService = new AppUserDetailsService(userRepo);
     private final Timestamp timestampService = mock(Timestamp.class);
     private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
     private final UserService userService = new UserService(userRepo, timestampService, passwordEncoder);
@@ -94,6 +99,25 @@ class UserServiceTest {
 
         //then
         assertEquals("User Exists. Please choose another E-Mail", exception.getMessage());
+
+    }
+
+
+    @Test
+    void loadUserByUsername_UserExistsTest() {
+        //given
+        //When
+        when(passwordEncoder.encode(newUserDto.getPassword())).thenReturn("password_encode");
+        when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
+        when(userRepo.save(registeredUserWithDate)).thenReturn(registeredUserWithDate);
+        when(userRepo.findById(newUserDto.getEmail())).thenReturn(Optional.of(registeredUserWithDate));
+
+        String actualUsername = appUserDetailsService.loadUserByUsername(newUserDto.getEmail()).getUsername();
+
+
+        //then
+        Assertions.assertEquals(newUserDto.getEmail(), actualUsername);
+        //then
 
     }
 }
