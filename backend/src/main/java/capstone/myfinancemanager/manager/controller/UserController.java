@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
@@ -41,6 +42,10 @@ public class UserController {
                 .getName();
     }
 
+    @GetMapping("logout")
+    void logout(HttpSession session) {
+        session.invalidate();
+    }
 
     public UserDto buildNewUserDto(String email, String name, String password, String repeatPassword) {
         return UserDto.builder()
