@@ -205,6 +205,14 @@ class UserControllerIntegrationTest {
     }
 
 
+    @Test
+    @WithMockUser(username = "test@test.com")
+    void loggedInUserTest() throws Exception {
+        mockMvc.perform(get("/auth/me"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("test@test.com"));
+    }
+
 }
 
 
