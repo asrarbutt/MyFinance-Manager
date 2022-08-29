@@ -198,8 +198,10 @@ class UserControllerIntegrationTest {
     }
 
     @Test
+    @DirtiesContext
     void logoutTest() throws Exception {
-        mockMvc.perform(get("/auth/logout")).andExpect(status().is(200));
+        mockMvc.perform(get("/auth/logout"))
+                .andExpect(status().isOk());
     }
 
 
