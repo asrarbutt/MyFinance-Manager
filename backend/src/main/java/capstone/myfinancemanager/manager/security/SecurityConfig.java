@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
 
-      /*  http.csrf()
+        http.csrf()
                 //   .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .disable()
                 .authorizeHttpRequests()
@@ -41,10 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("auth/logout").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/transactions").authenticated()
-                .and().httpBasic();*/
 
-        http.csrf().disable();
+                .and().httpBasic();
     }
 
 
