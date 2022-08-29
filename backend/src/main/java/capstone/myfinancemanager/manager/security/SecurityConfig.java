@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @EnableWebSecurity
@@ -34,14 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and().authorizeHttpRequests()
-                .antMatchers("/").permitAll()
+                //   .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .disable()
+                .authorizeHttpRequests()
 
-//                .antMatchers("auth/register").permitAll()
-//                .antMatchers("auth/login").permitAll()
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/**").authenticated()
+                .antMatchers("/auth/register").permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("auth/logout").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/transactions").authenticated()
                 .and().httpBasic();
     }
 
