@@ -18,6 +18,6 @@ public class TransactionDto {
     private double amount;
     private Instant transactionDate;
     private String category;
-    private boolean isIncome;
+    private Boolean isIncome;
     private String pictureId;
 }

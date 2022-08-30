@@ -30,7 +30,7 @@ public class TransactionService {
                                 t.getAmount(),
                                 t.getTransactionDate(),
                                 t.getCategory(),
-                                t.isIncome(),
+                                t.getIsIncome(),
                                 t.getPictureId()))
                 .toList();
     }
@@ -45,6 +45,7 @@ public class TransactionService {
                 .transactionDate(addNewTransactionDto.getTransactionDate())
                 .category(addNewTransactionDto.getCategory())
                 .pictureId(addNewTransactionDto.getPictureId())
+                .isIncome(addNewTransactionDto.getIsIncome())
                 .build();
 
         return transactionRepo.save(transactionCreated);

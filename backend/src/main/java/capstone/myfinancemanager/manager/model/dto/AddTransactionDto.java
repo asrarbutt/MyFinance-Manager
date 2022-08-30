@@ -34,6 +34,7 @@ public class AddTransactionDto {
     private String category;
 
     private String pictureId;
-    private String isIncome;
+
+    private Boolean isIncome;
 
 }

@@ -21,6 +21,6 @@ public class Transaction {
     private Instant transactionDate;
     private String category;
     private String userEmail;
-    boolean isIncome;
+    private Boolean isIncome;
     private String pictureId;
 }

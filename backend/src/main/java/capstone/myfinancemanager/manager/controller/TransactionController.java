@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,10 +23,9 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
-
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransactionDto> addTransaction(@Valid @RequestBody AddTransactionDto newTransactionCreation) {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody AddTransactionDto newTransactionCreation) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(buildNewTransactionDto(transactionService.addTransaction(newTransactionCreation)));
@@ -40,11 +38,9 @@ public class TransactionController {
                 .amount(transaction.getAmount())
                 .transactionDate(transaction.getTransactionDate())
                 .category(transaction.getCategory())
-                .isIncome(transaction.isIncome())
+                .isIncome(transaction.getIsIncome())
                 .pictureId(transaction.getPictureId())
                 .build();
 
     }
-
-
 }
