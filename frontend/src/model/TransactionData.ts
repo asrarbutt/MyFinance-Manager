@@ -4,6 +4,6 @@ export default interface TransactionData {
     "description": string,
     "amount": number,
     "category": string,
-    "transactionDate": string,
-    "isIncome": boolean;
+    "transactionDate": number | null,
+    "isIncome": boolean,
 }
