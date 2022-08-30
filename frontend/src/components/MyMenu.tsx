@@ -1,6 +1,10 @@
 import {Box, Button, Container} from "@mui/material";
 import {styled} from "@mui/system";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddTransaction from "./AddTransaction";
+import {useContext} from "react";
+import TransactionContext from "../context/transaction/TransactionContext";
+
 
 const StyleAddCircleIcon = styled(AddCircleIcon)`
 font-size:5rem;
@@ -22,6 +26,8 @@ const StyledButton = styled(Button)`
 
 export default function MyMenu() {
 
+    const {addTransaction} = useContext(TransactionContext);
+
     return (
         <Box sx={{mt: 1, padding: '1rem'}}>
             <Container sx={{display: 'flex'}}>
@@ -32,9 +38,10 @@ export default function MyMenu() {
                     <StyledButton>Ausgaben</StyledButton>
                 </Box>
                 <Button>
-                    <StyleAddCircleIcon></StyleAddCircleIcon>
-                </Button>
 
+
+                </Button>
+                <AddTransaction addTransaction={addTransaction}/>
             </Container>
         </Box>
     )
