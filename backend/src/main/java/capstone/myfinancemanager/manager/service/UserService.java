@@ -7,6 +7,7 @@ import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.model.dto.UserDto;
 import capstone.myfinancemanager.manager.respository.UserRepo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +16,13 @@ public class UserService {
     private final UserRepo userRepo;
     private final Timestamp timestamp;
 
-    public UserService(UserRepo userRepo, Timestamp timestamp) {
+    private final PasswordEncoder passwordEncoder;
+
+
+    public UserService(UserRepo userRepo, Timestamp timestamp, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.timestamp = timestamp;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User registerNewUser(UserDto userDto) {
@@ -30,7 +35,7 @@ public class UserService {
 
         User user = new User(userDto.getEmail());
         user.setName(userDto.getName());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setUserRegistrationDate(timestamp.now());
 
         return userRepo.save(user);
