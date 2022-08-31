@@ -9,17 +9,32 @@ interface Param {
 export default function TransactionProvider({children}: Param) {
 
     const getAllTransactions = () => {
-
-
         return axios.get("/transactions").then((response) => {
             return response.data
         })
+    }
+
+    const addTransaction = (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => {
+
+        const newTransaction = {
+
+            "userEmail": userEmail,
+            "description": description,
+            "amount": amount,
+            "category": category,
+            "transactionDate": transactionDate,
+            "isIncome": isIncome,
+            "pictureId": pictureId,
+        }
+
+        return axios.post("/transactions", newTransaction)
+            .then(response => response.data).then(getAllTransactions)
 
     }
 
     return (
 
-        <TransactionContext.Provider value={{getAllTransactions}}>
+        <TransactionContext.Provider value={{getAllTransactions, addTransaction}}>
             {children}
         </TransactionContext.Provider>
     )

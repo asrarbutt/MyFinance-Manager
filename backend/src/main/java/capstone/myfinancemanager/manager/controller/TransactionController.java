@@ -1,11 +1,13 @@
 package capstone.myfinancemanager.manager.controller;
 
+import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.service.TransactionService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +23,24 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @PostMapping
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation)));
+    }
+
+    public TransactionDto buildNewTransactionDto(Transaction transaction) {
+        return TransactionDto.builder()
+                .userEmail(transaction.getUserEmail())
+                .description(transaction.getDescription())
+                .amount(transaction.getAmount())
+                .transactionDate(transaction.getTransactionDate())
+                .category(transaction.getCategory())
+                .isIncome(transaction.getIsIncome())
+                .pictureId(transaction.getPictureId())
+                .build();
+
+    }
 }

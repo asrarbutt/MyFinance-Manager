@@ -1,5 +1,6 @@
 package capstone.myfinancemanager.manager.service;
 
+import capstone.myfinancemanager.manager.model.RandomUUIDGenerator;
 import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.Transaction;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
@@ -9,45 +10,77 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
 class TransactionServiceTest {
-
     private final TransactionRepo transactionRepo = mock(TransactionRepo.class);
-
     private final Timestamp timestampService = mock(Timestamp.class);
-    private final TransactionService transactionService = new TransactionService(transactionRepo);
-
+    private final RandomUUIDGenerator randomUUIDGenerator = mock(RandomUUIDGenerator.class);
+    private final TransactionService transactionService = new TransactionService(transactionRepo, randomUUIDGenerator);
     private final Instant testDate = Instant.parse("2022-08-23T09:22:41.255023Z");
+    private final String randomTestId = "1";
 
+    Transaction transaction1 = Transaction.builder().id(randomTestId)
+            .description("Essen")
+            .amount(25.0)
+            .transactionDate(testDate)
+            .category("TestCategory")
+            .userEmail("test@test.com")
+            .isIncome(false)
+            .pictureId("url").build();
+    Transaction transaction2 = Transaction.builder().id(randomTestId)
+            .description("Tanken")
+            .amount(27.0)
+            .transactionDate(testDate)
+            .category("TestCategory")
+            .userEmail("test@test.com")
+            .isIncome(true)
+            .pictureId("url").build();
 
-    private final List<Transaction> testTransactions = List.of(
-            new Transaction(UUID.randomUUID().toString(), "Essen", 25.0, testDate, "TestCategory", "testmail@test.com", false, "url"),
-            new Transaction(UUID.randomUUID().toString(), "Tanken", 25.0, testDate, "TestCategory", "testmail@test.com", false, "url")
-    );
+    TransactionDto transactionDto1 = TransactionDto.builder()
+            .userEmail("test@test.com")
+            .description("Tanken")
+            .amount(27.0)
+            .transactionDate(testDate)
+            .category("TestCategory")
+            .isIncome(true)
+            .pictureId("url")
+            .build();
 
-    private final List<TransactionDto> testTransactionsDto = List.of(
-            new TransactionDto("Essen", 25.0, testDate, "TestCategory", false, "url"),
-            new TransactionDto("Tanken", 25.0, testDate, "TestCategory", false, "url")
-    );
+    TransactionDto transactionDto2 = TransactionDto.builder()
+            .userEmail("test@test.com")
+            .description("Essen")
+            .amount(25.0)
+            .transactionDate(testDate)
+            .category("TestCategory")
+            .isIncome(false)
+            .pictureId("url")
+            .build();
 
     @Test
-    void getAllTransactions() {
-
+    void getAllTransactionsTest() {
         //when
+        when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
-        when(transactionRepo.findAll()).thenReturn(testTransactions);
+        when(transactionRepo.findAll()).thenReturn(List.of(transaction1, transaction2));
         List<TransactionDto> actual = transactionService.getAllTransactions();
 
         //then
-        Assertions.assertArrayEquals(testTransactionsDto.toArray(), actual.toArray());
-
-
+        Assertions.assertEquals(actual.get(0).getUserEmail(), transaction2.getUserEmail());
     }
 
+    @Test
+    void addNewTransactionTest() {
+        //when
+        when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
+        when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
+        when(transactionRepo.save(any())).thenReturn(transaction1);
 
+        Transaction actual = transactionRepo.save(transaction1);
+        Assertions.assertEquals(transaction1, actual);
+    }
 }

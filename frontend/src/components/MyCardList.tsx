@@ -17,12 +17,10 @@ export default function MyCardList() {
                 return setAllTransactions(data)
             })
             .catch(error => {
-
                 toast.error(error.message)
-
             });
 
-    }, [])// eslint-disable-line
+    }, [allTransactions])// eslint-disable-line
 
     return (
         <>

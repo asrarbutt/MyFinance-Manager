@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import {IconButton, Typography} from "@mui/material";
 import {Box, styled} from "@mui/system";
 import TransactionData from "../model/TransactionData";
-
+import {dateFromInstant} from "../util/Util";
 
 const StlyeDeleteIcon = styled(DeleteForeverIcon)`
 
@@ -43,7 +43,7 @@ export default function MyCard(props: MyCardProps) {
                 </Typography>
 
                 <Typography sx={{fontSize: 14}} color="text.secondary">
-                    {props.allTransaction.transactionDate}
+                    {dateFromInstant(props.allTransaction.transactionDate, "de-DE")}
                 </Typography>
 
                 <Box>
