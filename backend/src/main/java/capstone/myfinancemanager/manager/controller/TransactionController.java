@@ -25,10 +25,10 @@ public class TransactionController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto newTransactionCreation) {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(buildNewTransactionDto(transactionService.addTransaction(newTransactionCreation)));
+                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation)));
     }
 
     public TransactionDto buildNewTransactionDto(Transaction transaction) {
