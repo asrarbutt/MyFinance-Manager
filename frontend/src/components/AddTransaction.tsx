@@ -16,7 +16,6 @@ import Select from '@mui/material/Select';
 import AddIcon from '@mui/icons-material/Add';
 import TransactionData from "../model/TransactionData";
 import {toast} from "react-toastify";
-
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
@@ -34,7 +33,6 @@ export default function AddTransaction(props: AddTransactionProps) {
     const [pictureId, setPictureId] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
-
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
@@ -58,7 +56,6 @@ export default function AddTransaction(props: AddTransactionProps) {
         setOpen(false);
     };
 
-
     return (
         <div>
             <Button variant="contained" onClick={handleClickOpen}>
@@ -68,7 +65,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
 
                 <DialogContent>
-
                     <form onSubmit={submitHandler}>
 
                         <Box sx={{
@@ -80,7 +76,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                             marginTop: 6,
                             marginBottom: 7,
                             width: 900
-
                         }}>
                             <TextField id="standard-basic" onChange={e => setDescription(e.target.value)}
                                        label="Beschreibung"
@@ -99,7 +94,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     }}
                                     renderInput={(params) => <TextField
                                         {...params} />}
-
                                 />
                             </LocalizationProvider>
 
@@ -113,7 +107,6 @@ export default function AddTransaction(props: AddTransactionProps) {
 
                                     onChange={e => {
                                         setCategory(e.target.value);
-
                                     }}
                                 >
                                     <MenuItem value={"Essen"}>Essen</MenuItem>
@@ -121,7 +114,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     <MenuItem value={"Strom/Gas"}>Strom/Gas</MenuItem>
 
                                 </Select>
-
                             </FormControl>
 
                             <FormControl>
@@ -134,13 +126,11 @@ export default function AddTransaction(props: AddTransactionProps) {
 
                                     onChange={(e: any) => {
                                         setIsIncome(e.target.value)
-
                                     }}
                                 >
                                     <MenuItem value={true as any}>Einkommen</MenuItem>
                                     <MenuItem value={false as any}>Ausgabe</MenuItem>
                                 </Select>
-
                             </FormControl>
 
                             <Button variant="contained" component="label" color="primary">
@@ -149,10 +139,8 @@ export default function AddTransaction(props: AddTransactionProps) {
                                 <input type="file" onChange={(e) => {
 
                                     if (e.target.files !== null) {
-
                                         setPictureId(URL.createObjectURL(e.target.files[0]))
                                     }
-
                                 }} hidden/>
                             </Button>
                             <DialogActions>
@@ -163,7 +151,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                         </Box>
                     </form>
                 </DialogContent>
-
             </Dialog>
         </div>
     );
