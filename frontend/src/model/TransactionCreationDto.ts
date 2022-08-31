@@ -1,4 +1,4 @@
-export default interface TransactionData {
+export default interface TransactionCreationDto {
 
     "userEmail": string
     "description": string,

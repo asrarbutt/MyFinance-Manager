@@ -2,13 +2,13 @@ import MyCard from "./MyCard";
 import {useContext, useEffect, useState} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
 import {toast} from "react-toastify";
-import TransactionData from "../model/TransactionData";
+import TransactionDto from "../model/TransactionDto";
 
 export default function MyCardList() {
 
     const {getAllTransactions} = useContext(TransactionContext);
 
-    const [allTransactions, setAllTransactions] = useState<TransactionData[]>([]);
+    const [allTransactions, setAllTransactions] = useState<TransactionDto[]>([]);
 
     useEffect(() => {
 

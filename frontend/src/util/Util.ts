@@ -2,7 +2,6 @@ export const dateFromInstant = (instant: number | null, locale: string) => {
 
     if (instant !== null) {
         const date = new Date(instant);
-        console.log(instant)
         const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'numeric', day: 'numeric'};
         return date.toLocaleDateString((locale) ? locale : undefined, options)
     }

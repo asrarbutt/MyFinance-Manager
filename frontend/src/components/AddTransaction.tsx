@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Select from '@mui/material/Select';
 import AddIcon from '@mui/icons-material/Add';
-import TransactionData from "../model/TransactionData";
+import TransactionCreationDto from "../model/TransactionCreationDto";
 import {toast} from "react-toastify";
 
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
@@ -22,7 +22,7 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 
 type AddTransactionProps = {
-    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => Promise<TransactionData>;
+    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => Promise<TransactionCreationDto>;
 }
 
 export default function AddTransaction(props: AddTransactionProps) {

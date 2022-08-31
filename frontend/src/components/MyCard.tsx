@@ -6,8 +6,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import {IconButton, Typography} from "@mui/material";
 import {Box, styled} from "@mui/system";
-import TransactionData from "../model/TransactionData";
 import {dateFromInstant} from "../util/Util";
+import TransactionDto from "../model/TransactionDto";
 
 const StlyeDeleteIcon = styled(DeleteForeverIcon)`
 
@@ -21,7 +21,7 @@ const StlyeEditIcon = styled(EditIcon)`
 
 type MyCardProps = {
 
-    allTransaction: TransactionData;
+    allTransaction: TransactionDto;
 }
 
 export default function MyCard(props: MyCardProps) {
