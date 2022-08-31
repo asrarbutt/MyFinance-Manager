@@ -12,7 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class TransactionDto {
-
+    private String id;
     private String userEmail;
     private String description;
     private double amount;
