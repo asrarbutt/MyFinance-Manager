@@ -9,6 +9,7 @@ import capstone.myfinancemanager.manager.respository.TransactionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class TransactionService {
                 .userEmail(addNewTransactionDto.getUserEmail())
                 .description(addNewTransactionDto.getDescription())
                 .amount(addNewTransactionDto.getAmount())
-                .transactionDate(addNewTransactionDto.getTransactionDate())
+                .transactionDate(Instant.ofEpochMilli(addNewTransactionDto.getTransactionDate()))
                 .category(addNewTransactionDto.getCategory())
                 .pictureId(addNewTransactionDto.getPictureId())
                 .isIncome(addNewTransactionDto.getIsIncome())
