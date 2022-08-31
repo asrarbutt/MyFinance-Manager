@@ -132,8 +132,8 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     value={isIncome}
                                     label="Kategorie auswählen "
 
-                                    onChange={e => {
-                                        setIsIncome(e.target.value as any)
+                                    onChange={(e: any) => {
+                                        setIsIncome(e.target.value)
 
                                     }}
                                 >
