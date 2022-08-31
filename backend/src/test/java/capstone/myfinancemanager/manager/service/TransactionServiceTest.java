@@ -16,16 +16,12 @@ import static org.mockito.Mockito.*;
 
 
 class TransactionServiceTest {
-
     private final TransactionRepo transactionRepo = mock(TransactionRepo.class);
-
     private final Timestamp timestampService = mock(Timestamp.class);
     private final RandomUUIDGenerator randomUUIDGenerator = mock(RandomUUIDGenerator.class);
     private final TransactionService transactionService = new TransactionService(transactionRepo, randomUUIDGenerator);
-
     private final Instant testDate = Instant.parse("2022-08-23T09:22:41.255023Z");
     private final String randomTestId = "1";
-
 
     Transaction transaction1 = Transaction.builder()
             .id(randomTestId)
@@ -36,8 +32,6 @@ class TransactionServiceTest {
             .userEmail("test@test.com")
             .isIncome(false)
             .pictureId("url").build();
-
-
     Transaction transaction2 = Transaction.builder()
             .id(randomTestId)
             .description("Tanken")
@@ -70,29 +64,13 @@ class TransactionServiceTest {
             .pictureId("url")
             .build();
 
-
-
-
-/*    private final List<Transaction> testTransactions = List.of(
-            new Transaction(randomTestId, "Essen", 25.0, testDate, "TestCategory", "testmail@test.com", false, "url"),
-            new Transaction(randomTestId, "Tanken", 25.0, testDate, "TestCategory", "testmail@test.com", false, "url")
-    );
-
-
-    private final List<TransactionDto> testTransactionsDto = List.of(
-            new TransactionDto("testmail@test.com", "Essen", 25.0, testDate, "TestCategory", false, "url"),
-            new TransactionDto("testmail@test.com", "Tanken", 25.0, testDate, "TestCategory", false, "url")
-    );*/
-
     @Test
     void getAllTransactionsTest() {
-
         //when
         when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
         when(transactionRepo.findAll()).thenReturn(List.of(transaction1, transaction2));
         List<TransactionDto> actual = transactionService.getAllTransactions();
-
 
         //then
         Assertions.assertEquals(actual.get(0).getUserEmail(), transaction2.getUserEmail());
@@ -100,7 +78,6 @@ class TransactionServiceTest {
 
     @Test
     void addNewTransactionTest() {
-
         //when
         when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
@@ -108,7 +85,6 @@ class TransactionServiceTest {
 
         Transaction actual = transactionRepo.save(transaction1);
         Assertions.assertEquals(transaction1, actual);
-
     }
 
 

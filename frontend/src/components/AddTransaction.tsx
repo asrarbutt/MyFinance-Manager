@@ -16,7 +16,6 @@ import Select from '@mui/material/Select';
 import AddIcon from '@mui/icons-material/Add';
 import TransactionCreationDto from "../model/TransactionCreationDto";
 import {toast} from "react-toastify";
-
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
@@ -34,7 +33,6 @@ export default function AddTransaction(props: AddTransactionProps) {
     const [pictureId, setPictureId] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
-
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
@@ -57,7 +55,6 @@ export default function AddTransaction(props: AddTransactionProps) {
     const handleClose = () => {
         setOpen(false);
     };
-
 
     return (
         <div>
@@ -136,7 +133,6 @@ export default function AddTransaction(props: AddTransactionProps) {
 
                                     onChange={(e: any) => {
                                         setIsIncome(e.target.value)
-
                                     }}
                                 >
                                     <MenuItem value={true as any}>Einkommen</MenuItem>
