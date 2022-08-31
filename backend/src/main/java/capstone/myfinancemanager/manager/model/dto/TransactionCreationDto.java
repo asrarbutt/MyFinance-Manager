@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @Document(collection = "locations")
 @Builder
-public class AddTransactionDto {
+public class TransactionCreationDto {
 
     @Email(message = "Email not valid")
     private String userEmail;

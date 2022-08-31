@@ -1,7 +1,7 @@
 package capstone.myfinancemanager.manager.controller;
 
 import capstone.myfinancemanager.manager.model.Transaction;
-import capstone.myfinancemanager.manager.model.dto.AddTransactionDto;
+import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.service.TransactionService;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class TransactionController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransactionDto> addTransaction(@RequestBody AddTransactionDto newTransactionCreation) {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto newTransactionCreation) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(buildNewTransactionDto(transactionService.addTransaction(newTransactionCreation)));

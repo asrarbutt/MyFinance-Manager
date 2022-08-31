@@ -3,7 +3,7 @@ package capstone.myfinancemanager.manager.service;
 
 import capstone.myfinancemanager.manager.model.RandomUUIDGenerator;
 import capstone.myfinancemanager.manager.model.Transaction;
-import capstone.myfinancemanager.manager.model.dto.AddTransactionDto;
+import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.respository.TransactionRepo;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ public class TransactionService {
                 .toList();
     }
 
-    public Transaction addTransaction(AddTransactionDto addNewTransactionDto) {
+    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto) {
 
         Transaction transactionCreated = Transaction.builder()
                 .id(randomUUIDGenerator.getRandomId())
