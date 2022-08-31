@@ -66,11 +66,8 @@ export default function AddTransaction(props: AddTransactionProps) {
             </Button>
             <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
-
                 <DialogContent>
-
                     <form onSubmit={submitHandler}>
-
                         <Box sx={{
                             display: "flex",
                             flexDirection: "column",
@@ -80,14 +77,25 @@ export default function AddTransaction(props: AddTransactionProps) {
                             marginTop: 6,
                             marginBottom: 7,
                             width: 900
-
                         }}>
-                            <TextField id="standard-basic" onChange={e => setDescription(e.target.value)}
-                                       label="Beschreibung"
-                                       variant="standard"/>
-                            <TextField id="standard-basic"
-                                       onChange={e => setAmount(stringToNumberWithDot(e.target.value))} label="Betrag"
-                                       variant="standard"/>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                fullWidth
+                                variant="standard"
+                                id="standard-basic"
+                                label="Beschreibung"
+                                onChange={e => setDescription(e.target.value)}
+                            />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                fullWidth
+                                variant="standard"
+                                id="standard-basic"
+                                label="Betrag"
+                                onChange={e => setAmount(stringToNumberWithDot(e.target.value))}
+                            />
 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
@@ -95,11 +103,9 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     value={date}
                                     onChange={(newValue) => {
                                         setDate(newValue);
-
                                     }}
                                     renderInput={(params) => <TextField
                                         {...params} />}
-
                                 />
                             </LocalizationProvider>
 
@@ -110,18 +116,14 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     id="category-select"
                                     value={category}
                                     label="Kategorie auswählen "
-
                                     onChange={e => {
                                         setCategory(e.target.value);
-
                                     }}
                                 >
                                     <MenuItem value={"Essen"}>Essen</MenuItem>
                                     <MenuItem value={"Miete"}>Miete</MenuItem>
                                     <MenuItem value={"Strom/Gas"}>Strom/Gas</MenuItem>
-
                                 </Select>
-
                             </FormControl>
 
                             <FormControl>
@@ -140,19 +142,18 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     <MenuItem value={true as any}>Einkommen</MenuItem>
                                     <MenuItem value={false as any}>Ausgabe</MenuItem>
                                 </Select>
-
                             </FormControl>
 
-                            <Button variant="contained" component="label" color="primary">
+                            <Button
+                                variant="contained"
+                                component="label"
+                                color="primary">
                                 {" "}
-                                <AddAPhotoIcon/> Bild hochladen
+                                <AddAPhotoIcon/> Bild Uploaden
                                 <input type="file" onChange={(e) => {
-
                                     if (e.target.files !== null) {
-
                                         setPictureId(URL.createObjectURL(e.target.files[0]))
                                     }
-
                                 }} hidden/>
                             </Button>
                             <DialogActions>
@@ -163,7 +164,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                         </Box>
                     </form>
                 </DialogContent>
-
             </Dialog>
         </div>
     );
