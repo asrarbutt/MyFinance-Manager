@@ -22,6 +22,8 @@ const StlyeEditIcon = styled(EditIcon)`
 type MyCardProps = {
 
     allTransaction: TransactionDto;
+    deleteTransaction: (id: string) => void;
+
 }
 
 export default function MyCard(props: MyCardProps) {
@@ -48,7 +50,7 @@ export default function MyCard(props: MyCardProps) {
 
                 <Box>
                     <IconButton>
-                        <StlyeDeleteIcon/>
+                        <StlyeDeleteIcon onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
                     </IconButton>
                     <IconButton>
                         <StlyeEditIcon/>
