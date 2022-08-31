@@ -6,7 +6,7 @@ import TransactionDto from "../model/TransactionDto";
 
 export default function MyCardList() {
 
-    const {getAllTransactions} = useContext(TransactionContext);
+    const {getAllTransactions, deleteTransaction} = useContext(TransactionContext);
 
     const [allTransactions, setAllTransactions] = useState<TransactionDto[]>([]);
 
@@ -27,7 +27,7 @@ export default function MyCardList() {
             {
                 allTransactions.length !== 0 ? (
                     allTransactions.map(t =>
-                        <MyCard allTransaction={t}/>
+                        <MyCard allTransaction={t} deleteTransaction={deleteTransaction}/>
                     )
                 ) : (<h1>Keine Transaktion vorhanden</h1>)
             }
