@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.*;
-import java.time.Instant;
-
 
 @Data
 @NoArgsConstructor
@@ -28,7 +26,7 @@ public class AddTransactionDto {
     private double amount;
 
     @NotNull(message = "Date is required")
-    private Instant transactionDate;
+    private Long transactionDate;
 
     @NotEmpty(message = "Category is required")
     private String category;
