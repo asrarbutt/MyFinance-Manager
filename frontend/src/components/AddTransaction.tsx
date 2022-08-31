@@ -151,7 +151,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     if (e.target.files !== null) {
 
                                         setPictureId(URL.createObjectURL(e.target.files[0]))
-                                        console.log(pictureId);
                                     }
 
                                 }} hidden/>
