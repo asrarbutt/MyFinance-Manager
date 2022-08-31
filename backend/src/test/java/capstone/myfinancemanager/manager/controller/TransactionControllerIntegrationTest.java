@@ -69,7 +69,7 @@ class TransactionControllerIntegrationTest {
                                     "userEmail": "a@a.com",
                                     "description": "5",
                                     "amount": 123.2,
-                                    "transactionDate": "+54632-06-13T14:48:33Z",
+                                    "transactionDate": "2022-08-30T13:33:02.913Z",
                                     "category": "Essen",
                                     "pictureId": "url",
                                     "isIncome": true
