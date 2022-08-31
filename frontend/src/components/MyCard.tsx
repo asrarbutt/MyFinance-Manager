@@ -43,7 +43,7 @@ export default function MyCard(props: MyCardProps) {
                 </Typography>
 
                 <Typography sx={{fontSize: 14}} color="text.secondary">
-                    {dateFromInstant(props.allTransaction.transactionDate, "de-AT")}
+                    {dateFromInstant(props.allTransaction.transactionDate, "de-DE")}
                 </Typography>
 
                 <Box>
