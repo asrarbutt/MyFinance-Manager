@@ -14,7 +14,7 @@ export default function TransactionProvider({children}: Param) {
         })
     }
 
-    const addTransaction = (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean) => {
+    const addTransaction = (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => {
 
         const newTransaction = {
 
@@ -24,6 +24,7 @@ export default function TransactionProvider({children}: Param) {
             "category": category,
             "transactionDate": transactionDate,
             "isIncome": isIncome,
+            "pictureId": pictureId,
         }
 
         return axios.post("/transactions", newTransaction)

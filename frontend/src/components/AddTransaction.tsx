@@ -3,8 +3,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-
-
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -24,7 +22,7 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 
 type AddTransactionProps = {
-    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean) => Promise<TransactionData>;
+    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => Promise<TransactionData>;
 }
 
 export default function AddTransaction(props: AddTransactionProps) {
@@ -33,6 +31,7 @@ export default function AddTransaction(props: AddTransactionProps) {
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
     const [category, setCategory] = useState<string>("");
+    const [pictureId, setPictureId] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
 
@@ -40,15 +39,13 @@ export default function AddTransaction(props: AddTransactionProps) {
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
-        props.addTransaction("asrar@gmailaaaaa.com", description, amount, category, convertDateToNumber(date), isIncome).then(() => {
+        props.addTransaction("asrar@gmailaaaaa.com", description, amount, category, convertDateToNumber(date), isIncome, pictureId).then(() => {
             toast.success("Transaktion hinzugefügt");
             setIsIncome(true);
             setDate(null);
             setCategory("");
             setDescription("");
             setAmount(0);
-
-
         })
             .catch(error => toast(error));
     }
@@ -98,7 +95,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     value={date}
                                     onChange={(newValue) => {
                                         setDate(newValue);
-                                        console.log(newValue)
 
                                     }}
                                     renderInput={(params) => <TextField
@@ -120,9 +116,9 @@ export default function AddTransaction(props: AddTransactionProps) {
 
                                     }}
                                 >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    <MenuItem value={"Essen"}>Essen</MenuItem>
+                                    <MenuItem value={"Miete"}>Miete</MenuItem>
+                                    <MenuItem value={"Strom/Gas"}>Strom/Gas</MenuItem>
 
                                 </Select>
 
@@ -139,7 +135,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     onChange={e => {
                                         setIsIncome(e.target.value as any)
 
-                                        console.log(e.target.value as any)
                                     }}
                                 >
                                     <MenuItem value={true as any}>Einkommen</MenuItem>
@@ -150,8 +145,16 @@ export default function AddTransaction(props: AddTransactionProps) {
 
                             <Button variant="contained" component="label" color="primary">
                                 {" "}
-                                <AddAPhotoIcon/> Upload a file
-                                <input type="file" hidden/>
+                                <AddAPhotoIcon/> Bild hochladen
+                                <input type="file" onChange={(e) => {
+
+                                    if (e.target.files !== null) {
+
+                                        setPictureId(URL.createObjectURL(e.target.files[0]))
+                                        console.log(pictureId);
+                                    }
+
+                                }} hidden/>
                             </Button>
                             <DialogActions>
                                 <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
