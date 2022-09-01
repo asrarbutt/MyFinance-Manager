@@ -1,5 +1,6 @@
 import axios from "axios";
 import TransactionContext from "./TransactionContext";
+import {toast} from "react-toastify";
 
 
 interface Param {
@@ -14,10 +15,15 @@ export default function TransactionProvider({children}: Param) {
         })
     }
 
-    const addTransaction = (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => {
+    const addTransaction = (userEmail: string,
+                            description: string,
+                            amount: number,
+                            category: string,
+                            transactionDate: number | null,
+                            isIncome: boolean,
+                            pictureId: string) => {
 
         const newTransaction = {
-
             "userEmail": userEmail,
             "description": description,
             "amount": amount,
@@ -29,14 +35,18 @@ export default function TransactionProvider({children}: Param) {
 
         return axios.post("/transactions", newTransaction)
             .then(response => response.data).then(getAllTransactions)
+    }
 
+    const deleteTransaction = (id: string) => {
+        return axios.delete(`/transactions/${id}`)
+            .then(getAllTransactions)
+            .then(() => toast.success(`Transaktion wurde gelöscht`))
+            .catch(error => toast.error(error.message))
     }
 
     return (
-
-        <TransactionContext.Provider value={{getAllTransactions, addTransaction}}>
+        <TransactionContext.Provider value={{getAllTransactions, addTransaction, deleteTransaction}}>
             {children}
         </TransactionContext.Provider>
     )
 }
-

@@ -31,8 +31,15 @@ public class TransactionController {
                 .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation)));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePlant(@PathVariable String id) {
+        boolean deleteSuccess = transactionService.deleteTransaction(id);
+        return new ResponseEntity<>(deleteSuccess ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
+    }
+
     public TransactionDto buildNewTransactionDto(Transaction transaction) {
         return TransactionDto.builder()
+                .id(transaction.getId())
                 .userEmail(transaction.getUserEmail())
                 .description(transaction.getDescription())
                 .amount(transaction.getAmount())
@@ -43,4 +50,6 @@ public class TransactionController {
                 .build();
 
     }
+
+
 }

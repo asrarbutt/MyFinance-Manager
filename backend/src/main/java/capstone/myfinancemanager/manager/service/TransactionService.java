@@ -26,6 +26,7 @@ public class TransactionService {
                 .stream()
                 .map(t ->
                         new TransactionDto(
+                                t.getId(),
                                 t.getUserEmail(),
                                 t.getDescription(),
                                 t.getAmount(),
@@ -50,5 +51,14 @@ public class TransactionService {
                 .build();
 
         return transactionRepo.save(transactionCreated);
+    }
+
+
+    public boolean deleteTransaction(String id) {
+        if (transactionRepo.existsById(id)) {
+            transactionRepo.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

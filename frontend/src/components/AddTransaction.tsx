@@ -14,14 +14,14 @@ import MenuItem from '@mui/material/MenuItem';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Select from '@mui/material/Select';
 import AddIcon from '@mui/icons-material/Add';
-import TransactionData from "../model/TransactionData";
+import TransactionCreationDto from "../model/TransactionCreationDto";
 import {toast} from "react-toastify";
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 
 type AddTransactionProps = {
-    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => Promise<TransactionData>;
+    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => Promise<TransactionCreationDto>;
 }
 
 export default function AddTransaction(props: AddTransactionProps) {
@@ -63,10 +63,8 @@ export default function AddTransaction(props: AddTransactionProps) {
             </Button>
             <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
-
                 <DialogContent>
                     <form onSubmit={submitHandler}>
-
                         <Box sx={{
                             display: "flex",
                             flexDirection: "column",
@@ -77,12 +75,24 @@ export default function AddTransaction(props: AddTransactionProps) {
                             marginBottom: 7,
                             width: 900
                         }}>
-                            <TextField id="standard-basic" onChange={e => setDescription(e.target.value)}
-                                       label="Beschreibung"
-                                       variant="standard"/>
-                            <TextField id="standard-basic"
-                                       onChange={e => setAmount(stringToNumberWithDot(e.target.value))} label="Betrag"
-                                       variant="standard"/>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                fullWidth
+                                variant="standard"
+                                id="standard-basic"
+                                label="Beschreibung"
+                                onChange={e => setDescription(e.target.value)}
+                            />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                fullWidth
+                                variant="standard"
+                                id="standard-basic"
+                                label="Betrag"
+                                onChange={e => setAmount(stringToNumberWithDot(e.target.value))}
+                            />
 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
@@ -90,7 +100,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     value={date}
                                     onChange={(newValue) => {
                                         setDate(newValue);
-
                                     }}
                                     renderInput={(params) => <TextField
                                         {...params} />}
@@ -104,7 +113,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     id="category-select"
                                     value={category}
                                     label="Kategorie auswählen "
-
                                     onChange={e => {
                                         setCategory(e.target.value);
                                     }}
@@ -112,7 +120,6 @@ export default function AddTransaction(props: AddTransactionProps) {
                                     <MenuItem value={"Essen"}>Essen</MenuItem>
                                     <MenuItem value={"Miete"}>Miete</MenuItem>
                                     <MenuItem value={"Strom/Gas"}>Strom/Gas</MenuItem>
-
                                 </Select>
                             </FormControl>
 
@@ -133,11 +140,13 @@ export default function AddTransaction(props: AddTransactionProps) {
                                 </Select>
                             </FormControl>
 
-                            <Button variant="contained" component="label" color="primary">
+                            <Button
+                                variant="contained"
+                                component="label"
+                                color="primary">
                                 {" "}
-                                <AddAPhotoIcon/> Bild hochladen
+                                <AddAPhotoIcon/> Bild Uploaden
                                 <input type="file" onChange={(e) => {
-
                                     if (e.target.files !== null) {
                                         setPictureId(URL.createObjectURL(e.target.files[0]))
                                     }

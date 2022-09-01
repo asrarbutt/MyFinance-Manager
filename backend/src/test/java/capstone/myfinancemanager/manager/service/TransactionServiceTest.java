@@ -12,8 +12,7 @@ import java.time.Instant;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class TransactionServiceTest {
@@ -24,7 +23,8 @@ class TransactionServiceTest {
     private final Instant testDate = Instant.parse("2022-08-23T09:22:41.255023Z");
     private final String randomTestId = "1";
 
-    Transaction transaction1 = Transaction.builder().id(randomTestId)
+    Transaction transaction1 = Transaction.builder()
+            .id(randomTestId)
             .description("Essen")
             .amount(25.0)
             .transactionDate(testDate)
@@ -32,7 +32,8 @@ class TransactionServiceTest {
             .userEmail("test@test.com")
             .isIncome(false)
             .pictureId("url").build();
-    Transaction transaction2 = Transaction.builder().id(randomTestId)
+    Transaction transaction2 = Transaction.builder()
+            .id(randomTestId)
             .description("Tanken")
             .amount(27.0)
             .transactionDate(testDate)
@@ -42,6 +43,7 @@ class TransactionServiceTest {
             .pictureId("url").build();
 
     TransactionDto transactionDto1 = TransactionDto.builder()
+            .id(randomTestId)
             .userEmail("test@test.com")
             .description("Tanken")
             .amount(27.0)
@@ -52,6 +54,7 @@ class TransactionServiceTest {
             .build();
 
     TransactionDto transactionDto2 = TransactionDto.builder()
+            .id(randomTestId)
             .userEmail("test@test.com")
             .description("Essen")
             .amount(25.0)
@@ -83,4 +86,35 @@ class TransactionServiceTest {
         Transaction actual = transactionRepo.save(transaction1);
         Assertions.assertEquals(transaction1, actual);
     }
+
+
+    @Test
+    void deleteTransaction() {
+
+        //when
+        when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
+        when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
+        when(transactionRepo.existsById(transactionDto1.getId())).thenReturn(true);
+
+        doNothing().when(transactionRepo).deleteById(transactionDto1.getId());
+        transactionService.deleteTransaction(transactionDto1.getId());
+
+        verify(transactionRepo).deleteById(transactionDto1.getId());
+    }
+
+    @Test
+    void deleteTransactionNotExistsTest() {
+
+        //when
+        when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
+        when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
+        when(transactionRepo.existsById(transactionDto1.getId())).thenReturn(false);
+
+        doNothing().when(transactionRepo).deleteById(transactionDto1.getId());
+
+        transactionService.deleteTransaction(transactionDto1.getId());
+        verify(transactionRepo, times(0)).deleteById(transactionDto1.getId());
+    }
+
+
 }
