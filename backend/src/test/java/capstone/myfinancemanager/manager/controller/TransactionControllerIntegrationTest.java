@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
+import java.nio.charset.StandardCharsets;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -100,11 +102,12 @@ class TransactionControllerIntegrationTest {
                                     "isIncome": true
                                 }
                         """)
-        ).andReturn().getResponse().getContentAsString();
+        ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+        System.out.println(saveResult);
 
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
         String id = saveResultTransaction.getId();
-        System.out.println(saveResultTransaction);
+
 
         mockMvc.perform(delete("http://localhost:8080/transactions/" + id))
                 .andExpect(status().is(204));
