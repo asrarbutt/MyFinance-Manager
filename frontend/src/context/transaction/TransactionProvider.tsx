@@ -1,6 +1,7 @@
 import axios from "axios";
 import TransactionContext from "./TransactionContext";
 import {toast} from "react-toastify";
+import TransactionDto from "../../model/TransactionDto";
 
 
 interface Param {
@@ -44,8 +45,24 @@ export default function TransactionProvider({children}: Param) {
             .catch(error => toast.error(error.message))
     }
 
+    const updateTransaction = (transactionToUpdate: TransactionDto) => {
+
+        const updatedTransaction = {
+            "userEmail": transactionToUpdate.userEmail,
+            "description": transactionToUpdate.description,
+            "amount": transactionToUpdate.amount,
+            "category": transactionToUpdate.category,
+            "transactionDate": transactionToUpdate.transactionDate,
+            "isIncome": transactionToUpdate.isIncome,
+            "pictureId": transactionToUpdate.pictureId,
+        }
+
+        return axios.put(`/api/plants/${transactionToUpdate.id}`, updatedTransaction)
+            .then(getAllTransactions)
+    }
+
     return (
-        <TransactionContext.Provider value={{getAllTransactions, addTransaction, deleteTransaction}}>
+        <TransactionContext.Provider value={{getAllTransactions, addTransaction, deleteTransaction, updateTransaction}}>
             {children}
         </TransactionContext.Provider>
     )
