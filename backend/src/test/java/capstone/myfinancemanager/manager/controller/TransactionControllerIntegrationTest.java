@@ -1,7 +1,9 @@
 package capstone.myfinancemanager.manager.controller;
 
 import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -103,7 +105,7 @@ class TransactionControllerIntegrationTest {
                                 }
                         """)
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
-        System.out.println(saveResult);
+
 
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
         String id = saveResultTransaction.getId();
@@ -127,5 +129,92 @@ class TransactionControllerIntegrationTest {
         mockMvc.perform(delete("/transactions/" + id))
                 .andExpect(status().is(404));
     }
+
+
+    @Test
+    @DirtiesContext
+    void updateTransactionTest() throws Exception {
+        String saveResult = mockMvc.perform(post(
+                "/transactions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                           {
+                                    "userEmail": "a@a.com",
+                                    "description": "5",
+                                    "amount": 123.2,
+                                    "transactionDate": "1661866382913",
+                                    "category": "Essen",
+                                    "pictureId": "url",
+                                    "isIncome": true
+                                }
+                        """)
+        ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
+        String id = saveResultTransaction.getId();
+
+        TransactionCreationDto transactionCreationDto = TransactionCreationDto.builder()
+                .userEmail(saveResultTransaction.getUserEmail())
+                .description("Heute ist sehr schön")
+                .amount(159)
+                .transactionDate(Long.parseLong("1661866382913"))
+                .category("Tanken")
+                .pictureId("url2")
+                .isIncome(false)
+                .build();
+
+        String updatedResult = mockMvc.perform(
+                        MockMvcRequestBuilders.put("/transactions/" + saveResultTransaction.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(transactionCreationDto))
+                )
+                .andExpect(status().is(201))
+                .andReturn().getResponse().getContentAsString();
+
+        Transaction actualPlant = objectMapper.readValue(updatedResult, Transaction.class);
+        Assertions.assertEquals(saveResultTransaction.getId(), actualPlant.getId());
+    }
+
+
+    @Test
+    @DirtiesContext
+    void updateTransactionDoNotExistTest() throws Exception {
+        String saveResult = mockMvc.perform(post(
+                "/transactions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                           {
+                                    "userEmail": "a@a.com",
+                                    "description": "5",
+                                    "amount": 123.2,
+                                    "transactionDate": "1661866382913",
+                                    "category": "Essen",
+                                    "pictureId": "url",
+                                    "isIncome": true
+                                }
+                        """)
+        ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
+        String id = saveResultTransaction.getId();
+
+        TransactionCreationDto transactionCreationDto = TransactionCreationDto.builder()
+                .userEmail(saveResultTransaction.getUserEmail())
+                .description("Heute ist sehr schön")
+                .amount(159)
+                .transactionDate(Long.parseLong("1661866382913"))
+                .category("Tanken")
+                .pictureId("url2")
+                .isIncome(false)
+                .build();
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/transactions/" + "1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(transactionCreationDto))
+                )
+                .andExpect(status().is(403));
+    }
+
 
 }

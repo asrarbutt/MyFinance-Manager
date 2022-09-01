@@ -37,6 +37,15 @@ public class TransactionController {
         return new ResponseEntity<>(deleteSuccess ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<TransactionDto> updateTransaction(@PathVariable String id, @RequestBody TransactionCreationDto transactionUpdate) {
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(buildNewTransactionDto(transactionService.updateTransaction(id, transactionUpdate)));
+
+    }
+
     public TransactionDto buildNewTransactionDto(Transaction transaction) {
         return TransactionDto.builder()
                 .id(transaction.getId())

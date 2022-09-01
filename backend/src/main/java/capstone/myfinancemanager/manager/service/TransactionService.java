@@ -7,7 +7,9 @@ import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.respository.TransactionRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -60,5 +62,20 @@ public class TransactionService {
             return true;
         }
         return false;
+    }
+
+
+    public Transaction updateTransaction(String id, TransactionCreationDto transactionUpdate) {
+
+        Transaction transactionToUpdate = transactionRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
+
+        transactionToUpdate.setDescription(transactionUpdate.getDescription());
+        transactionToUpdate.setAmount(transactionUpdate.getAmount());
+        transactionToUpdate.setTransactionDate(Instant.ofEpochMilli(transactionUpdate.getTransactionDate()));
+        transactionToUpdate.setCategory(transactionUpdate.getCategory());
+        transactionToUpdate.setIsIncome(transactionUpdate.getIsIncome());
+        transactionToUpdate.setPictureId(transactionUpdate.getPictureId());
+
+        return transactionRepo.save(transactionToUpdate);
     }
 }
