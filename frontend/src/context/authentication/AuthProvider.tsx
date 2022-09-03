@@ -11,6 +11,7 @@ export default function AuthProvider({children}: Param) {
 
     const [loggedInUser, setLoggedInUser] = useState<string>("anonymousUser");
 
+
     const register = (email: string, name: string, password: string, repeatPassword: string) => {
         const newUser: UserRegisterData = {
             "email": email,
@@ -41,10 +42,9 @@ export default function AuthProvider({children}: Param) {
             })
     }
 
-    const userLoggedIn = loggedInUser;
 
     return (
-        <AuthContext.Provider value={{register, login, logout, userLoggedIn}}>
+        <AuthContext.Provider value={{register, login, logout, loggedInUser, setLoggedInUser}}>
 
             {children}
         </AuthContext.Provider>
