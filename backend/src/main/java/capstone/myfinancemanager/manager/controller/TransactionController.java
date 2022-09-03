@@ -1,14 +1,19 @@
 package capstone.myfinancemanager.manager.controller;
 
+import capstone.myfinancemanager.manager.exceptions.UserNotLoggedIn;
 import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.service.TransactionService;
+import capstone.myfinancemanager.manager.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,6 +22,7 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionService transactionService;
+    private final UserService userService;
 
     @GetMapping
     public List<TransactionDto> getAllTransactions() {
@@ -26,9 +32,13 @@ public class TransactionController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
     public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
+
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUsername(principal.getName()).orElseThrow(() -> new UserNotLoggedIn("Bitte vorher einloggen"));
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation)));
+                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation, user.getEmail())));
     }
 
     @DeleteMapping("/{id}")
@@ -37,7 +47,7 @@ public class TransactionController {
         return new ResponseEntity<>(deleteSuccess ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<TransactionDto> updateTransaction(@PathVariable String id, @RequestBody TransactionCreationDto transactionUpdate) {
 
         return ResponseEntity

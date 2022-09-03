@@ -10,6 +10,8 @@ import capstone.myfinancemanager.manager.respository.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -39,6 +41,10 @@ public class UserService {
         user.setUserRegistrationDate(timestamp.now());
 
         return userRepo.save(user);
+    }
+
+    public Optional<User> findUserByUsername(String username) {
+        return userRepo.findById(username);
     }
 }
 

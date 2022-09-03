@@ -21,6 +21,7 @@ public class TransactionService {
     private final TransactionRepo transactionRepo;
     private final RandomUUIDGenerator randomUUIDGenerator;
 
+
     public List<TransactionDto> getAllTransactions() {
 
 
@@ -39,11 +40,11 @@ public class TransactionService {
                 .toList();
     }
 
-    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto) {
+    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto, String userEmail) {
 
         Transaction transactionCreated = Transaction.builder()
                 .id(randomUUIDGenerator.getRandomId())
-                .userEmail(addNewTransactionDto.getUserEmail())
+                .userEmail(userEmail)
                 .description(addNewTransactionDto.getDescription())
                 .amount(addNewTransactionDto.getAmount())
                 .transactionDate(Instant.ofEpochMilli(addNewTransactionDto.getTransactionDate()))
