@@ -164,7 +164,7 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         String updatedResult = mockMvc.perform(
-                        MockMvcRequestBuilders.put("/transactions/" + saveResultTransaction.getId())
+                        MockMvcRequestBuilders.put("/transactions/update/" + saveResultTransaction.getId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
@@ -209,7 +209,7 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/transactions/" + "1")
+                        MockMvcRequestBuilders.put("/transactions/update/" + "1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
