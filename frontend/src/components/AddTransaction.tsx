@@ -1,4 +1,4 @@
-import React, {FormEvent, useContext, useState} from 'react';
+import React, {FormEvent, useContext, useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {LocalizationProvider} from "@mui/x-date-pickers";
@@ -19,6 +19,7 @@ import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import axios from "axios";
 import TransactionContext from "../context/transaction/TransactionContext";
+import TransactionCreationDto from "../model/TransactionCreationDto";
 
 
 export default function AddTransaction() {
@@ -32,30 +33,30 @@ export default function AddTransaction() {
     const [pictureId, setPictureId] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
+    const [addNewtransaction, setAddNewtransaction] = useState<TransactionCreationDto>();
+
+    useEffect(() => {
+        setAddNewtransaction({
+            "description": description,
+            "amount": amount,
+            "category": category,
+            "transactionDate": convertDateToNumber(date),
+            "isIncome": isIncome,
+            "pictureId": pictureId,
+        });
+
+    }, [date, description, amount, isIncome, pictureId, category])
+
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
-        addTransaction(description, amount, category, convertDateToNumber(date), isIncome, pictureId);
+        if (addNewtransaction)
+            addTransaction(addNewtransaction);
     }
 
-    const addTransaction = (
-        description: string,
-        amount: number,
-        category: string,
-        transactionDate: number | null,
-        isIncome: boolean,
-        pictureId: string) => {
+    const addTransaction = (newTransaction: TransactionCreationDto) => {
 
-        const newTransaction = {
-
-            "description": description,
-            "amount": amount,
-            "category": category,
-            "transactionDate": transactionDate,
-            "isIncome": isIncome,
-            "pictureId": pictureId,
-        }
 
         return axios.post("/transactions", newTransaction)
             .then(response => response.data)
