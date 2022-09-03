@@ -3,13 +3,12 @@ import {useContext} from "react";
 import AuthContext from "../context/authentication/AuthContext";
 
 export default function Header() {
-    const {userLoggedIn, logout} = useContext(AuthContext);
-
+    const {loggedInUser, logout} = useContext(AuthContext);
 
     return (
 
         <header>
-            <MyNavBar loggedInUser={userLoggedIn} logout={logout}/>
+            <MyNavBar loggedInUser={loggedInUser} logout={logout}/>
         </header>
     )
 
