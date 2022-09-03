@@ -1,14 +1,13 @@
-import {createContext} from "react";
-import TransactionCreationDto from "../../model/TransactionCreationDto";
+import React, {createContext} from "react";
 import TransactionDto from "../../model/TransactionDto";
 
 
 export interface IContext {
-    getAllTransactions: () => Promise<TransactionDto[]>;
-    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => Promise<TransactionCreationDto>;
-    deleteTransaction: (id: string) => void;
-    updateTransaction: (transactionToUpdate: TransactionDto) => Promise<void>;
 
+    deleteTransaction: (id: string) => void;
+    setAllTransaction: React.Dispatch<React.SetStateAction<TransactionDto[]>>;
+    allTransaction: TransactionDto[];
+    getAllTransactions: () => void;
 }
 
 export const TransactionContext = createContext({} as IContext);
