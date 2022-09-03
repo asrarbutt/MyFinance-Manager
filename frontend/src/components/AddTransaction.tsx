@@ -1,4 +1,4 @@
-import React, {FormEvent, useState} from 'react';
+import React, {FormEvent, useContext, useState} from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {LocalizationProvider} from "@mui/x-date-pickers";
@@ -14,17 +14,16 @@ import MenuItem from '@mui/material/MenuItem';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Select from '@mui/material/Select';
 import AddIcon from '@mui/icons-material/Add';
-import TransactionCreationDto from "../model/TransactionCreationDto";
 import {toast} from "react-toastify";
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
+import axios from "axios";
+import TransactionContext from "../context/transaction/TransactionContext";
 
 
-type AddTransactionProps = {
-    addTransaction: (userEmail: string, description: string, amount: number, category: string, transactionDate: number | null, isIncome: boolean, pictureId: string) => Promise<TransactionCreationDto>;
-}
+export default function AddTransaction() {
 
-export default function AddTransaction(props: AddTransactionProps) {
+    const {setAllTransaction, allTransaction} = useContext(TransactionContext);
 
     const [isIncome, setIsIncome] = useState<boolean>(true);
     const [open, setOpen] = useState(false);
@@ -37,17 +36,42 @@ export default function AddTransaction(props: AddTransactionProps) {
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
-        props.addTransaction("asrar@gmailaaaaa.com", description, amount, category, convertDateToNumber(date), isIncome, pictureId).then(() => {
-            toast.success("Transaktion hinzugefügt");
-            setIsIncome(true);
-            setDate(null);
-            setCategory("");
-            setDescription("");
-            setAmount(0);
-        })
-            .catch(error => toast(error));
+        addTransaction(description, amount, category, convertDateToNumber(date), isIncome, pictureId);
     }
 
+    const addTransaction = (
+        description: string,
+        amount: number,
+        category: string,
+        transactionDate: number | null,
+        isIncome: boolean,
+        pictureId: string) => {
+
+        const newTransaction = {
+
+            "description": description,
+            "amount": amount,
+            "category": category,
+            "transactionDate": transactionDate,
+            "isIncome": isIncome,
+            "pictureId": pictureId,
+        }
+
+        return axios.post("/transactions", newTransaction)
+            .then(response => response.data)
+            .then(data => {
+                setAllTransaction([...allTransaction, data]);
+            })
+            .then(() => {
+                toast.success("Transaktion hinzugefügt");
+                setIsIncome(true);
+                setDate(null);
+                setCategory("");
+                setDescription("");
+                setAmount(0);
+            })
+            .catch(error => toast(error));
+    }
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -69,11 +93,11 @@ export default function AddTransaction(props: AddTransactionProps) {
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "space-between",
-                            height: "400px",
+                            height: "30rem",
                             alignItems: "space-between",
                             marginTop: 6,
                             marginBottom: 7,
-                            width: 900
+                            width: 500
                         }}>
                             <TextField
                                 autoFocus
@@ -146,11 +170,13 @@ export default function AddTransaction(props: AddTransactionProps) {
                                 color="primary">
                                 {" "}
                                 <AddAPhotoIcon/> Bild Uploaden
-                                <input type="file" onChange={(e) => {
-                                    if (e.target.files !== null) {
-                                        setPictureId(URL.createObjectURL(e.target.files[0]))
-                                    }
-                                }} hidden/>
+                                <input
+                                    type="file"
+                                    onChange={(e) => {
+                                        if (e.target.files !== null) {
+                                            setPictureId(URL.createObjectURL(e.target.files[0]))
+                                        }
+                                    }} hidden/>
                             </Button>
                             <DialogActions>
                                 <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
