@@ -8,6 +8,8 @@ import {IconButton, Typography} from "@mui/material";
 import {Box, styled} from "@mui/system";
 import {dateFromInstant} from "../util/Util";
 import TransactionDto from "../model/TransactionDto";
+import UpdateTransaction from "./UpdateTransaction";
+
 
 const StlyeDeleteIcon = styled(DeleteForeverIcon)`
 
@@ -30,7 +32,7 @@ export default function MyCard(props: MyCardProps) {
 
     return (
         <Card sx={{width: 900, height: '20', minWidth: 245, ml: 5, mr: 5, borderRadius: '15px'}}>
-            <CardContent sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
+            <CardContent sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
                 <Typography sx={{fontSize: 14}} color="text.secondary">
                     {props.allTransaction.description}
@@ -53,7 +55,7 @@ export default function MyCard(props: MyCardProps) {
                         <StlyeDeleteIcon onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
                     </IconButton>
                     <IconButton>
-                        <StlyeEditIcon/>
+                        <UpdateTransaction allTransaction={props.allTransaction}/>
                     </IconButton>
                 </Box>
             </CardContent>
