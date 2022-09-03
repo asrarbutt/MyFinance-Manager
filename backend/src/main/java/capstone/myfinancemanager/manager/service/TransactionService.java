@@ -42,6 +42,7 @@ public class TransactionService {
 
     public Transaction addTransaction(TransactionCreationDto addNewTransactionDto, String userEmail) {
 
+
         Transaction transactionCreated = Transaction.builder()
                 .id(randomUUIDGenerator.getRandomId())
                 .userEmail(userEmail)

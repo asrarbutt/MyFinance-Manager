@@ -2,7 +2,6 @@ package capstone.myfinancemanager.manager.controller;
 
 import capstone.myfinancemanager.manager.exceptions.UserNotLoggedIn;
 import capstone.myfinancemanager.manager.model.Transaction;
-import capstone.myfinancemanager.manager.model.User;
 import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.service.TransactionService;
@@ -34,11 +33,15 @@ public class TransactionController {
     public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
 
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUsername(principal.getName()).orElseThrow(() -> new UserNotLoggedIn("Bitte vorher einloggen"));
+        if (principal.getName() == null) {
+            throw new UserNotLoggedIn("Bitte voher einloggen");
+
+        }
+        //  User user = userService.findUserByUsername(principal.getName()).orElseThrow(() -> new UserNotLoggedIn("Bitte vorher einloggen"));
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation, user.getEmail())));
+                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation, principal.getName())));
     }
 
     @DeleteMapping("/{id}")
