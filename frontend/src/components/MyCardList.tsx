@@ -3,6 +3,8 @@ import {useContext, useEffect, useState} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
 import {toast} from "react-toastify";
 import TransactionDto from "../model/TransactionDto";
+import {Box} from "@mui/system";
+
 
 export default function MyCardList() {
 
@@ -20,10 +22,12 @@ export default function MyCardList() {
                 toast.error(error.message)
             });
 
-    }, [allTransactions])// eslint-disable-line
+    }, [])// eslint-disable-line
 
     return (
-        <>
+        <Box>
+            <h1>Alle Transaktionen</h1>
+
             {
                 allTransactions.length !== 0 ? (
                     allTransactions.map(t =>
@@ -33,7 +37,7 @@ export default function MyCardList() {
             }
 
 
-        </>
+        </Box>
 
     );
 }
