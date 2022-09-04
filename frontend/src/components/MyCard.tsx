@@ -1,11 +1,10 @@
 import * as React from 'react';
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import "./MyCard.css";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import {IconButton, Typography} from "@mui/material";
-import {Box, styled} from "@mui/system";
+import {styled} from "@mui/system";
 import {dateFromInstant} from "../util/Util";
 import TransactionDto from "../model/TransactionDto";
 
@@ -29,35 +28,31 @@ type MyCardProps = {
 export default function MyCard(props: MyCardProps) {
 
     return (
-        <Card sx={{width: 900, height: '20', minWidth: 245, ml: 5, mr: 5, borderRadius: '15px'}}>
-            <CardContent sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
+        <div style={{display: "flex", justifyContent: "center", alignContent: "center", maxWidth: "50rem"}}>
+            <div className={`myCard-container ${props.allTransaction.isIncome ? "myCard-isIncome" : "myCard-expanse"}`}>
+                <div className="myCard-content">
+                    <div>
+                        <h1> {props.allTransaction.description}</h1>
+                        <h3>{props.allTransaction.category}</h3>
+                        <h3>{dateFromInstant(props.allTransaction.transactionDate, "de-DE")}</h3>
+                    </div>
 
-                <Typography sx={{fontSize: 14}} color="text.secondary">
-                    {props.allTransaction.description}
-                </Typography>
+                    <div className="myCard-amount">
+                        <h1>{props.allTransaction.amount} €</h1>
+                    </div>
+                </div>
 
-                <Typography sx={{fontSize: 14}} color="text.secondary">
-                    {props.allTransaction.amount}
-                </Typography>
+                <div className="myCard-actions">
 
-                <Typography sx={{fontSize: 14}} color="text.secondary">
-                    {props.allTransaction.category}
-                </Typography>
-
-                <Typography sx={{fontSize: 14}} color="text.secondary">
-                    {dateFromInstant(props.allTransaction.transactionDate, "de-DE")}
-                </Typography>
-
-                <Box>
                     <IconButton>
                         <StlyeDeleteIcon onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
                     </IconButton>
                     <IconButton>
                         <StlyeEditIcon/>
                     </IconButton>
-                </Box>
-            </CardContent>
-
-        </Card>
+                    <Typography color="third">dasd</Typography>
+                </div>
+            </div>
+        </div>
     );
 }
