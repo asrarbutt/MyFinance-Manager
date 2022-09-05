@@ -188,9 +188,9 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                 {" "}
                                 <AddAPhotoIcon/> Bild Uploaden
                                 <input type="file"
-
                                        name={"pictureId"}
                                        onChange={(e) => {
+
                                            if (e.target.files !== null) {
                                                setPictureId(URL.createObjectURL(e.target.files[0]))
                                            }

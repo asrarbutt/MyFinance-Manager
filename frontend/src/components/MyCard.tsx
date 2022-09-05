@@ -37,7 +37,6 @@ export default function MyCard(props: MyCardProps) {
                 <Typography sx={{fontSize: 14}} color="text.secondary">
                     {props.allTransaction.description}
                 </Typography>
-
                 <Typography sx={{fontSize: 14}} color="text.secondary">
                     {props.allTransaction.amount}
                 </Typography>
@@ -61,5 +60,6 @@ export default function MyCard(props: MyCardProps) {
             </CardContent>
 
         </Card>
+
     );
 }
