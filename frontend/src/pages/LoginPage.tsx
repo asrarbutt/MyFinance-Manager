@@ -16,6 +16,7 @@ import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TransactionContext from "../context/transaction/TransactionContext";
+import {useTheme} from "@mui/material/styles";
 
 
 export default function LoginPage() {
@@ -25,7 +26,7 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
+    const theme = useTheme();
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -57,7 +58,7 @@ export default function LoginPage() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                <Avatar sx={{m: 1, background: theme.palette.linkButtonColor}}>
                     <LockOutlinedIcon fontSize='large'/>
                 </Avatar>
                 <Typography component="h1" variant="h3">
@@ -105,11 +106,8 @@ export default function LoginPage() {
                         </Typography>
                     </Button>
                     <Grid item>
-
                         <Link to="/auth/register">{"Don't have an account? Sign Up"}</Link>
                     </Grid>
-
-
                 </Box>
             </Box>
 
