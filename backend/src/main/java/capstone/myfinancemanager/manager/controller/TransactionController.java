@@ -25,7 +25,11 @@ public class TransactionController {
 
     @GetMapping
     public List<TransactionDto> getAllTransactions() {
-        return transactionService.getAllTransactions();
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        if (principal.getName() == null) {
+            throw new UserNotLoggedIn("Bitte voher einloggen");
+        }
+        return transactionService.getAllTransactions(principal.getName());
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)

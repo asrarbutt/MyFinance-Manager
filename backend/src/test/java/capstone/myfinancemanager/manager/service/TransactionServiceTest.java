@@ -92,7 +92,7 @@ class TransactionServiceTest {
         when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
         when(transactionRepo.findAll()).thenReturn(List.of(transaction1, transaction2));
-        List<TransactionDto> actual = transactionService.getAllTransactions();
+        List<TransactionDto> actual = transactionService.getAllTransactions(transactionDto1.getUserEmail());
 
         //then
         Assertions.assertEquals(actual.get(0).getUserEmail(), transaction2.getUserEmail());
