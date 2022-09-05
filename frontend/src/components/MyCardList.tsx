@@ -19,7 +19,6 @@ export default function MyCardList() {
                 ) : (<h1>Keine Transaktion vorhanden</h1>)
             }
 
-
         </Box>
 
     );

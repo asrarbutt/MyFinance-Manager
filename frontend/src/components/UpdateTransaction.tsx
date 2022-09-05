@@ -188,18 +188,18 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                 {" "}
                                 <AddAPhotoIcon/> Bild Uploaden
                                 <input type="file"
-
                                        name={"pictureId"}
                                        onChange={(e) => {
+
                                            if (e.target.files !== null) {
                                                setPictureId(URL.createObjectURL(e.target.files[0]))
                                            }
                                        }} hidden/>
                             </Button>
                             <DialogActions>
-                                <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
+                                <Button color='warning' variant="contained" onClick={handleClose}>Zurück</Button>
                                 <Button variant='contained' color="success" type="submit"
-                                        onClick={handleClose}>Erstellen</Button>
+                                        onClick={handleClose}>Updaten</Button>
                             </DialogActions>
                         </Box>
                     </form>
