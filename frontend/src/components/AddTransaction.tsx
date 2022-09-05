@@ -168,7 +168,7 @@ export default function AddTransaction() {
                             <Button
                                 variant="contained"
                                 component="label"
-                                color="primary">
+                                color="secondary">
                                 {" "}
                                 <AddAPhotoIcon/> Bild Uploaden
                                 <input
@@ -182,7 +182,7 @@ export default function AddTransaction() {
                             <DialogActions>
                                 <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
                                 <Button variant='contained' color="success" type="submit"
-                                        onClick={handleClose}>Erstellen</Button>
+                                        onClick={handleClose}>Hinzufügen</Button>
                             </DialogActions>
                         </Box>
                     </form>
