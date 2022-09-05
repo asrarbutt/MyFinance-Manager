@@ -197,9 +197,9 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                        }} hidden/>
                             </Button>
                             <DialogActions>
-                                <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
+                                <Button color='warning' variant="contained" onClick={handleClose}>Zurück</Button>
                                 <Button variant='contained' color="success" type="submit"
-                                        onClick={handleClose}>Erstellen</Button>
+                                        onClick={handleClose}>Updaten</Button>
                             </DialogActions>
                         </Box>
                     </form>
