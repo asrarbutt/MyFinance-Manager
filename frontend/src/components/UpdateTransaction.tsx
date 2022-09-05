@@ -74,7 +74,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
     }
 
     const updateTransaction = (editTransaction: TransactionCreationDto, id: string) => {
-        axios.put(`/transactions/update/${id}`, editTransaction).then(() => {
+        axios.put(`/api/transactions/update/${id}`, editTransaction).then(() => {
             toast.success("Transaktion erfolgreich geändert");
             getAllTransactions();
         })
