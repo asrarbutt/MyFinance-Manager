@@ -1,12 +1,11 @@
 
 .signUp {
-
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 100vh;
-    margin-top: 5rem;
+    max-width: 500px;
 
 }
 
@@ -15,13 +14,10 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
-
     min-height: 80%;
     min-width: 80%;
-
 }
 
 .signUp-form * {
     margin: 0.5rem;
 }
-
