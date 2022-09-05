@@ -35,9 +35,7 @@ public class TransactionController {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         if (principal.getName() == null) {
             throw new UserNotLoggedIn("Bitte voher einloggen");
-
         }
-        //  User user = userService.findUserByUsername(principal.getName()).orElseThrow(() -> new UserNotLoggedIn("Bitte vorher einloggen"));
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
