@@ -61,7 +61,7 @@ export default function AddTransaction(props: AddTransactionProps) {
             <Button variant="contained" onClick={handleClickOpen}>
                 <AddIcon/> Transaktion
             </Button>
-            <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
+            <Dialog maxWidth={'md'} open={open} onClose={handleClose}>
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
                 <DialogContent>
                     <form onSubmit={submitHandler}>
@@ -73,7 +73,7 @@ export default function AddTransaction(props: AddTransactionProps) {
                             alignItems: "space-between",
                             marginTop: 6,
                             marginBottom: 7,
-                            width: 900
+                            width: 600
                         }}>
                             <TextField
                                 autoFocus
