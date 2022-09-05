@@ -15,11 +15,13 @@ import AuthContext from "../context/authentication/AuthContext";
 import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import TransactionContext from "../context/transaction/TransactionContext";
 
 
 export default function LoginPage() {
 
     const {login} = useContext(AuthContext);
+    const {getAllTransactions} = useContext(TransactionContext);
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -28,7 +30,6 @@ export default function LoginPage() {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-
         if (username === "" || password === "") {
             toast.error("Please enter Username and Password")
         } else {
@@ -36,7 +37,9 @@ export default function LoginPage() {
                 setPassword("");
                 setUsername("");
                 toast.success("Erfolgreich eingeloggt!")
+                getAllTransactions();
                 navigate("/home")
+
             }).catch(error => {
                 toast.error(error.message)
             })
