@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router-dom";
-
+import {Button} from "@mui/material";
 
 type MyNavBarProps = {
     loggedInUser: string;
@@ -20,7 +20,6 @@ type MyNavBarProps = {
 }
 
 const MyNavBar = (props: MyNavBarProps) => {
-
     const navigate = useNavigate();
 
 
@@ -117,8 +116,8 @@ const MyNavBar = (props: MyNavBarProps) => {
                             <MenuItem onClick={goToRegister}>
 
                                 <Typography textAlign="center">Registrieren</Typography>
-                            </MenuItem>
 
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
@@ -140,14 +139,27 @@ const MyNavBar = (props: MyNavBarProps) => {
                     >
                         MyFinance-Manager
                     </Typography>
-                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}></Box>
+                    <Box sx={{flexGrow: 1, justifyContent: 'center', display: {xs: 'none', md: 'flex'}}}>
+                        <Button
+                            onClick={goToLogin}
+                            sx={{my: 2, color: 'white', display: 'block'}}
+                        >Login
+                        </Button>
+                        <Button
+
+                            onClick={goToRegister}
+                            sx={{my: 2, color: 'white', display: 'block'}}
+                        > Registrieren
+                        </Button>
+                    </Box>
 
                     {
                         props.loggedInUser === "anonymousUser" ? (
-                                <MenuItem onClick={goToLogin}>
-
-                                    <Typography textAlign="center">login</Typography>
-                                </MenuItem>
+                                <Button
+                                    onClick={goToLogin}
+                                    sx={{my: 2, color: 'white', display: 'block'}}
+                                >Login
+                                </Button>
                             ) :
                             (
                                 <Box sx={{flexGrow: 0}}>
@@ -176,12 +188,9 @@ const MyNavBar = (props: MyNavBarProps) => {
 
                                             <Typography textAlign="center">Logout</Typography>
                                         </MenuItem>
-
-
                                     </Menu>
                                 </Box>
-                            )
-                    }
+                            )}
                 </Toolbar>
             </Container>
         </AppBar>
