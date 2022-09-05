@@ -18,7 +18,7 @@ export default function TransactionProvider({children}: Param) {
     }, [])
 
     const getAllTransactions = () => {
-        return axios.get("/transactions")
+        return axios.get("/api/transactions")
             .then((response) => {
                 return response.data
             })
@@ -26,14 +26,15 @@ export default function TransactionProvider({children}: Param) {
     }
 
     const deleteTransaction = (id: string) => {
-        return axios.delete(`/transactions/${id}`)
+        return axios.delete(`/api/transactions/${id}`)
             .then(getAllTransactions)
             .then(() => toast.success(`Transaktion wurde gelöscht`))
             .catch(error => toast.error(error.message))
     }
 
     return (
-        <TransactionContext.Provider value={{deleteTransaction, setAllTransaction, allTransaction, getAllTransactions}}>
+        <TransactionContext.Provider
+            value={{deleteTransaction, setAllTransaction, allTransaction, getAllTransactions}}>
             {children}
         </TransactionContext.Provider>
     )
