@@ -5,6 +5,9 @@ import App from './App';
 import {HashRouter} from "react-router-dom";
 import AuthProvider from "./context/authentication/AuthProvider";
 import TransactionProvider from "./context/transaction/TransactionProvider";
+import {ThemeProvider} from "@mui/material/styles";
+import {myTheme} from "./GlobleTheme/customTheme";
+
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -12,14 +15,17 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
 
-        <HashRouter>
-            <AuthProvider>
-                <TransactionProvider>
-                    <App/>
-                </TransactionProvider>
-            </AuthProvider>
+        <ThemeProvider theme={myTheme}>
+            <HashRouter>
+                <AuthProvider>
+                    <TransactionProvider>
+                        <App/>
+                    </TransactionProvider>
+                </AuthProvider>
 
-        </HashRouter>
+            </HashRouter>
+
+        </ThemeProvider>
 
 
     </React.StrictMode>

@@ -1,7 +1,8 @@
-import {Box, Button, Container} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {styled} from "@mui/system";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddTransaction from "./AddTransaction";
+import {useTheme} from "@mui/material/styles";
 
 
 const StyleAddCircleIcon = styled(AddCircleIcon)`
@@ -21,26 +22,35 @@ const StyledButton = styled(Button)`
   font-size: 1rem;
  `;
 
-
 export default function MyMenu() {
+    const theme = useTheme();
 
 
 
     return (
-        <Box sx={{mt: 1, padding: '1rem'}}>
-            <Container sx={{display: 'flex'}}>
-                <Box>
-                    <StyledButton>Transaktion</StyledButton>
-                    <StyledButton>Statistik</StyledButton>
-                    <StyledButton>Einkommen</StyledButton>
-                    <StyledButton>Ausgaben</StyledButton>
-                </Box>
-                <Button>
+        <Box maxWidth={"xs"} sx={{
+            margin: 1,
+            padding: '1rem',
+            display: 'flex',
+            justifyContent: "space-between"
 
 
-                </Button>
-                <AddTransaction/>
-            </Container>
+        }}>
+            <Box>
+                <Button sx={{background: theme.palette.linkButtonColor, color: theme.palette.linkButtonFontColor}}
+                        variant="contained">Transaktion</Button>
+                <Button sx={{background: theme.palette.linkButtonColor, color: theme.palette.linkButtonFontColor}}
+                        variant="contained">Statistik</Button>
+                <Button sx={{background: theme.palette.linkButtonColor, color: theme.palette.linkButtonFontColor}}
+                        variant="contained">Einkommen</Button>
+                <Button sx={{background: theme.palette.linkButtonColor, color: theme.palette.linkButtonFontColor}}
+                        variant="contained">Ausgaben</Button>
+            </Box>
+
+
+            <AddTransaction/>
+
         </Box>
+
     )
 }
