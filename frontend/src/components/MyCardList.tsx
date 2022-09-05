@@ -1,14 +1,16 @@
 import MyCard from "./MyCard";
 import {useContext} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
-
+import {Box} from "@mui/system";
 
 export default function MyCardList() {
 
     const {deleteTransaction, allTransaction} = useContext(TransactionContext);
 
     return (
-        <>
+        <Box>
+            <h1>Alle Transaktionen</h1>
+
             {
                 allTransaction.length !== 0 ? (
                     allTransaction.map(t =>
@@ -18,7 +20,7 @@ export default function MyCardList() {
             }
 
 
-        </>
+        </Box>
 
     );
 }
