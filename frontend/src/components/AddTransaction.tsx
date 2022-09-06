@@ -58,7 +58,7 @@ export default function AddTransaction() {
     const addTransaction = (newTransaction: TransactionCreationDto) => {
 
 
-        return axios.post("/transactions", newTransaction)
+        return axios.post("/api/transactions", newTransaction)
             .then(response => response.data)
             .then(data => {
                 setAllTransactions([...allTransactions, data]);
