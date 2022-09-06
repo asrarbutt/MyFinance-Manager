@@ -104,7 +104,7 @@ class TransactionControllerIntegrationTest {
                                     "pictureId": "url",
                                     "isIncome": true
                                 }
-                        """)
+                        """).with(csrf())
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
 
@@ -112,10 +112,10 @@ class TransactionControllerIntegrationTest {
         String id = saveResultTransaction.getId();
 
 
-        mockMvc.perform(delete("http://localhost:8080/transactions/" + id))
+        mockMvc.perform(delete("http://localhost:8080/transactions/" + id).with(csrf()))
                 .andExpect(status().is(204));
 
-        mockMvc.perform(get("http://localhost:8080/transactions"))
+        mockMvc.perform(get("http://localhost:8080/transactions").with(csrf()))
                 .andExpect(status().is(200))
                 .andExpect(content().json("""
                         []
@@ -165,7 +165,7 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         String updatedResult = mockMvc.perform(
-                        MockMvcRequestBuilders.put("/transactions/update/" + saveResultTransaction.getId())
+                        MockMvcRequestBuilders.put("/transactions/" + saveResultTransaction.getId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
@@ -193,7 +193,7 @@ class TransactionControllerIntegrationTest {
                                     "pictureId": "url",
                                     "isIncome": true
                                 }
-                        """)
+                        """).with(csrf())
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
@@ -210,11 +210,11 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/transactions/update/" + "1")
+                        MockMvcRequestBuilders.put("/transactions/" + "2")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
-                .andExpect(status().is(403));
+                .andExpect(status().is(404));
     }
 
 
