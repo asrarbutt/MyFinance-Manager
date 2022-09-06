@@ -69,7 +69,7 @@ public class TransactionService {
 
     public Transaction updateTransaction(String id, TransactionCreationDto transactionUpdate) {
 
-        Transaction transactionToUpdate = transactionRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
+        Transaction transactionToUpdate = transactionRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         transactionToUpdate.setDescription(transactionUpdate.getDescription());
         transactionToUpdate.setAmount(transactionUpdate.getAmount());
