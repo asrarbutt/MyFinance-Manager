@@ -1,19 +1,44 @@
 import PieChart from "../components/PieChart";
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import "./Statistic.css"
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
+
 
 export default function Statistic() {
 
+    const {allTransactions} = useContext(TransactionContext);
+    const transactionstypeCategory = ["Einkommen", "Ausgabe"]
 
-    const {allTransaction} = useContext(TransactionContext);
-    const category = ["Miete", "Strom/Gas", "Essen"];
-    const [transactionsType, setTransactionsType] = useState<string>("");
+
+    const grouped = Array.from(
+        allTransactions
+            .reduce(
+                (m,
+                 {category, amount}) =>
+                    m.set(category, (m.get(category) || 0) + amount), new Map),
+        ([key, val]) => ({key, val})
+    );
+
+    const amounts = grouped
+        .filter(t => t.val)
+        .map(t => t.val);
+
+    const groupedCategory = grouped
+        .filter(t => t.key)
+        .map(t => t.key);
+
+
+    const sumOfExpanse = allTransactions
+        .filter(t => (!t.isIncome))
+        .map(t => t.amount)
+        .reduce((a, b) => a + b);
+
+    const sumOfIncome = allTransactions
+        .filter(t => t.isIncome)
+        .map(t => t.amount)
+        .reduce((a, b) => a + b);
+
+    const sumOfIncomeAndExpanse = Array.of(sumOfIncome, sumOfExpanse);
 
 
     return (
@@ -23,45 +48,30 @@ export default function Statistic() {
             </header>
 
             <section>
-                <div className="statistic-selection">
-
-                    <Box sx={{minWidth: 120, mr: '1rem'}}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Art</InputLabel>
-
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={transactionsType}
-                                label="Art"
-                                onChange={(e) => setTransactionsType(e.target.value)}
-
-
-                            >
-                                <MenuItem value={"einkommen"}>Einkommen</MenuItem>
-                                <MenuItem value={"ausgabe"}>Ausgabe</MenuItem>
-
-                            </Select>
-                        </FormControl>
-                    </Box>
-
+                <div className="statistic-incomeExpanse">
+                    <div className="statistic-showIncome">
+                        <p>Summe Einkommen</p>
+                        <p>{sumOfIncome} €</p>
+                    </div>
+                    <div className="statistic-showExpanse">
+                        <p>Summe Ausgaben</p>
+                        <p>{sumOfExpanse} €</p>
+                    </div>
                 </div>
 
                 <div className="statistic-charts">
-                    <div className="statistic-pieChart">
-                        <PieChart allTransactions={allTransaction} categoryType={category}
-                                  incomeType={transactionsType}/>
-                    </div>
-
                     <div>
-                        <h1>11</h1>
+                        <p>Ausgaben nach Kategorien</p>
+                        <PieChart allTransactions={allTransactions} transactionsType={groupedCategory}
+                                  amounts={amounts}/>
                     </div>
-
+                    <div>
+                        <p>Einkommen und Ausgaben</p>
+                        <PieChart allTransactions={allTransactions} transactionsType={transactionstypeCategory}
+                                  amounts={sumOfIncomeAndExpanse}/>
+                    </div>
                 </div>
-
             </section>
-
-
         </div>
     )
 }
