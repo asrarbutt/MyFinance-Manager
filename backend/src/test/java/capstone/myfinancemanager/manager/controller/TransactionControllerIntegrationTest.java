@@ -134,6 +134,7 @@ class TransactionControllerIntegrationTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser("test@test.com")
     void updateTransactionTest() throws Exception {
         String saveResult = mockMvc.perform(post(
                 "/api/transactions").with(csrf())
@@ -179,6 +180,7 @@ class TransactionControllerIntegrationTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser("test@test.com")
     void updateTransactionDoNotExistTest() throws Exception {
         String saveResult = mockMvc.perform(post(
                 "/api/transactions").with(csrf())
@@ -193,7 +195,7 @@ class TransactionControllerIntegrationTest {
                                     "pictureId": "url",
                                     "isIncome": true
                                 }
-                        """).with(csrf())
+                        """)
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
@@ -216,6 +218,4 @@ class TransactionControllerIntegrationTest {
                 )
                 .andExpect(status().is(404));
     }
-
-
 }
