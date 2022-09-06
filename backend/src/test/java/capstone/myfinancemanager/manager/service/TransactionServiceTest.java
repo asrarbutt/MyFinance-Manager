@@ -149,6 +149,8 @@ class TransactionServiceTest {
 
         Transaction acutalTansaction = transactionService.updateTransaction(transaction1.getId(), transactionCreationDto1);
 
+
+        verify(transactionRepo).save(transaction1);
         Assertions.assertEquals(transaction1.getId(), acutalTansaction.getId());
     }
 

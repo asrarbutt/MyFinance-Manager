@@ -104,7 +104,7 @@ class TransactionControllerIntegrationTest {
                                     "pictureId": "url",
                                     "isIncome": true
                                 }
-                        """)
+                        """).with(csrf())
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
@@ -165,7 +165,7 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         String updatedResult = mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/transactions/update/" + saveResultTransaction.getId()).with(csrf())
+                        MockMvcRequestBuilders.put("/api/transactions/" + saveResultTransaction.getId()).with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
@@ -193,7 +193,7 @@ class TransactionControllerIntegrationTest {
                                     "pictureId": "url",
                                     "isIncome": true
                                 }
-                        """)
+                        """).with(csrf())
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
@@ -210,11 +210,11 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/transactions/update/" + "1").with(csrf())
+                        MockMvcRequestBuilders.put("/api/transactions/" + "2").with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
-                .andExpect(status().is(403));
+                .andExpect(status().is(404));
     }
 
 

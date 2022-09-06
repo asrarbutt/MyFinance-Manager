@@ -50,7 +50,7 @@ export default function MyCard(props: MyCardProps) {
                         <StlyeDeleteIcon onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
                     </IconButton>
                     <IconButton>
-                        <UpdateTransaction allTransaction={props.allTransaction}/>
+                        <UpdateTransaction allTransactions={props.allTransaction}/>
                     </IconButton>
                 </div>
             </div>
