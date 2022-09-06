@@ -11,7 +11,7 @@ interface Param {
 
 export default function TransactionProvider({children}: Param) {
 
-    const [allTransaction, setAllTransaction] = useState<TransactionDto[]>([]);
+    const [allTransactions, setAllTransactions] = useState<TransactionDto[]>([]);
 
     useEffect(() => {
         getAllTransactions();
@@ -19,10 +19,8 @@ export default function TransactionProvider({children}: Param) {
 
     const getAllTransactions = () => {
         return axios.get("/api/transactions")
-            .then((response) => {
-                return response.data
-            })
-            .then(data => setAllTransaction(data))
+            .then((response) => response.data)
+            .then(setAllTransactions)
     }
 
     const deleteTransaction = (id: string) => {
@@ -34,7 +32,7 @@ export default function TransactionProvider({children}: Param) {
 
     return (
         <TransactionContext.Provider
-            value={{deleteTransaction, setAllTransaction, allTransaction, getAllTransactions}}>
+            value={{deleteTransaction, setAllTransactions, allTransactions, getAllTransactions}}>
             {children}
         </TransactionContext.Provider>
     )

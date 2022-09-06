@@ -24,7 +24,7 @@ import TransactionCreationDto from "../model/TransactionCreationDto";
 
 export default function AddTransaction() {
 
-    const {setAllTransaction, allTransaction} = useContext(TransactionContext);
+    const {setAllTransactions, allTransactions} = useContext(TransactionContext);
 
     const [isIncome, setIsIncome] = useState<boolean>(true);
     const [open, setOpen] = useState(false);
@@ -33,10 +33,10 @@ export default function AddTransaction() {
     const [pictureId, setPictureId] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
-    const [addNewtransaction, setAddNewtransaction] = useState<TransactionCreationDto>();
+    const [newTransactionToAdd, setNewTransactionToAdd] = useState<TransactionCreationDto>();
 
     useEffect(() => {
-        setAddNewtransaction({
+        setNewTransactionToAdd({
             "description": description,
             "amount": amount,
             "category": category,
@@ -51,8 +51,8 @@ export default function AddTransaction() {
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
-        if (addNewtransaction)
-            addTransaction(addNewtransaction);
+        if (newTransactionToAdd)
+            addTransaction(newTransactionToAdd);
     }
 
     const addTransaction = (newTransaction: TransactionCreationDto) => {
@@ -61,7 +61,7 @@ export default function AddTransaction() {
         return axios.post("/transactions", newTransaction)
             .then(response => response.data)
             .then(data => {
-                setAllTransaction([...allTransaction, data]);
+                setAllTransactions([...allTransactions, data]);
             })
             .then(() => {
                 toast.success("Transaktion hinzugefügt");

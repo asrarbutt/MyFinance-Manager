@@ -30,20 +30,20 @@ const StlyeEditIcon = styled(EditIcon)`
  `;
 
 type UpdateTransactionProps = {
-    allTransaction: TransactionDto;
+    allTransactions: TransactionDto;
 }
 
 export default function UpdateTransaction(props: UpdateTransactionProps) {
 
     const {getAllTransactions} = useContext(TransactionContext);
 
-    const [isIncome, setIsIncome] = useState<boolean>(props.allTransaction.isIncome || true);
+    const [isIncome, setIsIncome] = useState<boolean>(props.allTransactions.isIncome || true);
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
-    const [category, setCategory] = useState<string>(props.allTransaction.category || "");
-    const [pictureId, setPictureId] = useState<string>(props.allTransaction.pictureId || "");
-    const [description, setDescription] = useState<string>(props.allTransaction.description || "");
-    const [amount, setAmount] = useState<number>(props.allTransaction.amount || 0);
+    const [category, setCategory] = useState<string>(props.allTransactions.category || "");
+    const [pictureId, setPictureId] = useState<string>(props.allTransactions.pictureId || "");
+    const [description, setDescription] = useState<string>(props.allTransactions.description || "");
+    const [amount, setAmount] = useState<number>(props.allTransactions.amount || 0);
     const [transactionToUpdate, setTransactionToUpdate] = useState<TransactionCreationDto>();
 
 
@@ -60,8 +60,8 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
         )
     }, [date, description, amount, isIncome, pictureId, category])
 
-    if (!props.allTransaction) {
-        return <>Nicht Gefunden</>
+    if (!props.allTransactions) {
+        return <p>Nicht Gefunden</p>
     }
 
 
@@ -69,12 +69,12 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
         event.preventDefault();
 
         if (transactionToUpdate)
-            updateTransaction(transactionToUpdate, props.allTransaction.id)
+            updateTransaction(transactionToUpdate, props.allTransactions.id)
 
     }
 
     const updateTransaction = (editTransaction: TransactionCreationDto, id: string) => {
-        axios.put(`/api/transactions/update/${id}`, editTransaction).then(() => {
+        axios.put(`/api/transactions/${id}`, editTransaction).then(() => {
             toast.success("Transaktion erfolgreich geändert");
             getAllTransactions();
         })

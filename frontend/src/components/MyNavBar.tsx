@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,14 +14,12 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router-dom";
 import {Button} from "@mui/material";
+import AuthContext from "../context/authentication/AuthContext";
 
-type MyNavBarProps = {
-    loggedInUser: string;
-    logout: () => void;
-}
 
-const MyNavBar = (props: MyNavBarProps) => {
+const MyNavBar = () => {
     const navigate = useNavigate();
+    const {loggedInUser, logout} = useContext(AuthContext);
 
 
     const goToLogin = () => {
@@ -33,7 +32,7 @@ const MyNavBar = (props: MyNavBarProps) => {
     }
 
     const gotToLandingPage = () => {
-        props.logout();
+        logout();
         navigate('/')
         handleCloseNavMenu()
     }
@@ -154,7 +153,7 @@ const MyNavBar = (props: MyNavBarProps) => {
                     </Box>
 
                     {
-                        props.loggedInUser === "anonymousUser" ? (
+                        loggedInUser === "anonymousUser" ? (
                                 <Button
                                     onClick={goToLogin}
                                     sx={{my: 2, color: 'white', display: 'block'}}

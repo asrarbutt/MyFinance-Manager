@@ -36,6 +36,7 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
 
+
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         if (principal.getName() == null) {
             throw new UserNotLoggedIn("Bitte voher einloggen");
@@ -52,7 +53,7 @@ public class TransactionController {
         return new ResponseEntity<>(deleteSuccess ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<TransactionDto> updateTransaction(@PathVariable String id, @RequestBody TransactionCreationDto transactionUpdate) {
 
         return ResponseEntity

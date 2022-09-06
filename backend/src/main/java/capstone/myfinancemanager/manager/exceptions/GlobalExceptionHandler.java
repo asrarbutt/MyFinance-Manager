@@ -47,13 +47,4 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
-
-/*    @ExceptionHandler(value = UserNotLoggedIn.class)
-    public ResponseEntity<Map<String, Object>> handleUserNotLoggedInException(UserNotLoggedIn exception) {
-        Map<String, Object> responseBody = new LinkedHashMap<>();
-        responseBody.put("Timestamp", LocalDateTime.now());
-        responseBody.put("message", exception.getMessage());
-
-        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
-    }*/
 }
