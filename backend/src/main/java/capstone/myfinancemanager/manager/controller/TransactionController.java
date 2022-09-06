@@ -30,10 +30,10 @@ public class TransactionController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransactionDto> addTransaction(Principal principal, @RequestBody TransactionCreationDto transactionCreation) {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
 
 
-        principal = SecurityContextHolder.getContext().getAuthentication();
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
         if (principal.getName() == null) {
             throw new UserNotLoggedIn("Bitte voher einloggen");
         }
