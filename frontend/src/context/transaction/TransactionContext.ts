@@ -2,14 +2,14 @@ import React, {createContext} from "react";
 import TransactionDto from "../../model/TransactionDto";
 
 
-export interface IContext {
+export type ITransactionsContext = {
 
     deleteTransaction: (id: string) => void;
-    setAllTransaction: React.Dispatch<React.SetStateAction<TransactionDto[]>>;
-    allTransaction: TransactionDto[];
+    setAllTransactions: React.Dispatch<React.SetStateAction<TransactionDto[]>>;
+    allTransactions: TransactionDto[];
     getAllTransactions: () => void;
 }
 
-export const TransactionContext = createContext({} as IContext);
+export const TransactionContext = createContext<ITransactionsContext>({} as ITransactionsContext);
 
 export default TransactionContext;
