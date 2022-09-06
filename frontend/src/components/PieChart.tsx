@@ -1,6 +1,6 @@
 import React from 'react';
 import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
-import {Doughnut} from 'react-chartjs-2';
+import {Pie} from 'react-chartjs-2';
 import TransactionDto from "../model/TransactionDto";
 
 
@@ -8,31 +8,20 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 type PieChartProps = {
-    categoryType: string[],
-    incomeType: string,
+
+    transactionsType: string[],
     allTransactions: TransactionDto[];
+    amounts: number[]
 }
 
 export default function PieChart(props: PieChartProps) {
 
-
-    let grouped = Array.from(
-        props.allTransactions
-            .reduce(
-                (m,
-                 {category, amount}) =>
-                    m.set(category, (m.get(category) || 0) + amount), new Map),
-        ([key, val]) => ({key, val})
-    );
-
-    const amounts = grouped.filter(t => t.val).map(t => t.val)
-
     const data = {
-        labels: props.categoryType,
+        labels: props.transactionsType,
         datasets: [
             {
                 label: '# of Votes',
-                data: amounts,
+                data: props.amounts,
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 0.8)',
@@ -57,8 +46,8 @@ export default function PieChart(props: PieChartProps) {
     };
 
 
-    return (<div style={{height: '400px', width: '600px'}}>
-        <Doughnut data={data}/>
+    return (<div style={{height: '200px', width: '300px'}}>
+        <Pie data={data}/>
 
     </div>);
 }
