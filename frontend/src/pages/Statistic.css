@@ -1,0 +1,17 @@
+
+.statistic-selection {
+    display: flex;
+    flex-direction: row;
+
+    margin-top: 7rem;
+    margin-bottom: 10rem;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.statistic-charts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
