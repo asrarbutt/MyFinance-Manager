@@ -13,66 +13,73 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Select from '@mui/material/Select';
-import AddIcon from '@mui/icons-material/Add';
-import {toast} from "react-toastify";
+import TransactionCreationDto from "../model/TransactionCreationDto";
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
+import EditIcon from '@mui/icons-material/Edit';
+import {styled} from "@mui/system";
+import TransactionDto from "../model/TransactionDto";
 import axios from "axios";
+import {toast} from "react-toastify";
 import TransactionContext from "../context/transaction/TransactionContext";
-import TransactionCreationDto from "../model/TransactionCreationDto";
 
 
-export default function AddTransaction() {
+const StlyeEditIcon = styled(EditIcon)`
 
-    const {setAllTransactions, allTransactions} = useContext(TransactionContext);
+  font-size: 2rem;
+ `;
 
-    const [isIncome, setIsIncome] = useState<boolean>(true);
+type UpdateTransactionProps = {
+    allTransactions: TransactionDto;
+}
+
+export default function UpdateTransaction(props: UpdateTransactionProps) {
+
+    const {getAllTransactions} = useContext(TransactionContext);
+
+    const [isIncome, setIsIncome] = useState<boolean>(props.allTransactions.isIncome || true);
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
-    const [category, setCategory] = useState<string>("");
-    const [pictureId, setPictureId] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
-    const [amount, setAmount] = useState<number>(0);
-    const [newTransactionToAdd, setNewTransactionToAdd] = useState<TransactionCreationDto>();
+    const [category, setCategory] = useState<string>(props.allTransactions.category || "");
+    const [pictureId, setPictureId] = useState<string>(props.allTransactions.pictureId || "");
+    const [description, setDescription] = useState<string>(props.allTransactions.description || "");
+    const [amount, setAmount] = useState<number>(props.allTransactions.amount || 0);
+    const [transactionToUpdate, setTransactionToUpdate] = useState<TransactionCreationDto>();
+
 
     useEffect(() => {
-        setNewTransactionToAdd({
-            "description": description,
-            "amount": amount,
-            "category": category,
-            "transactionDate": convertDateToNumber(date),
-            "isIncome": isIncome,
-            "pictureId": pictureId,
-        });
 
+        setTransactionToUpdate({
+                "description": description,
+                "amount": amount,
+                "category": category,
+                "transactionDate": convertDateToNumber(date),
+                "isIncome": isIncome,
+                "pictureId": pictureId,
+            }
+        )
     }, [date, description, amount, isIncome, pictureId, category])
+
+    if (!props.allTransactions) {
+        return <p>Nicht Gefunden</p>
+    }
 
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
-        if (newTransactionToAdd)
-            addTransaction(newTransactionToAdd);
+        if (transactionToUpdate)
+            updateTransaction(transactionToUpdate, props.allTransactions.id)
+
     }
 
-    const addTransaction = (newTransaction: TransactionCreationDto) => {
-
-
-        return axios.post("/transactions", newTransaction)
-            .then(response => response.data)
-            .then(data => {
-                setAllTransactions([...allTransactions, data]);
-            })
-            .then(() => {
-                toast.success("Transaktion hinzugefügt");
-                setIsIncome(true);
-                setDate(null);
-                setCategory("");
-                setDescription("");
-                setAmount(0);
-            })
-            .catch(error => toast(error));
+    const updateTransaction = (editTransaction: TransactionCreationDto, id: string) => {
+        axios.put(`/transactions/${id}`, editTransaction).then(() => {
+            toast.success("Transaktion erfolgreich geändert");
+            getAllTransactions();
+        })
     }
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -83,10 +90,10 @@ export default function AddTransaction() {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClickOpen}>
-                <AddIcon/> Transaktion
+            <Button onClick={handleClickOpen}>
+                <StlyeEditIcon/>
             </Button>
-            <Dialog maxWidth={'md'} open={open} onClose={handleClose}>
+            <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
                 <DialogContent>
                     <form onSubmit={submitHandler}>
@@ -98,15 +105,19 @@ export default function AddTransaction() {
                             alignItems: "space-between",
                             marginTop: 6,
                             marginBottom: 7,
-                            width: 600
+                            width: 500
+
                         }}>
                             <TextField
+
                                 autoFocus
                                 margin="dense"
                                 fullWidth
                                 variant="standard"
                                 id="standard-basic"
                                 label="Beschreibung"
+                                name={"description"}
+                                value={description}
                                 onChange={e => setDescription(e.target.value)}
                             />
                             <TextField
@@ -116,6 +127,8 @@ export default function AddTransaction() {
                                 variant="standard"
                                 id="standard-basic"
                                 label="Betrag"
+                                name={"amount"}
+                                value={amount}
                                 onChange={e => setAmount(stringToNumberWithDot(e.target.value))}
                             />
 
@@ -136,8 +149,10 @@ export default function AddTransaction() {
                                 <Select
                                     labelId="category-select"
                                     id="category-select"
-                                    value={category}
+                                    name={"category"}
+
                                     label="Kategorie auswählen "
+                                    value={category}
                                     onChange={e => {
                                         setCategory(e.target.value);
                                     }}
@@ -154,7 +169,8 @@ export default function AddTransaction() {
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={isIncome}
-                                    label="Kategorie auswählen "
+                                    name={"income"}
+                                    label="Type auswählen "
 
                                     onChange={(e: any) => {
                                         setIsIncome(e.target.value)
@@ -168,21 +184,22 @@ export default function AddTransaction() {
                             <Button
                                 variant="contained"
                                 component="label"
-                                color="secondary">
+                                color="primary">
                                 {" "}
                                 <AddAPhotoIcon/> Bild Uploaden
-                                <input
-                                    type="file"
-                                    onChange={(e) => {
-                                        if (e.target.files !== null) {
-                                            setPictureId(URL.createObjectURL(e.target.files[0]))
-                                        }
-                                    }} hidden/>
+                                <input type="file"
+                                       name={"pictureId"}
+                                       onChange={(e) => {
+
+                                           if (e.target.files !== null) {
+                                               setPictureId(URL.createObjectURL(e.target.files[0]))
+                                           }
+                                       }} hidden/>
                             </Button>
                             <DialogActions>
-                                <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
+                                <Button color='warning' variant="contained" onClick={handleClose}>Zurück</Button>
                                 <Button variant='contained' color="success" type="submit"
-                                        onClick={handleClose}>Hinzufügen</Button>
+                                        onClick={handleClose}>Updaten</Button>
                             </DialogActions>
                         </Box>
                     </form>

@@ -7,7 +7,9 @@ import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.respository.TransactionRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -18,6 +20,7 @@ public class TransactionService {
 
     private final TransactionRepo transactionRepo;
     private final RandomUUIDGenerator randomUUIDGenerator;
+
 
     public List<TransactionDto> getAllTransactions() {
 
@@ -37,11 +40,12 @@ public class TransactionService {
                 .toList();
     }
 
-    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto) {
+    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto, String userEmail) {
+
 
         Transaction transactionCreated = Transaction.builder()
                 .id(randomUUIDGenerator.getRandomId())
-                .userEmail(addNewTransactionDto.getUserEmail())
+                .userEmail(userEmail)
                 .description(addNewTransactionDto.getDescription())
                 .amount(addNewTransactionDto.getAmount())
                 .transactionDate(Instant.ofEpochMilli(addNewTransactionDto.getTransactionDate()))
@@ -60,5 +64,20 @@ public class TransactionService {
             return true;
         }
         return false;
+    }
+
+
+    public Transaction updateTransaction(String id, TransactionCreationDto transactionUpdate) {
+
+        Transaction transactionToUpdate = transactionRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        transactionToUpdate.setDescription(transactionUpdate.getDescription());
+        transactionToUpdate.setAmount(transactionUpdate.getAmount());
+        transactionToUpdate.setTransactionDate(Instant.ofEpochMilli(transactionUpdate.getTransactionDate()));
+        transactionToUpdate.setCategory(transactionUpdate.getCategory());
+        transactionToUpdate.setIsIncome(transactionUpdate.getIsIncome());
+        transactionToUpdate.setPictureId(transactionUpdate.getPictureId());
+
+        return transactionRepo.save(transactionToUpdate);
     }
 }

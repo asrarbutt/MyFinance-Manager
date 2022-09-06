@@ -1,8 +1,21 @@
-import {Box, Button, TextField} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Button,
+    Checkbox,
+    Container,
+    CssBaseline,
+    FormControlLabel,
+    Grid,
+    TextField,
+    Typography,
+} from "@mui/material";
 import {FormEvent, useContext, useState} from "react";
 import AuthContext from "../context/authentication/AuthContext";
 import {toast} from "react-toastify";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {useTheme} from "@mui/material/styles";
 
 
 export default function LoginPage() {
@@ -11,7 +24,7 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
+    const theme = useTheme();
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -32,16 +45,69 @@ export default function LoginPage() {
     }
 
     return (
-        <Box className="loginPage">
-            <h1>Login</h1>
+        <Container component="main" maxWidth="sm">
+            <CssBaseline/>
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Avatar sx={{m: 1, background: theme.palette.linkButtonColor}}>
+                    <LockOutlinedIcon fontSize='large'/>
+                </Avatar>
+                <Typography component="h1" variant="h3">
+                    Login
+                </Typography>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        type="email"
+                        autoFocus
+                        variant="filled"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        variant="outlined"
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary"/>}
+                        label="Remember me"
+                    />
+                    <Button startIcon={<LockOutlinedIcon/>}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 3, mb: 2}}
+                    >
+                        <Typography fontSize='large'>
+                            Login
+                        </Typography>
+                    </Button>
+                    <Grid item>
+                        <Link to="/auth/register">{"Don't have an account? Sign Up"}</Link>
+                    </Grid>
+                </Box>
+            </Box>
 
-            <form onSubmit={handleSubmit} className="loginPage-form">
-                <TextField required label="E-Mail" type="email" variant="filled" value={username}
-                           onChange={e => setUsername(e.target.value)}/>
-                <TextField required label="Password" type="password" variant="outlined"
-                           onChange={e => setPassword(e.target.value)}/>
-                <Button type="submit" variant="outlined">Register</Button>
-            </form>
-        </Box>
+        </Container>
     )
 }

@@ -3,6 +3,7 @@ package capstone.myfinancemanager.manager.service;
 import capstone.myfinancemanager.manager.model.RandomUUIDGenerator;
 import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.Transaction;
+import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
 import capstone.myfinancemanager.manager.respository.TransactionRepo;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -61,6 +63,26 @@ class TransactionServiceTest {
             .transactionDate(testDate)
             .category("TestCategory")
             .isIncome(false)
+            .pictureId("url")
+            .build();
+
+    TransactionCreationDto transactionCreationDto1 = TransactionCreationDto.builder()
+            .description("Tanken")
+            .amount(27.0)
+            .transactionDate(Long.parseLong("1661866382913"))
+            .category("TestCategory")
+            .userEmail("test@test.com")
+            .isIncome(true)
+            .pictureId("url")
+            .build();
+
+    TransactionCreationDto transactionCreationDtoUpdate = TransactionCreationDto.builder()
+            .userEmail("test@test.com")
+            .description("Urlaub")
+            .amount(27.0)
+            .transactionDate(Long.parseLong("1661866382913"))
+            .category("TestCategory2")
+            .isIncome(true)
             .pictureId("url")
             .build();
 
@@ -116,5 +138,20 @@ class TransactionServiceTest {
         verify(transactionRepo, times(0)).deleteById(transactionDto1.getId());
     }
 
+    @Test
+    void updateTransactionTest() {
+
+        //when
+        when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
+        when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
+        when(transactionRepo.save(any())).thenReturn(transaction1);
+        when(transactionRepo.findById(transaction1.getId())).thenReturn(Optional.ofNullable(transaction1));
+
+        Transaction acutalTansaction = transactionService.updateTransaction(transaction1.getId(), transactionCreationDto1);
+
+
+        verify(transactionRepo).save(transaction1);
+        Assertions.assertEquals(transaction1.getId(), acutalTansaction.getId());
+    }
 
 }

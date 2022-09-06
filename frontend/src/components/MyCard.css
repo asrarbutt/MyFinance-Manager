@@ -1,0 +1,74 @@
+* {
+    box-sizing: border-box;
+
+
+}
+
+.myCard-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    width: 80%;
+    padding-left: 1rem;
+
+    border-radius: 0 50px 50px 0;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: .5em;
+    margin-left: 1rem;
+}
+
+
+.myCard-header > h4 {
+    margin-left: 1rem;
+    margin-right: 4rem;
+}
+
+.myCard-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    border-radius: 50px;
+}
+
+.myCard-isIncome {
+    border-left: 7px solid green;
+    display: flex;
+    flex-direction: row;
+
+    width: 80%;
+    padding-left: 1rem;
+
+    border-radius: 0 50px 50px 0;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: .5em;
+
+}
+
+.myCard-expanse {
+    border-left: 7px solid red;
+    display: flex;
+    flex-direction: row;
+
+    width: 80%;
+    padding-left: 1rem;
+
+    border-radius: 0 50px 50px 0;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: .5em;
+
+}
+
+.myCard-actions {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding-right: 1rem;
+
+    width: 30%;
+    border-radius: 20px;
+}
