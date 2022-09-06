@@ -3,7 +3,7 @@ import * as React from 'react';
 import "./MyCard.css";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import {IconButton, Typography} from "@mui/material";
+import {IconButton} from "@mui/material";
 import {styled} from "@mui/system";
 import {dateFromInstant} from "../util/Util";
 import TransactionDto from "../model/TransactionDto";
@@ -30,7 +30,7 @@ type MyCardProps = {
 export default function MyCard(props: MyCardProps) {
 
     return (
-        <div style={{display: "flex", justifyContent: "center", alignContent: "center", maxWidth: "50rem"}}>
+
             <div className={`myCard-container ${props.allTransaction.isIncome ? "myCard-isIncome" : "myCard-expanse"}`}>
                 <div className="myCard-content">
                     <div>
@@ -52,9 +52,9 @@ export default function MyCard(props: MyCardProps) {
                     <IconButton>
                         <UpdateTransaction allTransactions={props.allTransaction}/>
                     </IconButton>
-                    <Typography color="third">dasd</Typography>
+
                 </div>
             </div>
-        </div>
+
     );
 }
