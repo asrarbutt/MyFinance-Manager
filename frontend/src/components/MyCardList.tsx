@@ -1,15 +1,16 @@
 import MyCard from "./MyCard";
 import {useContext} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
-import {Box} from "@mui/system";
+import TransactionsContainerStyled from "./ui/TransactionsContainerStyled";
+import TitleStyled from "./ui/TitleStyled";
 
 export default function MyCardList() {
 
     const {deleteTransaction, allTransactions} = useContext(TransactionContext);
 
     return (
-        <Box>
-            <h1>Alle Transaktionen</h1>
+        <TransactionsContainerStyled>
+            <TitleStyled>Alle Transaktionen</TitleStyled>
 
             {
                 allTransactions.length !== 0 ? (
@@ -19,7 +20,7 @@ export default function MyCardList() {
                 ) : (<p>Keine Transaktion vorhanden</p>)
             }
 
-        </Box>
+        </TransactionsContainerStyled>
 
     );
 }
