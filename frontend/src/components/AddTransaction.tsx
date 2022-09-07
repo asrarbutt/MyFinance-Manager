@@ -13,19 +13,18 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Select from '@mui/material/Select';
-import AddIcon from '@mui/icons-material/Add';
 import {toast} from "react-toastify";
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import axios from "axios";
 import TransactionContext from "../context/transaction/TransactionContext";
 import TransactionCreationDto from "../model/TransactionCreationDto";
+import {AddIconStyled, MenuButton} from './ui/Button.styled';
 
 
 export default function AddTransaction() {
 
     const {setAllTransactions, allTransactions} = useContext(TransactionContext);
-
     const [isIncome, setIsIncome] = useState<boolean>(true);
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
@@ -83,9 +82,9 @@ export default function AddTransaction() {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClickOpen}>
-                <AddIcon/> Transaktion
-            </Button>
+            <MenuButton variant="addBtn" onClick={handleClickOpen}>
+                <AddIconStyled></AddIconStyled>
+            </MenuButton>
             <Dialog maxWidth={'md'} open={open} onClose={handleClose}>
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
                 <DialogContent>
