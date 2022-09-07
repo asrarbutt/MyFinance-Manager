@@ -1,22 +1,14 @@
 import MyMenu from "../components/MyMenu";
 import MyCardList from "../components/MyCardList";
-import {Box} from "@mui/system";
+import {HomeContainerStyled} from "../components/ui/CommonContainer.styled";
 
 
 export default function Home() {
 
-
     return (
-        <>
-
-            <h1>Home Page</h1>
-
+        <HomeContainerStyled>
             <MyMenu/>
-
-            <Box>
-                <MyCardList/>
-            </Box>
-
-        </>
+            <MyCardList/>
+        </HomeContainerStyled>
     )
 }
