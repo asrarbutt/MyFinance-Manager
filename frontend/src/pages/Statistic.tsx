@@ -31,12 +31,12 @@ export default function Statistic() {
     const sumOfExpanse = allTransactions
         .filter(t => (!t.isIncome))
         .map(t => t.amount)
-        .reduce((a, b) => a + b);
+        .reduce((a, b) => a + b, 0);
 
     const sumOfIncome = allTransactions
         .filter(t => t.isIncome)
         .map(t => t.amount)
-        .reduce((a, b) => a + b);
+        .reduce((a, b) => a + b, 0);
 
     const sumOfIncomeAndExpanse = Array.of(sumOfIncome, sumOfExpanse);
 
@@ -61,14 +61,29 @@ export default function Statistic() {
 
                 <div className="statistic-charts">
                     <div>
-                        <p>Ausgaben nach Kategorien</p>
-                        <PieChart allTransactions={allTransactions} transactionsType={groupedCategory}
-                                  amounts={amounts}/>
+
+
+                        {amounts.length !== 0 ? (
+                                <>
+                                    <p>Ausgaben nach Kategorien</p>
+                                    <PieChart allTransactions={allTransactions} transactionsType={groupedCategory}
+                                              amounts={amounts}/>
+                                </>
+                            )
+                            : <p>Keine Transaktionen vorhanden</p>
+
+                        }
                     </div>
                     <div>
-                        <p>Einkommen und Ausgaben</p>
-                        <PieChart allTransactions={allTransactions} transactionsType={transactionstypeCategory}
-                                  amounts={sumOfIncomeAndExpanse}/>
+                        {amounts.length !== 0 ? (
+                                <>
+                                    <p>Einkommen und Ausgaben</p>
+                                    <PieChart allTransactions={allTransactions} transactionsType={transactionstypeCategory}
+                                              amounts={sumOfIncomeAndExpanse}/>
+                                </>
+                            )
+                            : <p>Kein Transaktionen vorhanden</p>
+                        }
                     </div>
                 </div>
             </section>
