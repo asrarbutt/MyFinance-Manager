@@ -14,8 +14,6 @@ export default function RegistrationsPage() {
     const [userName, setUserName] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
     const [userRepeatPassword, setUserRepeatPassword] = useState<string>("");
-
-
     const [errorMessage, setErrorMessage] = useState<string>("");
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 
@@ -53,10 +51,9 @@ export default function RegistrationsPage() {
                     paddingTop: '3rem'
                 }}>
                     <Typography color={'primary'} variant='h3'>Registrieren</Typography>
-                    <Typography variant='h6'>Es geht schnell, einfach und kostenlos</Typography>
+                    <Typography variant='h6'>schnell, einfach und kostenlos</Typography>
                     {errorMessage && <Box>{errorMessage}</Box>}
                 </Box>
-
 
                 <form onSubmit={handleSubmit} className="signUp-form">
                     <TextField required label="E-Mail" type="email" variant="filled" value={userEmail}
@@ -70,11 +67,8 @@ export default function RegistrationsPage() {
                                onChange={(e) => setUserRepeatPassword(e.target.value)}/>
                     <Button sx={{background: 'primary'}} type="submit" variant="contained">Register</Button>
                     <Link to="/auth/login">Back to login</Link>
-
                 </form>
             </CssBaseline>
-
         </Container>
-
     )
 }
