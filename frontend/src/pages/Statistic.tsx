@@ -9,7 +9,6 @@ export default function Statistic() {
     const {allTransactions} = useContext(TransactionContext);
     const transactionstypeCategory = ["Einkommen", "Ausgabe"]
 
-
     const grouped = Array.from(
         allTransactions
             .reduce(
@@ -47,21 +46,20 @@ export default function Statistic() {
                 <h1>Ein- und Ausgabebericht</h1>
             </header>
 
-            <section>
+            <section className="statistic-section">
                 <div className="statistic-incomeExpanse">
                     <div className="statistic-showIncome">
-                        <p>Summe Einkommen</p>
+                        <p>Einkommen</p>
                         <p>{sumOfIncome} €</p>
                     </div>
                     <div className="statistic-showExpanse">
-                        <p>Summe Ausgaben</p>
+                        <p>Ausgaben</p>
                         <p>{sumOfExpanse} €</p>
                     </div>
                 </div>
 
                 <div className="statistic-charts">
                     <div>
-
 
                         {amounts.length !== 0 ? (
                                 <>
