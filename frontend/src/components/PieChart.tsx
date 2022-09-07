@@ -3,15 +3,13 @@ import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
 import {Pie} from 'react-chartjs-2';
 import TransactionDto from "../model/TransactionDto";
 
-
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 
 type PieChartProps = {
 
     transactionsType: string[],
     allTransactions: TransactionDto[];
-    amounts: number[]
+    amounts: number[];
 }
 
 export default function PieChart(props: PieChartProps) {
@@ -39,15 +37,13 @@ export default function PieChart(props: PieChartProps) {
                     'rgba(255, 159, 64, 1)',
                 ],
                 borderWidth: 1,
-
             },
         ],
 
     };
-
-
-    return (<div style={{height: '200px', width: '300px'}}>
-        <Pie data={data}/>
-
-    </div>);
+    return (
+        <div style={{height: '200px', width: '300px'}}>
+            <Pie data={data}/>
+        </div>
+    );
 }
