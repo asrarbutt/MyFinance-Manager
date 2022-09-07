@@ -1,8 +1,8 @@
 import MyCard from "./MyCard";
 import {useContext} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
-import TransactionsContainerStyled from "./ui/TransactionsContainerStyled";
-import TitleStyled from "./ui/TitleStyled";
+import TransactionsContainerStyled from "./ui/TransactionsContainer.styled";
+import TitleStyled from "./ui/Title.styled";
 
 export default function MyCardList() {
 
@@ -11,7 +11,6 @@ export default function MyCardList() {
     return (
         <TransactionsContainerStyled>
             <TitleStyled>Alle Transaktionen</TitleStyled>
-
             {
                 allTransactions.length !== 0 ? (
                     allTransactions.map(t =>
@@ -19,7 +18,6 @@ export default function MyCardList() {
                     )
                 ) : (<p>Keine Transaktion vorhanden</p>)
             }
-
         </TransactionsContainerStyled>
 
     );
