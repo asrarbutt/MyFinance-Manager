@@ -19,12 +19,12 @@ export default function AuthProvider({children}: Param) {
             "password": password,
             "repeatPassword": repeatPassword
         }
-        return axios.post("/auth/register", newUser).then(response => response.data)
+        return axios.post("/api/register", newUser).then(response => response.data)
     }
 
     const login = (username: string, password: string) => {
 
-        return axios.get("/auth/login",
+        return axios.get("/api/users/login",
             {auth: {username, password}})
             .then(response => {
                 setLoggedInUser(response.data)
@@ -35,7 +35,7 @@ export default function AuthProvider({children}: Param) {
 
     const logout = () => {
 
-        axios.get("/auth/logout")
+        axios.get("/api/users/logout")
             .then(response => response.data)
             .then(() => {
                 setLoggedInUser("anonymousUser")

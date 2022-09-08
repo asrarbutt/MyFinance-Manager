@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/auth/")
+@RequestMapping("/api")
 public class UserController {
     private final UserService userService;
 
@@ -20,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<UserDto> registerNewUser(@Valid @RequestBody UserDto newUserDto) {
 
         User registerNewUser = userService.registerNewUser(newUserDto);
@@ -29,7 +29,7 @@ public class UserController {
 
     }
 
-    @GetMapping("login")
+    @GetMapping("/users/login")
     String login() {
         return getUsername();
     }
@@ -42,7 +42,7 @@ public class UserController {
                 .getName();
     }
 
-    @GetMapping("logout")
+    @GetMapping("/users/logout")
     void logout(HttpSession session) {
         session.invalidate();
     }

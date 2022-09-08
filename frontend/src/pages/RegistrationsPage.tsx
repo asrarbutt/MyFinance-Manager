@@ -1,10 +1,9 @@
-import {Alert, Box, Button, TextField} from "@mui/material";
+import {Alert, Box, Button, Container, CssBaseline, TextField, Typography} from "@mui/material";
 import "./RegistrationsPage.css";
 import {FormEvent, useContext, useState} from "react";
 import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
 import AuthContext from "../context/authentication/AuthContext";
-
 
 export default function RegistrationsPage() {
 
@@ -14,8 +13,8 @@ export default function RegistrationsPage() {
     const [userName, setUserName] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
     const [userRepeatPassword, setUserRepeatPassword] = useState<string>("");
-
     const [errorMessage, setErrorMessage] = useState<string>("");
+
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();
@@ -83,24 +82,35 @@ export default function RegistrationsPage() {
     }
 
     return (
-        <Box className="signUp" sx={{boxShadow: "0 0.1rem 0.2rem rgba(0, 0, 0, 0.5)"}}>
-            <h1>Registrieren</h1>
-            <h3>Es geht schnell, einfach und kostenlos</h3>
-            {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+        <Container component='main' maxWidth="sm" className="signUp">
+            <CssBaseline>
 
-            <form onSubmit={handleSubmit} className="signUp-form">
-                <TextField required label="E-Mail" type="email" variant="filled" value={userEmail}
-                           onChange={(e) => setUserEmail(e.target.value)}/>
-                <TextField required label="Name" type="name" variant="outlined" value={userName}
-                           onChange={(e) => setUserName(e.target.value)}/>
-                <TextField required label="Password" type="password" variant="outlined" value={userPassword}
-                           onChange={(e) => setUserPassword(e.target.value)}/>
-                <TextField required label="Repeat Password" type="password" variant="outlined"
-                           value={userRepeatPassword}
-                           onChange={(e) => setUserRepeatPassword(e.target.value)}/>
-                <Button type="submit" variant="outlined">Register</Button>
-                <Link to="/auth/login">Back to login</Link>
-            </form>
-        </Box>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    paddingTop: '3rem'
+                }}>
+                    <Typography color={'primary'} variant='h3'>Registrieren</Typography>
+                    <Typography variant='h6'>Es geht schnell, einfach und kostenlos</Typography>
+                    {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+                </Box>
+
+                <form onSubmit={handleSubmit} className="signUp-form">
+                    <TextField required label="E-Mail" type="email" variant="filled" value={userEmail}
+                               onChange={(e) => setUserEmail(e.target.value)}/>
+                    <TextField required label="Name" type="name" variant="outlined" value={userName}
+                               onChange={(e) => setUserName(e.target.value)}/>
+                    <TextField required label="Password" type="password" variant="outlined" value={userPassword}
+                               onChange={(e) => setUserPassword(e.target.value)}/>
+                    <TextField required label="Repeat Password" type="password" variant="outlined"
+                               value={userRepeatPassword}
+                               onChange={(e) => setUserRepeatPassword(e.target.value)}/>
+                    <Button sx={{background: 'primary'}} type="submit" variant="contained">Register</Button>
+                    <Link to="/auth/login">Back to login</Link>
+                </form>
+            </CssBaseline>
+        </Container>
     )
 }
