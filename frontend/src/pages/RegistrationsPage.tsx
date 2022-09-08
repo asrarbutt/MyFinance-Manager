@@ -22,17 +22,15 @@ export default function RegistrationsPage() {
         if (validateEmail(userEmail) && validatePasswords(userPassword, userRepeatPassword)) {
 
             register(userEmail, userName, userPassword, userRepeatPassword).then(() => {
-                if (userPassword !== userRepeatPassword) {
-                    toast.error('Passwords do not match')
-                } else {
-                    setUserEmail("");
-                    setUserName("");
-                    setUserPassword("");
-                    setUserRepeatPassword("");
-                    setErrorMessage("")
-                    toast.success("Account Created!")
-                    navigate("/auth/login");
-                }
+
+                setUserEmail("");
+                setUserName("");
+                setUserPassword("");
+                setUserRepeatPassword("");
+                setErrorMessage("")
+                toast.success("Account Created!")
+                navigate("/auth/login");
+
             })
                 .catch(error => {
                     setErrorMessage(error.response.data.message)
@@ -63,12 +61,12 @@ export default function RegistrationsPage() {
         }
 
         if (!/[a-z]/.test(password1)) {
-            setErrorMessage("minimum one lowercase Character required")
+            setErrorMessage("lowercase letter required")
             return false
         }
 
         if (!/[A-Z]/.test(password1)) {
-            setErrorMessage("minimum one Uppercase Character required")
+            setErrorMessage("uppercase letter required")
             return false
         }
 
