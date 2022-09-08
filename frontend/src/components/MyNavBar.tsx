@@ -31,9 +31,15 @@ const MyNavBar = () => {
         handleCloseNavMenu()
     }
 
-    const gotToLandingPage = () => {
+    const goToLandingPage = () => {
         logout();
         navigate('/')
+        handleCloseNavMenu()
+    }
+
+    const goToHomePage = () => {
+        logout();
+        navigate('/home')
         handleCloseNavMenu()
     }
 
@@ -117,6 +123,11 @@ const MyNavBar = () => {
                                 <Typography textAlign="center">Registrieren</Typography>
 
                             </MenuItem>
+                            <MenuItem onClick={goToHomePage}>
+
+                                <Typography textAlign="center">Home</Typography>
+
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
@@ -140,12 +151,11 @@ const MyNavBar = () => {
                     </Typography>
                     <Box sx={{flexGrow: 1, justifyContent: 'center', display: {xs: 'none', md: 'flex'}}}>
                         <Button
-                            onClick={goToLogin}
+                            onClick={goToHomePage}
                             sx={{my: 2, color: 'white', display: 'block'}}
-                        >Login
+                        >Home
                         </Button>
                         <Button
-
                             onClick={goToRegister}
                             sx={{my: 2, color: 'white', display: 'block'}}
                         > Registrieren
@@ -183,7 +193,7 @@ const MyNavBar = () => {
                                         open={Boolean(anchorElUser)}
                                         onClose={handleCloseUserMenu}
                                     >
-                                        <MenuItem onClick={gotToLandingPage}>
+                                        <MenuItem onClick={goToLandingPage}>
 
                                             <Typography textAlign="center">Logout</Typography>
                                         </MenuItem>
