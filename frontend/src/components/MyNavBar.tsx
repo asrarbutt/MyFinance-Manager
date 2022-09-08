@@ -37,6 +37,12 @@ const MyNavBar = () => {
         handleCloseNavMenu()
     }
 
+    const gotToHomePage = () => {
+        logout();
+        navigate('/home')
+        handleCloseNavMenu()
+    }
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -117,6 +123,11 @@ const MyNavBar = () => {
                                 <Typography textAlign="center">Registrieren</Typography>
 
                             </MenuItem>
+                            <MenuItem onClick={gotToHomePage}>
+
+                                <Typography textAlign="center">Home</Typography>
+
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
@@ -140,12 +151,11 @@ const MyNavBar = () => {
                     </Typography>
                     <Box sx={{flexGrow: 1, justifyContent: 'center', display: {xs: 'none', md: 'flex'}}}>
                         <Button
-                            onClick={goToLogin}
+                            onClick={gotToHomePage}
                             sx={{my: 2, color: 'white', display: 'block'}}
-                        >Login
+                        >Home
                         </Button>
                         <Button
-
                             onClick={goToRegister}
                             sx={{my: 2, color: 'white', display: 'block'}}
                         > Registrieren
