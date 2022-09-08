@@ -7,11 +7,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final AppUserDetailsService appUserDetailsService;
 
     public SecurityConfig(AppUserDetailsService appUserDetailsService) {
@@ -30,18 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                //   .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .disable()
-                .authorizeHttpRequests()
-
-                .antMatchers("/auth/register").permitAll()
-                .antMatchers("/auth/login").permitAll()
-                .antMatchers("auth/logout").permitAll()
-                .antMatchers("/").permitAll()
-
+        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and().authorizeRequests()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/users/login").permitAll()
+                .antMatchers("/api/users/logout").permitAll()
+                .antMatchers("/api/users/me").permitAll()
+                .antMatchers("/api/users/**").authenticated()
                 .and().httpBasic();
     }
-
-
 }

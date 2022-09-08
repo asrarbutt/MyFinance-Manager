@@ -22,11 +22,12 @@ public class TransactionService {
     private final RandomUUIDGenerator randomUUIDGenerator;
 
 
-    public List<TransactionDto> getAllTransactions() {
+    public List<TransactionDto> getAllTransactions(String username) {
 
 
         return transactionRepo.findAll()
                 .stream()
+                .filter((transaction -> (transaction.getUserEmail().equals(username))))
                 .map(t ->
                         new TransactionDto(
                                 t.getId(),

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.stream.Stream;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -47,7 +48,7 @@ class UserControllerIntegrationTest {
     @Test
     void shouldRegisterUser() throws Exception {
 
-        MvcResult result = mockMvc.perform(post("/auth/register")
+        MvcResult result = mockMvc.perform(post("/api/register").with(csrf())
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -64,16 +65,13 @@ class UserControllerIntegrationTest {
 
         String content = result.getResponse().getContentAsString();
         Assertions.assertTrue(content.contains("testname"));
-
-
     }
-
 
     @DirtiesContext
     @Test
     void shouldNotRegisterUser_UserExists() throws Exception {
 
-        MvcResult result = mockMvc.perform(post("/auth/register")
+        MvcResult result = mockMvc.perform(post("/api/register").with(csrf())
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -87,12 +85,10 @@ class UserControllerIntegrationTest {
                 .andExpect(status().is(201))
                 .andReturn();
 
-
         String content = result.getResponse().getContentAsString();
         Assertions.assertTrue(content.contains("testname"));
 
-
-        MvcResult resultException = mockMvc.perform(post("/auth/register")
+        MvcResult resultException = mockMvc.perform(post("/api/register").with(csrf())
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -107,7 +103,6 @@ class UserControllerIntegrationTest {
 
         String exception = resultException.getResponse().getContentAsString();
         Assertions.assertTrue(exception.contains("User Exists. Please choose another E-Mail"));
-
     }
 
 
@@ -116,7 +111,7 @@ class UserControllerIntegrationTest {
     @MethodSource
     void shouldNotRegisterUser_passDoNotMatch_passShortThen6(String key, String value) throws Exception {
 
-        MvcResult resultException = mockMvc.perform(post("/auth/register")
+        MvcResult resultException = mockMvc.perform(post("/api/register").with(csrf())
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -132,16 +127,14 @@ class UserControllerIntegrationTest {
 
         String exception = resultException.getResponse().getContentAsString();
 
-
         Assertions.assertTrue(exception.contains(value));
-
     }
 
     @DirtiesContext
     @Test
     void shouldNotRegisterUser_passwordEmpty() throws Exception {
 
-        MvcResult resultException = mockMvc.perform(post("/auth/register")
+        MvcResult resultException = mockMvc.perform(post("/api/register").with(csrf())
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -168,7 +161,7 @@ class UserControllerIntegrationTest {
     @MethodSource
     void shouldNotRegisterUser_invalidEmail_emptyParameter(String key, String value) throws Exception {
 
-        MvcResult result = mockMvc.perform(post("/auth/register")
+        MvcResult result = mockMvc.perform(post("/api/register").with(csrf())
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
@@ -184,23 +177,23 @@ class UserControllerIntegrationTest {
 
         String exception = result.getResponse().getContentAsString();
         Assertions.assertTrue(exception.contains(value));
-
     }
-
 
     @Test
     @DirtiesContext
     @WithMockUser("test@test.com")
     void validUsernameAndPassword_LoginSuccessfully() throws Exception {
 
-        mockMvc.perform(get("/auth/login")).andExpect(content().string("test@test.com"));
+        mockMvc.perform(get("/api/users/login").with(csrf()))
+                .andExpect(content()
+                        .string("test@test.com"));
 
     }
 
     @Test
     @DirtiesContext
     void logoutTest() throws Exception {
-        mockMvc.perform(get("/auth/logout"))
+        mockMvc.perform(get("/api/users/logout"))
                 .andExpect(status().isOk());
     }
 
@@ -208,14 +201,8 @@ class UserControllerIntegrationTest {
     @Test
     @WithMockUser(username = "test@test.com")
     void loggedInUserTest() throws Exception {
-        mockMvc.perform(get("/auth/me"))
+        mockMvc.perform(get("/api/me").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("test@test.com"));
     }
-
 }
-
-
-
-
-

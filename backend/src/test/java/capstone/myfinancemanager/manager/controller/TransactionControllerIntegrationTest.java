@@ -23,7 +23,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class TransactionControllerIntegrationTest {
@@ -34,31 +33,30 @@ class TransactionControllerIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Test
-    @DirtiesContext
-    @WithMockUser("test@test.com")
-    void getAllTransactions() throws Exception {
-
-        mockMvc.perform(get("/auth/login")).andExpect(content().string("test@test.com"));
-
-        mockMvc
-                .perform(
-                        MockMvcRequestBuilders.get("/transactions")
-                )
-                .andExpect(status().is(200))
-                .andExpect(jsonPath("$", hasSize(0)));
-
-    }
-
     protected RequestPostProcessor myTestUserWithEmail() {
         return user("a@a.com").password("123456");
     }
 
     @Test
     @DirtiesContext
+    @WithMockUser("test@test.com")
+    void getAllTransactions() throws Exception {
+
+        mockMvc.perform(get("/api/users/login")).andExpect(content().string("test@test.com"));
+
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders.get("/api/transactions")
+                )
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    @DirtiesContext
     void addTransaction() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/transactions")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/transactions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -86,17 +84,16 @@ class TransactionControllerIntegrationTest {
                         """));
     }
 
-
     @DirtiesContext
     @Test
+    @WithMockUser("test@test.com")
     void deleteTransaction() throws Exception {
 
         String saveResult = mockMvc.perform(post(
-                "/transactions")
+                "/api/transactions").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                            {
-                                    "userEmail": "a@a.com",
                                     "description": "5",
                                     "amount": 123.2,
                                     "transactionDate": "1661866382913",
@@ -107,15 +104,13 @@ class TransactionControllerIntegrationTest {
                         """).with(csrf())
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
         String id = saveResultTransaction.getId();
 
-
-        mockMvc.perform(delete("http://localhost:8080/transactions/" + id).with(csrf()))
+        mockMvc.perform(delete("http://localhost:8080/api/transactions/" + id).with(csrf()))
                 .andExpect(status().is(204));
 
-        mockMvc.perform(get("http://localhost:8080/transactions").with(csrf()))
+        mockMvc.perform(get("http://localhost:8080/api/transactions").with(csrf()))
                 .andExpect(status().is(200))
                 .andExpect(content().json("""
                         []
@@ -124,19 +119,20 @@ class TransactionControllerIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser("test@test.com")
     void deleteTransactionNotExists() throws Exception {
 
         String id = "555555";
-        mockMvc.perform(delete("/transactions/" + id))
+        mockMvc.perform(delete("/api/transactions" + id).with(csrf()))
                 .andExpect(status().is(404));
     }
 
-
     @Test
     @DirtiesContext
+    @WithMockUser("test@test.com")
     void updateTransactionTest() throws Exception {
         String saveResult = mockMvc.perform(post(
-                "/transactions")
+                "/api/transactions").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                            {
@@ -165,7 +161,7 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         String updatedResult = mockMvc.perform(
-                        MockMvcRequestBuilders.put("/transactions/" + saveResultTransaction.getId())
+                        MockMvcRequestBuilders.put("/api/transactions/" + saveResultTransaction.getId()).with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
@@ -176,12 +172,12 @@ class TransactionControllerIntegrationTest {
         Assertions.assertEquals(saveResultTransaction.getId(), actualPlant.getId());
     }
 
-
     @Test
     @DirtiesContext
+    @WithMockUser("test@test.com")
     void updateTransactionDoNotExistTest() throws Exception {
         String saveResult = mockMvc.perform(post(
-                "/transactions")
+                "/api/transactions").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                            {
@@ -193,7 +189,7 @@ class TransactionControllerIntegrationTest {
                                     "pictureId": "url",
                                     "isIncome": true
                                 }
-                        """).with(csrf())
+                        """)
         ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
@@ -210,12 +206,10 @@ class TransactionControllerIntegrationTest {
                 .build();
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/transactions/" + "2")
+                        MockMvcRequestBuilders.put("/api/transactions/" + "2").with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
                 .andExpect(status().is(404));
     }
-
-
 }
