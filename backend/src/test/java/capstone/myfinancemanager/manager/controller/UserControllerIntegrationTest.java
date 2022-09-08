@@ -65,10 +65,7 @@ class UserControllerIntegrationTest {
 
         String content = result.getResponse().getContentAsString();
         Assertions.assertTrue(content.contains("testname"));
-
-
     }
-
 
     @DirtiesContext
     @Test
@@ -88,10 +85,8 @@ class UserControllerIntegrationTest {
                 .andExpect(status().is(201))
                 .andReturn();
 
-
         String content = result.getResponse().getContentAsString();
         Assertions.assertTrue(content.contains("testname"));
-
 
         MvcResult resultException = mockMvc.perform(post("/api/register").with(csrf())
                         .contentType(APPLICATION_JSON)
@@ -108,7 +103,6 @@ class UserControllerIntegrationTest {
 
         String exception = resultException.getResponse().getContentAsString();
         Assertions.assertTrue(exception.contains("User Exists. Please choose another E-Mail"));
-
     }
 
 
@@ -133,9 +127,7 @@ class UserControllerIntegrationTest {
 
         String exception = resultException.getResponse().getContentAsString();
 
-
         Assertions.assertTrue(exception.contains(value));
-
     }
 
     @DirtiesContext
@@ -185,9 +177,7 @@ class UserControllerIntegrationTest {
 
         String exception = result.getResponse().getContentAsString();
         Assertions.assertTrue(exception.contains(value));
-
     }
-
 
     @Test
     @DirtiesContext
@@ -215,5 +205,4 @@ class UserControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("test@test.com"));
     }
-
 }

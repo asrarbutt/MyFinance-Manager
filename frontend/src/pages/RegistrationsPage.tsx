@@ -5,7 +5,6 @@ import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
 import AuthContext from "../context/authentication/AuthContext";
 
-
 export default function RegistrationsPage() {
 
     const navigate = useNavigate();
@@ -14,9 +13,8 @@ export default function RegistrationsPage() {
     const [userName, setUserName] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
     const [userRepeatPassword, setUserRepeatPassword] = useState<string>("");
-
-
     const [errorMessage, setErrorMessage] = useState<string>("");
+
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();
@@ -42,9 +40,9 @@ export default function RegistrationsPage() {
     }
 
     return (
-
         <Container component='main' maxWidth="sm" className="signUp">
             <CssBaseline>
+
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -56,7 +54,6 @@ export default function RegistrationsPage() {
                     <Typography variant='h6'>Es geht schnell, einfach und kostenlos</Typography>
                     {errorMessage && <Box>{errorMessage}</Box>}
                 </Box>
-
 
                 <form onSubmit={handleSubmit} className="signUp-form">
                     <TextField required label="E-Mail" type="email" variant="filled" value={userEmail}
@@ -70,11 +67,9 @@ export default function RegistrationsPage() {
                                onChange={(e) => setUserRepeatPassword(e.target.value)}/>
                     <Button sx={{background: 'primary'}} type="submit" variant="contained">Register</Button>
                     <Link to="/auth/login">Back to login</Link>
-
                 </form>
+
             </CssBaseline>
-
         </Container>
-
     )
 }
