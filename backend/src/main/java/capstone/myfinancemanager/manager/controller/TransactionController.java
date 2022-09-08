@@ -8,6 +8,7 @@ import capstone.myfinancemanager.manager.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,13 +23,18 @@ public class TransactionController {
     private final UserService userService;
 
     @GetMapping
-    public List<TransactionDto> getAllTransactions(Principal principal) {
-        return transactionService.getAllTransactions(principal.getName());
+    public List<TransactionDto> getAllTransactions() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+
+        return transactionService
+                .getAllTransactions(principal.getName());
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransactionDto> addTransaction(Principal principal, @RequestBody TransactionCreationDto transactionCreation) {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation, principal.getName())));
@@ -41,7 +47,8 @@ public class TransactionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TransactionDto> updateTransaction(@PathVariable String id, @RequestBody TransactionCreationDto transactionUpdate) {
+    public ResponseEntity<TransactionDto> updateTransaction(@PathVariable String id,
+                                                            @RequestBody TransactionCreationDto transactionUpdate) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(buildNewTransactionDto(transactionService.updateTransaction(id, transactionUpdate)));
