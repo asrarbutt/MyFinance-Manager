@@ -9,10 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final AppUserDetailsService appUserDetailsService;
 
     public SecurityConfig(AppUserDetailsService appUserDetailsService) {
@@ -40,6 +38,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/**").authenticated()
                 .and().httpBasic();
     }
-
-
 }

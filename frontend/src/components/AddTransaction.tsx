@@ -21,11 +21,9 @@ import axios from "axios";
 import TransactionContext from "../context/transaction/TransactionContext";
 import TransactionCreationDto from "../model/TransactionCreationDto";
 
-
 export default function AddTransaction() {
 
     const {setAllTransactions, allTransactions} = useContext(TransactionContext);
-
     const [isIncome, setIsIncome] = useState<boolean>(true);
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
@@ -47,7 +45,6 @@ export default function AddTransaction() {
 
     }, [date, description, amount, isIncome, pictureId, category])
 
-
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
@@ -56,7 +53,6 @@ export default function AddTransaction() {
     }
 
     const addTransaction = (newTransaction: TransactionCreationDto) => {
-
 
         return axios.post("/api/transactions", newTransaction)
             .then(response => response.data)
