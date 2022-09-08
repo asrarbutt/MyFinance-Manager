@@ -197,7 +197,6 @@ class UserControllerIntegrationTest {
                 .andExpect(status().isOk());
     }
 
-
     @Test
     @WithMockUser(username = "test@test.com")
     void loggedInUserTest() throws Exception {
