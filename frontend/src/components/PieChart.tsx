@@ -36,11 +36,19 @@ export default function PieChart(props: PieChartProps) {
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)',
                 ],
+                hoverBackgroundColor: [
+                    'rgb(194,133,191)',
+                    'rgba(101,225,135,0.8)',
+                    'rgb(210,141,78)',
+                    'rgba(188,132,224,0.8)',
+                    'rgb(170,159,196)',
+                    'rgba(203,146,91,0.8)',
+                ],
                 borderWidth: 1,
             },
         ],
-
     };
+
     return (
         <div style={{height: '180px', width: '250px'}}>
             <Pie data={data}/>
