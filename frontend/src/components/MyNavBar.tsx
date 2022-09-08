@@ -31,13 +31,13 @@ const MyNavBar = () => {
         handleCloseNavMenu()
     }
 
-    const gotToLandingPage = () => {
+    const goToLandingPage = () => {
         logout();
         navigate('/')
         handleCloseNavMenu()
     }
 
-    const gotToHomePage = () => {
+    const goToHomePage = () => {
         logout();
         navigate('/home')
         handleCloseNavMenu()
@@ -123,7 +123,7 @@ const MyNavBar = () => {
                                 <Typography textAlign="center">Registrieren</Typography>
 
                             </MenuItem>
-                            <MenuItem onClick={gotToHomePage}>
+                            <MenuItem onClick={goToHomePage}>
 
                                 <Typography textAlign="center">Home</Typography>
 
@@ -151,7 +151,7 @@ const MyNavBar = () => {
                     </Typography>
                     <Box sx={{flexGrow: 1, justifyContent: 'center', display: {xs: 'none', md: 'flex'}}}>
                         <Button
-                            onClick={gotToHomePage}
+                            onClick={goToHomePage}
                             sx={{my: 2, color: 'white', display: 'block'}}
                         >Home
                         </Button>
@@ -193,7 +193,7 @@ const MyNavBar = () => {
                                         open={Boolean(anchorElUser)}
                                         onClose={handleCloseUserMenu}
                                     >
-                                        <MenuItem onClick={gotToLandingPage}>
+                                        <MenuItem onClick={goToLandingPage}>
 
                                             <Typography textAlign="center">Logout</Typography>
                                         </MenuItem>
