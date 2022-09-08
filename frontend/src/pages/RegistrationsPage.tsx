@@ -42,10 +42,11 @@ export default function RegistrationsPage() {
 
     const validateEmail = (inputEmail: string) => {
 
-        let emailRegExpression = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+        let emailRegExpression = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+            + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
 
-        if (!emailRegExpression.test(inputEmail)) {
+        if (!emailRegExpression.match(inputEmail)) {
             setErrorMessage("Email ist not valid")
         }
 
