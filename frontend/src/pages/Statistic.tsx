@@ -3,7 +3,6 @@ import "./Statistic.css"
 import {useContext} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
 
-
 export default function Statistic() {
 
     const {allTransactions} = useContext(TransactionContext);
@@ -12,9 +11,8 @@ export default function Statistic() {
     const grouped = Array.from(
         allTransactions
             .reduce(
-                (m,
-                 {category, amount}) =>
-                    m.set(category, (m.get(category) || 0) + amount), new Map),
+                (m, {category, amount}) =>
+                    m.set(category, (m.get(category) || 0) + amount), new Map()),
         ([key, val]) => ({key, val})
     );
 
@@ -25,7 +23,6 @@ export default function Statistic() {
     const groupedCategory = grouped
         .filter(t => t.key)
         .map(t => t.key);
-
 
     const sumOfExpanse = allTransactions
         .filter(t => (!t.isIncome))
@@ -38,7 +35,6 @@ export default function Statistic() {
         .reduce((a, b) => a + b, 0);
 
     const sumOfIncomeAndExpanse = Array.of(sumOfIncome, sumOfExpanse);
-
 
     return (
         <div className="statistic">
@@ -69,7 +65,6 @@ export default function Statistic() {
                                 </>
                             )
                             : <p>Keine Transaktionen vorhanden</p>
-
                         }
                     </div>
                     <div>
