@@ -3,7 +3,6 @@ import AuthContext from "../context/authentication/AuthContext";
 import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
 import TransactionContext from "../context/transaction/TransactionContext";
-import {useTheme} from "@mui/material/styles";
 import CommonContainerStyled, {
     FormInputContainer,
     HomeContainerStyled,
@@ -21,7 +20,6 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const theme = useTheme();
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
