@@ -1,4 +1,7 @@
+
 import AddTransaction from "./AddTransaction";
+
+
 import {MenuButton} from "./ui/Button.styled";
 
 export default function MyMenu() {

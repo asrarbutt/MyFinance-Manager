@@ -23,7 +23,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class TransactionControllerIntegrationTest {
@@ -33,6 +32,10 @@ class TransactionControllerIntegrationTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    protected RequestPostProcessor myTestUserWithEmail() {
+        return user("a@a.com").password("123456");
+    }
 
     @Test
     @DirtiesContext
@@ -47,11 +50,6 @@ class TransactionControllerIntegrationTest {
                 )
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(0)));
-
-    }
-
-    protected RequestPostProcessor myTestUserWithEmail() {
-        return user("a@a.com").password("123456");
     }
 
     @Test
@@ -86,7 +84,6 @@ class TransactionControllerIntegrationTest {
                         """));
     }
 
-
     @DirtiesContext
     @Test
     @WithMockUser("test@test.com")
@@ -110,7 +107,6 @@ class TransactionControllerIntegrationTest {
         Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
         String id = saveResultTransaction.getId();
 
-
         mockMvc.perform(delete("http://localhost:8080/api/transactions/" + id).with(csrf()))
                 .andExpect(status().is(204));
 
@@ -130,7 +126,6 @@ class TransactionControllerIntegrationTest {
         mockMvc.perform(delete("/api/transactions" + id).with(csrf()))
                 .andExpect(status().is(404));
     }
-
 
     @Test
     @DirtiesContext
@@ -176,7 +171,6 @@ class TransactionControllerIntegrationTest {
         Transaction actualPlant = objectMapper.readValue(updatedResult, Transaction.class);
         Assertions.assertEquals(saveResultTransaction.getId(), actualPlant.getId());
     }
-
 
     @Test
     @DirtiesContext

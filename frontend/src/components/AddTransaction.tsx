@@ -21,7 +21,6 @@ import TransactionContext from "../context/transaction/TransactionContext";
 import TransactionCreationDto from "../model/TransactionCreationDto";
 import {AddIconStyled, MenuButton} from './ui/Button.styled';
 
-
 export default function AddTransaction() {
 
     const {setAllTransactions, allTransactions} = useContext(TransactionContext);
@@ -46,7 +45,6 @@ export default function AddTransaction() {
 
     }, [date, description, amount, isIncome, pictureId, category])
 
-
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
@@ -55,7 +53,6 @@ export default function AddTransaction() {
     }
 
     const addTransaction = (newTransaction: TransactionCreationDto) => {
-
 
         return axios.post("/api/transactions", newTransaction)
             .then(response => response.data)
