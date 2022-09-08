@@ -42,7 +42,10 @@ export default function RegistrationsPage() {
 
     const validateEmail = (inputEmail: string) => {
 
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(inputEmail)) {
+        let emailRegExpression = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+
+
+        if (!emailRegExpression.test(inputEmail)) {
             setErrorMessage("Email ist not valid")
         }
 
