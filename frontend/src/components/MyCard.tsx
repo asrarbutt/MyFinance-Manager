@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import "./MyCard.css";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
 import {IconButton, Typography} from "@mui/material";
 import {styled} from "@mui/system";
 import {dateFromInstant} from "../util/Util";
@@ -11,11 +10,6 @@ import UpdateTransaction from "./UpdateTransaction";
 
 
 const StlyeDeleteIcon = styled(DeleteForeverIcon)`
-
-  font-size: 2rem;
- `;
-
-const StlyeEditIcon = styled(EditIcon)`
 
   font-size: 2rem;
  `;
