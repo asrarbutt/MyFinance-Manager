@@ -45,6 +45,7 @@ export default function RegistrationsPage() {
         if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(inputEmail)) {
             setErrorMessage("Email ist not valid")
         }
+
         setErrorMessage("");
         return true;
     }
