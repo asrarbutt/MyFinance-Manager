@@ -16,18 +16,12 @@ import Select from '@mui/material/Select';
 import TransactionCreationDto from "../model/TransactionCreationDto";
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
-import EditIcon from '@mui/icons-material/Edit';
-import {styled} from "@mui/system";
 import TransactionDto from "../model/TransactionDto";
 import axios from "axios";
 import {toast} from "react-toastify";
 import TransactionContext from "../context/transaction/TransactionContext";
+import {StlyeEditIcon} from './ui/Button.styled';
 
-
-const StlyeEditIcon = styled(EditIcon)`
-
-  font-size: 2rem;
- `;
 
 type UpdateTransactionProps = {
     allTransactions: TransactionDto;
