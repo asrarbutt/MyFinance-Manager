@@ -12,7 +12,6 @@ import {WelcomeTitle} from "../components/ui/Title.styled";
 import ButtonStyled from "../components/ui/Button.styled";
 import {TextField} from "@mui/material";
 
-
 export default function LoginPage() {
 
     const {login} = useContext(AuthContext);
