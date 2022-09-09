@@ -1,68 +1,109 @@
-* {
+
+body {
     box-sizing: border-box;
 }
 
-.myCard-container {
+.card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    width: 100%;
-    padding-left: 1rem;
+    justify-content: space-around;
+    align-items: center;
+    width: 97%;
+    height: 100%;
     border-radius: 0 50px 50px 0;
-    box-shadow: 8px 0 8px 8px rgba(0, 0, 0, 0.3);
-    margin: 0.5rem 0.5rem 0.5rem 0.2rem;
+    box-shadow: 1px 0 1px 1px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0.5rem 0 0.3rem;
+    padding: 0.2rem;
+    background: #112b3c;
 
 }
 
+.card-dateCategoryIcon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-radius: 0 50px 50px 0;
+
+}
+
+
 .myCard-isIncome {
     border-left: 0.8rem solid green;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding-left: 1rem;
-    border-radius: 0 50px 50px 0;
-    box-shadow: 8px 0 8px 8px rgba(0, 0, 0, 0.3);
-    margin: 0 0 0.5rem 0.2rem;
 
 }
 
 .myCard-expanse {
     border-left: 0.8rem solid red;
+}
+
+.card-description {
+    border-radius: 0 40px 0 0;
+    background: #f57b29;
+    width: 100%;
+}
+
+.card-description > p {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1.2rem;
+
+}
+
+
+.card-date {
+    /*border: 0.1rem solid white;*/
+
+    max-width: 5rem;
+    min-width: 5rem;
+    height: 100%;
+    /*background: #f57b29;*/
+
+}
+
+.card-date > p {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.card-category > p {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.card-amount {
+
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1.4rem;
+    /*max-width: 6rem;*/
+    /*min-width: 6rem;*/
+
+
+    text-align: center;
+
+    border-radius: 0 0 50px 0;
+    background: #f57b29;
+    width: 100%;
+}
+
+.card-icon {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding-left: 1rem;
-    border-radius: 0 50px 50px 0;
-    box-shadow: 8px 0 8px 8px rgba(0, 0, 0, 0.3);
-    margin: 0 0 0.5rem 0.2rem;
-
-}
-
-.myCard-header > h4 {
-    margin-left: 1rem;
-    margin-right: 4rem;
-}
-
-.myCard-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    align-content: center;
-    width: 100%;
-    border-radius: 0 50px 50px 0;
-    padding: 0.1rem;
-
-}
-
-
-.myCard-actions {
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    border-radius: 20px;
+    /*background: #f57b29;*/
+    height: 100%;
+    border-radius: 0 50px 50px 0;
+    flex-grow: 1;
+    max-width: 3.5rem;
+    min-width: 3.5rem;
 
+}
+
+.card-icon > span {
+    color: whitesmoke;
 }
