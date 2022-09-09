@@ -77,4 +77,7 @@ export const StlyeEditIcon = styled(EditIcon)`
 
   font-size: 2rem;
   background: none;
+  border-radius: 2.5px;
+  font-weight: bold;
+  color: whitesmoke;
 `;
