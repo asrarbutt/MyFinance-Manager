@@ -1,13 +1,10 @@
 import * as React from 'react';
 
 import "./MyCard.css";
-import {IconButton} from "@mui/material";
 import {dateFromInstant} from "../util/Util";
 import TransactionDto from "../model/TransactionDto";
 import UpdateTransaction from "./UpdateTransaction";
-
 import {DeleteIconStyled} from './ui/Button.styled';
-
 
 type MyCardProps = {
     allTransaction: TransactionDto;
@@ -29,12 +26,8 @@ export default function MyCard(props: MyCardProps) {
                 </div>
             </div>
             <div className="myCard-actions">
-                <IconButton>
-                    <DeleteIconStyled onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
-                </IconButton>
-                <IconButton>
-                    <UpdateTransaction allTransactions={props.allTransaction}/>
-                </IconButton>
+                <DeleteIconStyled onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
+                <UpdateTransaction allTransactions={props.allTransaction}/>
             </div>
         </div>
     );
