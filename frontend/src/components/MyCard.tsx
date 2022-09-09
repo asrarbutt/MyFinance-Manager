@@ -14,21 +14,29 @@ type MyCardProps = {
 export default function MyCard(props: MyCardProps) {
 
     return (
-        <div className={`myCard-container ${props.allTransaction.isIncome ? "myCard-isIncome" : "myCard-expanse"}`}>
-            <div className="myCard-content">
-                <div>
-                    <h1> {props.allTransaction.description}</h1>
-                    <h3>{props.allTransaction.category}</h3>
-                    <h3>{dateFromInstant(props.allTransaction.transactionDate, "de-DE")}</h3>
+        <div className={`card ${props.allTransaction.isIncome ? "card-isIncome" : "card-expanse"}`}>
+
+            <div className="card-description">
+                <p>{props.allTransaction.description}</p>
+
+            </div>
+
+            <div className="card-dateCategoryIcon">
+                <div className="card-date"><p>{dateFromInstant(props.allTransaction.transactionDate, "de-DE")}</p></div>
+
+                <div className="card-category">
+                    <p>{props.allTransaction.category}</p>
                 </div>
-                <div className="myCard-amount">
-                    <h1>{props.allTransaction.amount} €</h1>
+
+                <div className="card-icon">
+                    <span> <UpdateTransaction allTransactions={props.allTransaction}/></span>
+                    <span><DeleteIconStyled onClick={() => props.deleteTransaction(props.allTransaction.id)}/></span>
+
                 </div>
             </div>
-            <div className="myCard-actions">
-                <DeleteIconStyled onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
-                <UpdateTransaction allTransactions={props.allTransaction}/>
-            </div>
+
+            <div className="card-amount">{props.allTransaction.amount} €</div>
+
         </div>
     );
 }
