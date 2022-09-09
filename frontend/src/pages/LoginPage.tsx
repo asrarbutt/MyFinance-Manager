@@ -18,7 +18,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TransactionContext from "../context/transaction/TransactionContext";
 import {useTheme} from "@mui/material/styles";
 
-
 export default function LoginPage() {
 
     const {login} = useContext(AuthContext);
