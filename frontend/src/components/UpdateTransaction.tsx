@@ -105,7 +105,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                             alignItems: "space-between",
                             marginTop: 6,
                             marginBottom: 7,
-                            width: 500
+                            width: "70vmin"
 
                         }}>
                             <TextField
