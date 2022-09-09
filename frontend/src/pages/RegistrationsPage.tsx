@@ -34,7 +34,6 @@ export default function RegistrationsPage() {
             })
                 .catch(error => {
                     setErrorMessage(error.response.data.message)
-                    toast.error(error.response.data.message);
                     console.log(error.response.data.message)
                 });
         }
@@ -61,7 +60,7 @@ export default function RegistrationsPage() {
         }
 
         if (password1.length < 6) {
-            setErrorMessage("Password to short minimum 6 Characters")
+            setErrorMessage("Password too short minimum 6 Characters")
             return false
         }
 
