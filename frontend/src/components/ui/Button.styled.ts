@@ -1,6 +1,7 @@
 import styled, {css} from 'styled-components';
 import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
 
 
 const ButtonStyled = styled.button<{ variant: string }>`
@@ -72,3 +73,8 @@ export const DeleteIconStyled = styled(DeleteForeverIcon)`
   font-size: 2rem;
 `;
 
+export const StlyeEditIcon = styled(EditIcon)`
+
+  font-size: 2rem;
+  background: none;
+`;
