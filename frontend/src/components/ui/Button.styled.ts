@@ -42,12 +42,13 @@ const ButtonStyled = styled.button<{ variant: string }>`
             background: linear-gradient(to right, #795303 0%, #03217b 79%);
             text-transform: uppercase;
             letter-spacing: 0.2rem;
-            width: 65%;
+            width: 30%;
             height: 3rem;
             border: none;
             color: white;
             border-radius: 2rem;
             cursor: pointer;
+            margin-top: 1rem;
           `};
 `;
 export default ButtonStyled;
