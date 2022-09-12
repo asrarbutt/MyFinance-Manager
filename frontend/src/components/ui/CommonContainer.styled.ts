@@ -21,7 +21,7 @@ export const MainContainer = styled(CommonContainerStyled)`
   width: 100vw;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
-  color: #ec8442;
+  color: var(--MenuButtonColor);
   text-transform: uppercase;
   letter-spacing: 0.4rem;
 `;

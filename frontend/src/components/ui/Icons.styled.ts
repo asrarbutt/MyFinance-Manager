@@ -18,5 +18,5 @@ export const StlyeEditIcon = styled(EditIcon)`
   background: none;
   border-radius: 2.5px;
   font-weight: bold;
-  color: whitesmoke;
+  color: var(--FontColor);
 `;

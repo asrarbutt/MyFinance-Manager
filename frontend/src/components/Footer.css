@@ -3,14 +3,12 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #112b3c;
+    background: var(--NavBarColor);
     height: 5vh;
     width: 100vw;
     color: whitesmoke;
     margin-top: 1rem;
-
 }
-
 
 .footer-content > p > a {
     margin: 10px auto;
@@ -19,7 +17,6 @@ footer {
     transition: color .4s ease;
     text-decoration: none;
 }
-
 
 .footer-content > p:hover a {
     color: wheat;
