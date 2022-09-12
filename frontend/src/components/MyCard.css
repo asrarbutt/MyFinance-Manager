@@ -13,16 +13,7 @@ body {
     box-shadow: 1px 0 1px 1px rgba(0, 0, 0, 0.1);
     margin: 1rem 0.5rem 0 0.3rem;
     padding: 0.2rem;
-    background: #112b3c;
-}
-
-.card-dateCategoryIcon {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    border-radius: 0 50px 50px 0;
+    background-color: #969496;
 }
 
 .card-isIncome {
@@ -33,44 +24,55 @@ body {
     border-left: 0.8rem solid var(--ExpanseColor);
 }
 
-.card-description {
-    border-radius: 0 40px 0 0;
-    background: #f57b29;
+.card-descriptionAmount {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
+    border-radius: 0 50px 50px 0;
 }
 
-.card-description > p {
-    color: var(--FontColor);
+.card-description {
+    color: black;
     font-weight: bold;
     font-size: 1.2rem;
+    text-align: left;
+    width: 50%;
 }
 
-.card-date {
-    max-width: 5rem;
-    min-width: 5rem;
-    height: 100%;
-}
-
-.card-date > p {
-    color: var(--FontColor);
-    font-weight: bold;
-    font-size: 1rem;
+.card-dateCategoryIcons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    border-radius: 0 50px 50px 0;
 }
 
 .card-category > p {
-    color: var(--FontColor);
+    color: black;
     font-weight: bold;
     font-size: 1rem;
 }
 
-.card-amount {
-    color: var(--FontColor);
+.card-date > p {
+    color: black;
     font-weight: bold;
-    font-size: 1.4rem;
-    text-align: center;
+    font-size: 1rem;
+}
+
+.card-icon > span {
+    color: black;
+}
+
+.card-amount {
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: right;
+    margin-right: 1rem;
     border-radius: 0 0 50px 0;
-    background: var(--MenuButtonColor);
-    width: 100%;
+    width: 25%;
 }
 
 .card-icon {
@@ -80,11 +82,4 @@ body {
     align-items: center;
     height: 100%;
     border-radius: 0 50px 50px 0;
-    flex-grow: 1;
-    max-width: 3.5rem;
-    min-width: 3.5rem;
-}
-
-.card-icon > span {
-    color: var(--FontColor);
 }

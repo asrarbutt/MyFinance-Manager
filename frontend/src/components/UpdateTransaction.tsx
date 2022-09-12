@@ -20,7 +20,7 @@ import TransactionDto from "../model/TransactionDto";
 import axios from "axios";
 import {toast} from "react-toastify";
 import TransactionContext from "../context/transaction/TransactionContext";
-import {StlyeEditIcon} from './ui/Icons.styled';
+import {EditIconStyled} from './ui/Icons.styled';
 
 type UpdateTransactionProps = {
     allTransactions: TransactionDto;
@@ -80,7 +80,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
     return (
         <div>
             <Button onClick={handleClickOpen}>
-                <StlyeEditIcon/>
+                <EditIconStyled/>
             </Button>
             <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
