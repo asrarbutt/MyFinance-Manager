@@ -34,6 +34,7 @@ export default function AddTransaction() {
     const [amount, setAmount] = useState<number>(0);
     const [newTransactionToAdd, setNewTransactionToAdd] = useState<TransactionCreationDto>();
 
+
     useEffect(() => {
         setNewTransactionToAdd({
             "description": description,
@@ -49,11 +50,44 @@ export default function AddTransaction() {
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
 
-        if (newTransactionToAdd)
-            addTransaction(newTransactionToAdd);
+        /* if (newTransactionToAdd)
+             addTransaction(newTransactionToAdd);*/
+
+
+        uploadImages(event.target as HTMLFormElement)
+
+
     }
 
+    const uploadImages = (htmlForm: HTMLFormElement) => {
+        const formData = new FormData(htmlForm);
+        console.log(formData);
+
+        formData.append('TransactionCreationDto', new Blob([JSON.stringify(newTransactionToAdd)], {
+            type: "application/json"
+        }));
+
+        return axios.post("/api/transactions", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            }
+        ).then(data => data.data)
+            .then(response => {
+                toast.info("Bild wurde gespeichert")
+
+                return response;
+            }).then((respone) => console.log(respone))
+            .catch(() => {
+                    toast.warn("Bild konnte nicht auf die Cloud geladen werden.");
+                    return [];
+                }
+            );
+    }
+
+
     const addTransaction = (newTransaction: TransactionCreationDto) => {
+
 
         return axios.post("/api/transactions", newTransaction)
             .then(response => response.data)
@@ -77,6 +111,7 @@ export default function AddTransaction() {
     const handleClose = () => {
         setOpen(false);
     };
+
 
     return (
         <div>
@@ -176,9 +211,12 @@ export default function AddTransaction() {
                                 <AddAPhotoIcon/> Bild Uploaden
                                 <input
                                     type="file"
+                                    name="file"
                                     onChange={(e) => {
                                         if (e.target.files !== null) {
-                                            setPictureId(URL.createObjectURL(e.target.files[0]))
+                                            setPictureId(e.target.value);
+
+
                                         }
                                     }} hidden/>
                             </Button>

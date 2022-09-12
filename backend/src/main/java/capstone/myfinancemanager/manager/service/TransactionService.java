@@ -1,6 +1,5 @@
 package capstone.myfinancemanager.manager.service;
 
-
 import capstone.myfinancemanager.manager.model.RandomUUIDGenerator;
 import capstone.myfinancemanager.manager.model.Transaction;
 import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
@@ -14,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.Instant;
 import java.util.List;
 
+
 @RequiredArgsConstructor
 @Service
 public class TransactionService {
@@ -21,9 +21,7 @@ public class TransactionService {
     private final TransactionRepo transactionRepo;
     private final RandomUUIDGenerator randomUUIDGenerator;
 
-
     public List<TransactionDto> getAllTransactions(String username) {
-
 
         return transactionRepo.findAll()
                 .stream()
@@ -41,8 +39,8 @@ public class TransactionService {
                 .toList();
     }
 
-    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto, String userEmail) {
 
+    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto, String userEmail) {
 
         Transaction transactionCreated = Transaction.builder()
                 .id(randomUUIDGenerator.getRandomId())
@@ -57,7 +55,6 @@ public class TransactionService {
 
         return transactionRepo.save(transactionCreated);
     }
-
 
     public boolean deleteTransaction(String id) {
         if (transactionRepo.existsById(id)) {

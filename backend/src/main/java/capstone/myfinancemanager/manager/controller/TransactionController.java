@@ -3,16 +3,21 @@ package capstone.myfinancemanager.manager.controller;
 import capstone.myfinancemanager.manager.model.Transaction;
 import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
 import capstone.myfinancemanager.manager.model.dto.TransactionDto;
+import capstone.myfinancemanager.manager.security.PictureService;
 import capstone.myfinancemanager.manager.service.TransactionService;
 import capstone.myfinancemanager.manager.service.UserService;
+import com.cloudinary.Cloudinary;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -21,6 +26,9 @@ public class TransactionController {
 
     private final TransactionService transactionService;
     private final UserService userService;
+
+    private final Cloudinary cloudinary;
+    private final PictureService pictureService;
 
     @GetMapping
     public List<TransactionDto> getAllTransactions() {
@@ -32,12 +40,16 @@ public class TransactionController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation) {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionCreationDto transactionCreation, @RequestPart(value = "file") Optional<MultipartFile> inputFile) throws IOException {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
+
+
+        pictureService.getFileUrl(inputFile);
+
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation, principal.getName())));
+                .body(buildNewTransactionDto2(transactionService.addTransaction(transactionCreation, principal.getName()), pictureService.getFileUrl(inputFile)));
     }
 
     @DeleteMapping("/{id}")
@@ -54,6 +66,19 @@ public class TransactionController {
                 .body(buildNewTransactionDto(transactionService.updateTransaction(id, transactionUpdate)));
     }
 
+    public TransactionDto buildNewTransactionDto2(Transaction transaction, String url) {
+        return TransactionDto.builder()
+                .id(transaction.getId())
+                .userEmail(transaction.getUserEmail())
+                .description(transaction.getDescription())
+                .amount(transaction.getAmount())
+                .transactionDate(transaction.getTransactionDate())
+                .category(transaction.getCategory())
+                .isIncome(transaction.getIsIncome())
+                .pictureId(url)
+                .build();
+    }
+
     public TransactionDto buildNewTransactionDto(Transaction transaction) {
         return TransactionDto.builder()
                 .id(transaction.getId())
@@ -66,4 +91,5 @@ public class TransactionController {
                 .pictureId(transaction.getPictureId())
                 .build();
     }
+
 }
