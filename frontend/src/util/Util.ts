@@ -25,10 +25,10 @@ export const convertAmountToGermanCurrencyStyle = (amount: number) => {
 
 }
 
-export const getFirstLetters = (username: string) => {
-    return username
+export const getFirstLetters = (word: string) => {
+    return word
         .split(' ')
-        .map(word => word[0])
+        .map(w => w[0])
         .join('');
 }
 
