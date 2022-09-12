@@ -1,7 +1,4 @@
 import styled, {css} from 'styled-components';
-import AddIcon from "@mui/icons-material/Add";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
 
 
 const ButtonStyled = styled.button<{ variant: string }>`
@@ -55,7 +52,6 @@ export default ButtonStyled;
 
 
 export const MenuButton = styled(ButtonStyled)`
-
   background: #f57b29;
   color: Black;
   box-shadow: 0 3px 5px 2px rgba(182, 31, 61, 0.3);
@@ -63,22 +59,3 @@ export const MenuButton = styled(ButtonStyled)`
   font-size: 1.2rem;
 `;
 
-export const AddIconStyled = styled(AddIcon)`
-  border-radius: 2.5px;
-  background: none;
-  font-weight: bold;
-`;
-
-export const DeleteIconStyled = styled(DeleteForeverIcon)`
-
-  font-size: 2rem;
-`;
-
-export const StlyeEditIcon = styled(EditIcon)`
-
-  font-size: 2rem;
-  background: none;
-  border-radius: 2.5px;
-  font-weight: bold;
-  color: whitesmoke;
-`;

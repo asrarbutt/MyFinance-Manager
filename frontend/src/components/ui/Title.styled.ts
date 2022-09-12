@@ -9,11 +9,9 @@ const TitleStyled = styled.h1`
 
 export default TitleStyled;
 
-
 export const WelcomeTitle = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
-
 
 export const WelcomeText = styled.p`
   font-size: 1rem;

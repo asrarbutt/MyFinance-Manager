@@ -73,6 +73,5 @@ export default function MyCardList(props: MyCardListProps) {
                 ) : (<p>Keine Transaktion vorhanden</p>)
             }
         </TransactionsContainerStyled>
-
     );
 }

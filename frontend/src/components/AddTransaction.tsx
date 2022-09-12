@@ -19,7 +19,8 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import axios from "axios";
 import TransactionContext from "../context/transaction/TransactionContext";
 import TransactionCreationDto from "../model/TransactionCreationDto";
-import {AddIconStyled, MenuButton} from './ui/Button.styled';
+import {MenuButton} from './ui/Button.styled';
+import {AddIconStyled} from './ui/Icons.styled';
 
 export default function AddTransaction() {
 
