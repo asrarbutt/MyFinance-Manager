@@ -19,3 +19,7 @@ export const convertDateToNumber = (date: Date | null) => {
     }
     return dateInstant;
 }
+
+export const convertAmountToGermanCurrencyStyle = (amount: number) => {
+    return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(amount);
+}

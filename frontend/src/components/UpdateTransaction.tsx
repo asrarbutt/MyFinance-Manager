@@ -16,18 +16,12 @@ import Select from '@mui/material/Select';
 import TransactionCreationDto from "../model/TransactionCreationDto";
 import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
-import EditIcon from '@mui/icons-material/Edit';
-import {styled} from "@mui/system";
 import TransactionDto from "../model/TransactionDto";
 import axios from "axios";
 import {toast} from "react-toastify";
 import TransactionContext from "../context/transaction/TransactionContext";
+import {StlyeEditIcon} from './ui/Icons.styled';
 
-
-const StlyeEditIcon = styled(EditIcon)`
-
-  font-size: 2rem;
- `;
 
 type UpdateTransactionProps = {
     allTransactions: TransactionDto;
@@ -36,7 +30,6 @@ type UpdateTransactionProps = {
 export default function UpdateTransaction(props: UpdateTransactionProps) {
 
     const {getAllTransactions} = useContext(TransactionContext);
-
     const [isIncome, setIsIncome] = useState<boolean>(props.allTransactions.isIncome || true);
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
@@ -46,9 +39,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
     const [amount, setAmount] = useState<number>(props.allTransactions.amount || 0);
     const [transactionToUpdate, setTransactionToUpdate] = useState<TransactionCreationDto>();
 
-
     useEffect(() => {
-
         setTransactionToUpdate({
                 "description": description,
                 "amount": amount,
@@ -63,7 +54,6 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
     if (!props.allTransactions) {
         return <p>Nicht Gefunden</p>
     }
-
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
@@ -105,7 +95,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                             alignItems: "space-between",
                             marginTop: 6,
                             marginBottom: 7,
-                            width: 500
+                            width: "70vmin"
 
                         }}>
                             <TextField

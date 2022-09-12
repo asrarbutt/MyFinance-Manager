@@ -95,7 +95,7 @@ export default function RegistrationsPage() {
                     paddingTop: '3rem'
                 }}>
                     <Typography color={'primary'} variant='h3'>Registrieren</Typography>
-                    <Typography variant='h6'>Es geht schnell, einfach und kostenlos</Typography>
+                    <Typography variant='h6'>schnell, einfach und kostenlos</Typography>
                     {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                 </Box>
 

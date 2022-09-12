@@ -1,22 +1,23 @@
 import MyMenu from "../components/MyMenu";
 import MyCardList from "../components/MyCardList";
-import {Box} from "@mui/system";
+import {HomeContainerStyled} from "../components/ui/CommonContainer.styled";
+import ShowIncomeExpanse from "../components/ShowIncomeExpanse";
 
+type HomeProps = {
+    sumOfIncome: number,
+    sumOfExpanse: number
+}
 
-export default function Home() {
-
+export default function Home(props: HomeProps) {
 
     return (
-        <>
-
-            <h1>Home Page</h1>
-
+        <HomeContainerStyled>
             <MyMenu/>
-
-            <Box>
-                <MyCardList/>
-            </Box>
-
-        </>
+            <ShowIncomeExpanse
+                sumOfIncome={props.sumOfIncome}
+                sumOfExpanse={props.sumOfExpanse}
+            />
+            <MyCardList/>
+        </HomeContainerStyled>
     )
 }

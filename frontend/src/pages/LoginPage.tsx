@@ -1,22 +1,16 @@
-import {
-    Avatar,
-    Box,
-    Button,
-    Checkbox,
-    Container,
-    CssBaseline,
-    FormControlLabel,
-    Grid,
-    TextField,
-    Typography,
-} from "@mui/material";
 import {FormEvent, useContext, useState} from "react";
 import AuthContext from "../context/authentication/AuthContext";
 import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TransactionContext from "../context/transaction/TransactionContext";
-import {useTheme} from "@mui/material/styles";
+import CommonContainerStyled, {
+    FormInputContainer,
+    HomeContainerStyled,
+    MainContainer,
+} from "../components/ui/CommonContainer.styled";
+import {WelcomeTitle} from "../components/ui/Title.styled";
+import ButtonStyled from "../components/ui/Button.styled";
+import {TextField} from "@mui/material";
 
 export default function LoginPage() {
 
@@ -25,7 +19,6 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const theme = useTheme();
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -47,69 +40,26 @@ export default function LoginPage() {
     }
 
     return (
-        <Container component="main" maxWidth="sm">
-            <CssBaseline/>
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Avatar sx={{m: 1, background: theme.palette.linkButtonColor}}>
-                    <LockOutlinedIcon fontSize='large'/>
-                </Avatar>
-                <Typography component="h1" variant="h3">
-                    Login
-                </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        type="email"
-                        autoFocus
-                        variant="filled"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        variant="outlined"
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary"/>}
-                        label="Remember me"
-                    />
-                    <Button startIcon={<LockOutlinedIcon/>}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 3, mb: 2}}
-                    >
-                        <Typography fontSize='large'>
-                            Login
-                        </Typography>
-                    </Button>
-                    <Grid item>
-                        <Link to="/auth/register">{"Don't have an account? Sign Up"}</Link>
-                    </Grid>
-                </Box>
-            </Box>
-
-        </Container>
+        <MainContainer>
+            <HomeContainerStyled>
+                <WelcomeTitle>Login</WelcomeTitle>
+            </HomeContainerStyled>
+            <FormInputContainer onSubmit={handleSubmit}>
+                <TextField
+                    onChange={e => setUsername(e.target.value)}
+                    value={username}
+                    type="text"
+                    label="E-Mail"
+                />
+                <TextField
+                    onChange={e => setPassword(e.target.value)}
+                    type="password"
+                    label="Password"/>
+                <ButtonStyled variant={"login"}>Login</ButtonStyled>
+            </FormInputContainer>
+            <CommonContainerStyled>
+                <Link to="/auth/register">{"Don't have an account? Sign Up"}</Link>
+            </CommonContainerStyled>
+        </MainContainer>
     )
 }

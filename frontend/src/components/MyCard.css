@@ -1,74 +1,92 @@
-* {
+body {
     box-sizing: border-box;
-
-
 }
 
-.myCard-container {
+.card {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    width: 80%;
-    padding-left: 1rem;
-
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 97%;
+    height: 100%;
     border-radius: 0 50px 50px 0;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: .5em;
-    margin-left: 1rem;
+    box-shadow: 1px 0 1px 1px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0.5rem 0 0.3rem;
+    padding: 0.2rem;
+    background: #112b3c;
 }
 
-
-.myCard-header > h4 {
-    margin-left: 1rem;
-    margin-right: 4rem;
-}
-
-.myCard-content {
+.card-dateCategoryIcon {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
-    border-radius: 50px;
+    width: 100%;
+    border-radius: 0 50px 50px 0;
 }
 
+
 .myCard-isIncome {
-    border-left: 7px solid green;
-    display: flex;
-    flex-direction: row;
-
-    width: 80%;
-    padding-left: 1rem;
-
-    border-radius: 0 50px 50px 0;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: .5em;
-
+    border-left: 0.8rem solid green;
 }
 
 .myCard-expanse {
-    border-left: 7px solid red;
-    display: flex;
-    flex-direction: row;
-
-    width: 80%;
-    padding-left: 1rem;
-
-    border-radius: 0 50px 50px 0;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: .5em;
-
+    border-left: 0.8rem solid red;
 }
 
-.myCard-actions {
+.card-description {
+    border-radius: 0 40px 0 0;
+    background: #f57b29;
+    width: 100%;
+}
 
+.card-description > p {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
+.card-date {
+    max-width: 5rem;
+    min-width: 5rem;
+    height: 100%;
+}
+
+.card-date > p {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.card-category > p {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.card-amount {
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-align: center;
+    border-radius: 0 0 50px 0;
+    background: #f57b29;
+    width: 100%;
+}
+
+.card-icon {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    padding-right: 1rem;
+    align-items: center;
+    height: 100%;
+    border-radius: 0 50px 50px 0;
+    flex-grow: 1;
+    max-width: 3.5rem;
+    min-width: 3.5rem;
+}
 
-    width: 30%;
-    border-radius: 20px;
+.card-icon > span {
+    color: whitesmoke;
 }

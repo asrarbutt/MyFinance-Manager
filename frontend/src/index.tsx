@@ -14,7 +14,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-
         <ThemeProvider theme={myTheme}>
             <HashRouter>
                 <AuthProvider>
@@ -22,12 +21,7 @@ root.render(
                         <App/>
                     </TransactionProvider>
                 </AuthProvider>
-
             </HashRouter>
-
         </ThemeProvider>
-
-
     </React.StrictMode>
 );
-

@@ -1,4 +1,3 @@
-
 .statistic {
     display: flex;
     flex-direction: column;
@@ -17,7 +16,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .statistic-charts {
@@ -36,7 +34,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .statistic-charts > div p {
@@ -47,9 +44,11 @@
 .statistic-incomeExpanse {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-    margin: 2rem;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    margin: 2rem 1rem 0 0.8rem;
+    gap: 1rem;
 }
 
 .statistic-incomeExpanse > div p {
@@ -59,13 +58,13 @@
 }
 
 .statistic-incomeExpanse > div p:nth-child(2) {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
 }
 
 .statistic-showIncome {
-    max-width: 12rem;
+    max-width: 13em;
     max-height: 10rem;
-    min-width: 10rem;
+    min-width: 12rem;
     min-height: 8rem;
     background-color: #4dce4d;
     display: flex;
@@ -76,9 +75,9 @@
 }
 
 .statistic-showExpanse {
-    max-width: 12rem;
+    max-width: 13rem;
     max-height: 10rem;
-    min-width: 10rem;
+    min-width: 12rem;
     min-height: 8rem;
     background-color: #e04747;
     display: flex;

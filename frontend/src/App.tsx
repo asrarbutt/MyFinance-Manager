@@ -4,6 +4,7 @@ import AllRoutes from "./components/AllRoutes";
 import Header from "./components/Header";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import MainStyled from "./components/ui/Main.styled";
 
 
 function App() {
@@ -11,10 +12,11 @@ function App() {
     return (
         <>
             <Header/>
-            <AllRoutes/>
+            <MainStyled>
+                <AllRoutes/>
+            </MainStyled>
             <ToastContainer/>
         </>
-
     );
 }
 

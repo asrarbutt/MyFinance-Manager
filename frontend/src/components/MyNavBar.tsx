@@ -75,7 +75,7 @@ const MyNavBar = () => {
                             mr: 2,
                             display: {xs: 'none', md: 'flex'},
                             fontFamily: 'monospace',
-                            fontWeight: 700,
+                            fontWeight: 'bold',
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
@@ -114,19 +114,14 @@ const MyNavBar = () => {
                             }}
                         >
                             <MenuItem onClick={goToLogin}>
-
                                 <Typography textAlign="center">Login</Typography>
                             </MenuItem>
 
                             <MenuItem onClick={goToRegister}>
-
                                 <Typography textAlign="center">Registrieren</Typography>
-
                             </MenuItem>
                             <MenuItem onClick={goToHomePage}>
-
                                 <Typography textAlign="center">Home</Typography>
-
                             </MenuItem>
                         </Menu>
                     </Box>
