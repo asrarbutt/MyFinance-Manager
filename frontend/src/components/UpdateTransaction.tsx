@@ -14,14 +14,13 @@ import MenuItem from '@mui/material/MenuItem';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Select from '@mui/material/Select';
 import TransactionCreationDto from "../model/TransactionCreationDto";
-import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
+import {convertDateToNumber, incomeExpanseList, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import TransactionDto from "../model/TransactionDto";
 import axios from "axios";
 import {toast} from "react-toastify";
 import TransactionContext from "../context/transaction/TransactionContext";
 import {StlyeEditIcon} from './ui/Button.styled';
-
 
 type UpdateTransactionProps = {
     allTransactions: TransactionDto;
@@ -30,10 +29,9 @@ type UpdateTransactionProps = {
 export default function UpdateTransaction(props: UpdateTransactionProps) {
 
     const {getAllTransactions} = useContext(TransactionContext);
-
     const [isIncome, setIsIncome] = useState<boolean>(props.allTransactions.isIncome || true);
     const [open, setOpen] = useState(false);
-    const [date, setDate] = useState<Date | null>(null);
+    const [date, setDate] = useState<Date | null>(new Date(props.allTransactions.transactionDate || ""));
     const [category, setCategory] = useState<string>(props.allTransactions.category || "");
     const [pictureId, setPictureId] = useState<string>(props.allTransactions.pictureId || "");
     const [description, setDescription] = useState<string>(props.allTransactions.description || "");
@@ -42,7 +40,6 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
 
 
     useEffect(() => {
-
         setTransactionToUpdate({
                 "description": description,
                 "amount": amount,
@@ -128,6 +125,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
+                                    inputFormat="dd/MM/yyyy"
                                     label="Datum auswählen"
                                     value={date}
                                     onChange={(newValue) => {
@@ -151,9 +149,14 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                         setCategory(e.target.value);
                                     }}
                                 >
-                                    <MenuItem value={"Essen"}>Essen</MenuItem>
-                                    <MenuItem value={"Miete"}>Miete</MenuItem>
-                                    <MenuItem value={"Strom/Gas"}>Strom/Gas</MenuItem>
+                                    {incomeExpanseList.map((c) => (
+                                        <MenuItem
+                                            value={c}
+                                            key={c}
+                                        >
+                                            {c}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
 
