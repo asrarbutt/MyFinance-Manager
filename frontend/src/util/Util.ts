@@ -23,5 +23,13 @@ export const convertDateToNumber = (date: Date | null) => {
 export const convertAmountToGermanCurrencyStyle = (amount: number) => {
     return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(amount);
 
-
 }
+
+export const getFirstLetters = (username: string) => {
+    return username
+        .split(' ')
+        .map(word => word[0])
+        .join('');
+}
+
+export const incomeExpanseList: string[] = ["Strom/Gas", "Essen", "Einkauf", "Miete", "Kleidung", "Lebensmittel", "Geschenke", "Bildung", "Gesundheit", "Gehalt", "Andere"];
