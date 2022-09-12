@@ -27,7 +27,7 @@ const MyNavBar = () => {
         if (loggedInUser === "anonymousUser") {
             navigate("/auth/login")
         }
-    })
+    }, [])
 
     const goToLogin = () => {
         navigate('/auth/login')
