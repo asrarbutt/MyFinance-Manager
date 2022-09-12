@@ -200,7 +200,7 @@ class UserControllerIntegrationTest {
     @Test
     @WithMockUser(username = "test@test.com")
     void loggedInUserTest() throws Exception {
-        mockMvc.perform(get("/api/me").with(csrf()))
+        mockMvc.perform(get("/api/users/me").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("test@test.com"));
     }
