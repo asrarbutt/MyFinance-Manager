@@ -3,12 +3,12 @@ import MyCardList from "../components/MyCardList";
 import {HomeContainerStyled} from "../components/ui/CommonContainer.styled";
 import ShowIncomeExpanse from "../components/ShowIncomeExpanse";
 
-type HomeProsp = {
+type HomeProps = {
     sumOfIncome: number,
     sumOfExpanse: number
 }
 
-export default function Home(props: HomeProsp) {
+export default function Home(props: HomeProps) {
 
     return (
         <HomeContainerStyled>

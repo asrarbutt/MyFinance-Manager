@@ -2,10 +2,7 @@ import {useContext} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
 
 export default function useStatistic() {
-
-
     const {allTransactions} = useContext(TransactionContext);
-
 
     const grouped = Array.from(
         allTransactions
@@ -36,5 +33,4 @@ export default function useStatistic() {
     const sumOfIncomeAndExpanse = Array.of(sumOfIncome, sumOfExpanse);
 
     return {amounts, groupedCategory, sumOfExpanse, sumOfIncome, sumOfIncomeAndExpanse}
-
 }

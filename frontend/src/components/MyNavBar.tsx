@@ -121,9 +121,7 @@ const MyNavBar = () => {
                                 <Typography textAlign="center">Registrieren</Typography>
                             </MenuItem>
                             <MenuItem onClick={goToHomePage}>
-
                                 <Typography textAlign="center">Home</Typography>
-
                             </MenuItem>
                         </Menu>
                     </Box>

@@ -14,7 +14,7 @@ type StatisticProps = {
 
 export default function Statistic(props: StatisticProps) {
 
-    const transactionstypeCategory = ["Einkommen", "Ausgabe"]
+    const transactionstypeCategory = ["Einkommen", "Ausgaben"]
     const {allTransactions} = useContext(TransactionContext);
 
     return (
@@ -25,7 +25,6 @@ export default function Statistic(props: StatisticProps) {
 
             <section className="statistic-section">
                 <div className="statistic-incomeExpanse">
-
                     <ShowIncomeExpanse
                         sumOfIncome={props.sumOfIncome}
                         sumOfExpanse={props.sumOfExpanse}
@@ -52,7 +51,6 @@ export default function Statistic(props: StatisticProps) {
                         {props.amounts.length !== 0 ? (
                                 <>
                                     <p>Einkommen und Ausgaben</p>
-
                                     <PieChart
                                         allTransactions={allTransactions}
                                         transactionsType={transactionstypeCategory}
