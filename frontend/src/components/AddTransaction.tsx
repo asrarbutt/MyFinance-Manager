@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Select from '@mui/material/Select';
 import {toast} from "react-toastify";
-import {convertDateToNumber, stringToNumberWithDot} from "../util/Util";
+import {convertDateToNumber, incomeExpanseList, stringToNumberWithDot} from "../util/Util";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import axios from "axios";
 import TransactionContext from "../context/transaction/TransactionContext";
@@ -117,6 +117,7 @@ export default function AddTransaction() {
 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
+                                    inputFormat="dd/MM/yyyy"
                                     label="Datum auswählen"
                                     value={date}
                                     onChange={(newValue) => {
@@ -138,9 +139,14 @@ export default function AddTransaction() {
                                         setCategory(e.target.value);
                                     }}
                                 >
-                                    <MenuItem value={"Essen"}>Essen</MenuItem>
-                                    <MenuItem value={"Miete"}>Miete</MenuItem>
-                                    <MenuItem value={"Strom/Gas"}>Strom/Gas</MenuItem>
+                                    {incomeExpanseList.map((c) => (
+                                        <MenuItem
+                                            value={c}
+                                            key={c}
+                                        >
+                                            {c}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
 
