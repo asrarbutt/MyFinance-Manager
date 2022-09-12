@@ -34,7 +34,7 @@ public class UserController {
         return getUsername();
     }
 
-    @GetMapping("me")
+    @GetMapping("users/me")
     String getUsername() {
         return SecurityContextHolder
                 .getContext()
