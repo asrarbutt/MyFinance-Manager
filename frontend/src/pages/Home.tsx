@@ -1,23 +1,30 @@
-import MyMenu from "../components/MyMenu";
 import MyCardList from "../components/MyCardList";
 import {HomeContainerStyled} from "../components/ui/CommonContainer.styled";
-import ShowIncomeExpanse from "../components/ShowIncomeExpanse";
+import {useContext, useEffect} from "react";
+import AuthContext from "../context/authentication/AuthContext";
+import {useNavigate} from "react-router-dom";
+import Footer from "../components/Footer";
 
-type HomeProsp = {
+type HomeProps = {
     sumOfIncome: number,
     sumOfExpanse: number
 }
 
-export default function Home(props: HomeProsp) {
+export default function Home(props: HomeProps) {
+    const {loggedInUser} = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loggedInUser === "anonymousUser") {
+            navigate("/auth/login")
+        }
+
+    })
 
     return (
         <HomeContainerStyled>
-            <MyMenu/>
-            <ShowIncomeExpanse
-                sumOfIncome={props.sumOfIncome}
-                sumOfExpanse={props.sumOfExpanse}
-            />
-            <MyCardList/>
+            <MyCardList sumOfExpanse={props.sumOfExpanse} sumOfIncome={props.sumOfIncome}/>
+            <Footer/>
         </HomeContainerStyled>
     )
 }
