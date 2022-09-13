@@ -83,7 +83,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                 <EditIconStyled/>
             </Button>
             <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
-                <DialogTitle>Neue Transaktion erstellen</DialogTitle>
+                <DialogTitle>Update Transaktion</DialogTitle>
                 <DialogContent>
                     <form onSubmit={submitHandler}>
                         <Box sx={{
