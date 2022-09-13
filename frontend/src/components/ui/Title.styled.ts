@@ -3,6 +3,8 @@ import styled from "styled-components";
 const TitleStyled = styled.h1`
   color: #212323;
   font-weight: bold;
+  margin-top: 5rem;
+  text-align: left;
 `;
 
 export default TitleStyled;

@@ -89,10 +89,10 @@ export default function RegistrationsPage() {
 
                 <Box sx={{
                     display: 'flex',
-                    justifyContent: 'center',
                     flexDirection: 'column',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    paddingTop: '3rem'
+                    paddingTop: '10rem'
                 }}>
                     <Typography color={'primary'} variant='h3'>Registrieren</Typography>
                     <Typography variant='h6'>schnell, einfach und kostenlos</Typography>

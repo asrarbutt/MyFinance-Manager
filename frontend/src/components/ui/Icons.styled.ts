@@ -1,22 +1,23 @@
 import styled from "styled-components";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
+import ModeIcon from '@mui/icons-material/Mode';
 
 export const AddIconStyled = styled(AddIcon)`
   border-radius: 2.5px;
   background: none;
-  font-weight: bold;
+  font-size: 4rem !important;
 `;
 
 export const DeleteIconStyled = styled(DeleteForeverIcon)`
-  font-size: 2rem;
+  font-size: 2rem!important;
+  color: var(--FontColor);
 `;
 
-export const StlyeEditIcon = styled(EditIcon)`
-  font-size: 2rem;
+export const EditIconStyled = styled(ModeIcon)`
+  font-size: 2rem!important;
   background: none;
   border-radius: 2.5px;
   font-weight: bold;
-  color: whitesmoke;
+  color: var(--FontColor);
 `;

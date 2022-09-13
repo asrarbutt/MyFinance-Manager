@@ -21,7 +21,7 @@ export default function useStatistic() {
         .map(t => t.key);
 
     const sumOfExpanse = allTransactions
-        .filter(t => (!t.isIncome))
+        .filter(t => !t.isIncome)
         .map(t => t.amount)
         .reduce((a, b) => a + b, 0);
 

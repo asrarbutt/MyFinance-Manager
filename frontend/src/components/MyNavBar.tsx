@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,12 +15,19 @@ import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router-dom";
 import {Button} from "@mui/material";
 import AuthContext from "../context/authentication/AuthContext";
+import {getFirstLetters} from "../util/Util";
 
 
 const MyNavBar = () => {
     const navigate = useNavigate();
     const {loggedInUser, logout} = useContext(AuthContext);
 
+
+    useEffect(() => {
+        if (loggedInUser === "anonymousUser") {
+            navigate("/auth/login")
+        }
+    }, [])
 
     const goToLogin = () => {
         navigate('/auth/login')
@@ -38,7 +45,7 @@ const MyNavBar = () => {
     }
 
     const goToHomePage = () => {
-        logout();
+
         navigate('/home')
         handleCloseNavMenu()
     }
@@ -62,7 +69,7 @@ const MyNavBar = () => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
@@ -169,7 +176,7 @@ const MyNavBar = () => {
                                 <Box sx={{flexGrow: 0}}>
                                     <Tooltip title="Open settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                            <Avatar>{getFirstLetters(loggedInUser)}</Avatar>
                                         </IconButton>
                                     </Tooltip>
                                     <Menu
