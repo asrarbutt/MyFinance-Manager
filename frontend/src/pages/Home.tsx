@@ -19,7 +19,7 @@ export default function Home(props: HomeProps) {
             navigate("/auth/login")
         }
 
-    }, [loggedInUser])
+    }, [loggedInUser]) // eslint-disable-line
 
     return (
         <HomeContainerStyled>
