@@ -26,7 +26,7 @@ export default function TransactionProvider({children}: Param) {
     const deleteTransaction = (id: string) => {
         return axios.delete(`/api/transactions/${id}`)
             .then(getAllTransactions)
-            .then(() => toast.success(`Transaktion wurde gelöscht`))
+            .then(() => toast.success("Transaction deleted"))
             .catch(error => toast.error(error.message))
     }
 
