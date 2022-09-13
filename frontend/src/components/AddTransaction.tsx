@@ -61,7 +61,7 @@ export default function AddTransaction() {
                 setAllTransactions([...allTransactions, data]);
             })
             .then(() => {
-                toast.success("Transaktion hinzugefügt");
+                toast.success("Transaction added");
                 setIsIncome(true);
                 setDate(null);
                 setCategory("");
