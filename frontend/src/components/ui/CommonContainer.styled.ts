@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 const CommonContainerStyled = styled.div`
-
   display: flex;
-
 `;
 
 export default CommonContainerStyled;
@@ -20,10 +18,10 @@ export const MainContainer = styled(CommonContainerStyled)`
   height: 100vh;
   width: 100vw;
   background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
   color: var(--MenuButtonColor);
   text-transform: uppercase;
-  letter-spacing: 0.4rem;
+  letter-spacing: 0.3rem;
+  padding: 7rem 1rem;
 `;
 
 export const FormInputContainer = styled.form`
@@ -35,6 +33,3 @@ export const FormInputContainer = styled.form`
   width: 100%;
   margin: 2rem 0 2rem 0;
 `;
-
-
-

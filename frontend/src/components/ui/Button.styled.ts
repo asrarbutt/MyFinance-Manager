@@ -2,16 +2,17 @@ import styled, {css} from 'styled-components';
 
 
 const ButtonStyled = styled.button<{ variant: string }>`
-  border-radius: 2.5px;
+  border-radius: 20px;
   background: none;
-
+ 
   &:hover {
     box-shadow: 2px 2px 5px #282c34;
     cursor: pointer;
   }
 
-  &:active {
-    border-color: var(--ExpanseColor);
+  &:focus {
+       background: var(--MenuButtonHoverColor);
+      color: var(--FontColor);
   }
 
   ${({variant}) =>
@@ -19,8 +20,8 @@ const ButtonStyled = styled.button<{ variant: string }>`
           css`
             border: 1px solid #e5b16f;
             background: #c6c6d9;
-            height: 2.5rem;
-            width: 9rem;
+            padding: 1rem;
+            width: 10rem;
             font-weight: bold;`
   };
 

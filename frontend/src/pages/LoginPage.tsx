@@ -29,7 +29,7 @@ export default function LoginPage() {
             login(username, password).then(() => {
                 setPassword("");
                 setUsername("");
-                toast.success("Erfolgreich eingeloggt!")
+                toast.success("login successful")
                 getAllTransactions();
                 navigate("/home")
 

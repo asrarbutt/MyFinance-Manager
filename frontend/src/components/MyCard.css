@@ -11,22 +11,21 @@ body {
     height: 100%;
     border-radius: 0 50px 50px 0;
     box-shadow: 1px 0 1px 1px rgba(0, 0, 0, 0.1);
-    margin: 1rem 0.5rem 0 0.3rem;
+    margin: 0.5rem 0.5rem 0 0.3rem;
     padding: 0.2rem;
-    background-color: #969496;
+    background-color: var(--CardBackgroundColor);
 }
 
 .card:hover {
     transform: translateX(2px);
 }
 
-
 .card-isIncome {
-    border-left: 0.8rem solid var(--IncomeColor);
+    border-left: 1rem solid var(--IncomeColor);
 }
 
 .card-expanse {
-    border-left: 0.8rem solid var(--ExpanseColor);
+    border-left: 1rem solid var(--ExpanseColor);
 }
 
 .card-descriptionAmount {
@@ -39,9 +38,9 @@ body {
 }
 
 .card-description {
-    color: black;
+    color: var(--FontColor);
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: left;
     width: 50%;
 }
@@ -55,36 +54,34 @@ body {
 }
 
 .card-category > p {
-    color: black;
+    color: var(--FontColor);
     font-weight: bold;
     font-size: 1rem;
 }
 
 .card-date > p {
-    color: black;
+    color: var(--FontColor);
     font-weight: bold;
     font-size: 1rem;
 }
 
+.card-icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border-radius: 0 50px 50px 0;
+}
+
 .card-icon > span {
-    color: black;
+    color: var(--FontColor);
 }
 
 .card-amount {
-    color: black;
+    color: var(--FontColor);
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     text-align: right;
     margin-right: 1rem;
     border-radius: 0 0 50px 0;
     width: 25%;
-}
-
-.card-icon {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    border-radius: 0 50px 50px 0;
 }

@@ -20,7 +20,11 @@ export default function MyCard(props: MyCardProps) {
 
                 <p className="card-description">{props.allTransaction.description}</p>
 
-                <p className="card-amount">{convertAmountToGermanCurrencyStyle(props.allTransaction.amount)}</p>
+                <p className="card-amount">
+                    {props.allTransaction.isIncome ? `+ ${(convertAmountToGermanCurrencyStyle(props.allTransaction.amount))}` : `- ${(convertAmountToGermanCurrencyStyle(props.allTransaction.amount))}`}
+
+
+                </p>
             </div>
 
             <div className="card-dateCategoryIcons">

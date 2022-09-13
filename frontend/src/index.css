@@ -1,9 +1,12 @@
 :root {
     --NavBarColor: #112b3c;
     --MenuButtonColor: #f57b29;
+    --MenuButtonHoverColor: #853401;
     --FontColor: whitesmoke;
-    --ExpanseColor: #e04747;
-    --IncomeColor: #4dce4d;
+    --ExpanseColor: #de0404;
+    --IncomeColor: #168f16;
+    --MainBackgroundColor: whitesmoke;
+    --CardBackgroundColor: #222831;
 }
 
 body {
@@ -13,6 +16,7 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
 }
 
 code {
