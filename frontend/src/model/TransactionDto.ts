@@ -1,5 +1,4 @@
 export default interface TransactionDto {
-
     "id": string,
     "userEmail": string,
     "description": string,

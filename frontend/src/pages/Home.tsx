@@ -23,7 +23,10 @@ export default function Home(props: HomeProps) {
 
     return (
         <HomeContainerStyled>
-            <MyCardList sumOfExpanse={props.sumOfExpanse} sumOfIncome={props.sumOfIncome}/>
+            <MyCardList
+                sumOfExpanse={props.sumOfExpanse}
+                sumOfIncome={props.sumOfIncome}
+            />
             <Footer/>
         </HomeContainerStyled>
     )

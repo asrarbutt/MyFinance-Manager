@@ -48,7 +48,6 @@ export default function AddTransaction() {
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
-
         if (newTransactionToAdd)
             addTransaction(newTransactionToAdd);
     }
@@ -70,6 +69,7 @@ export default function AddTransaction() {
             })
             .catch(error => toast(error));
     }
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -95,14 +95,14 @@ export default function AddTransaction() {
                             alignItems: "space-between",
                             marginTop: 6,
                             marginBottom: 7,
-                            width: '70vmin'
+                            width: "70vmin"
                         }}>
                             <TextField
                                 autoFocus
                                 margin="dense"
                                 fullWidth
                                 variant="standard"
-                                id="standard-basic"
+                                id="description"
                                 label="Beschreibung"
                                 onChange={e => setDescription(e.target.value)}
                             />
@@ -111,7 +111,7 @@ export default function AddTransaction() {
                                 margin="dense"
                                 fullWidth
                                 variant="standard"
-                                id="standard-basic"
+                                id="amount"
                                 label="Betrag"
                                 onChange={e => setAmount(stringToNumberWithDot(e.target.value))}
                             />
@@ -124,13 +124,12 @@ export default function AddTransaction() {
                                     onChange={(newValue) => {
                                         setDate(newValue);
                                     }}
-                                    renderInput={(params) => <TextField
-                                        {...params} />}
+                                    renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
 
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Kategorie auswählen</InputLabel>
+                                <InputLabel id="category-select">Kategorie auswählen</InputLabel>
                                 <Select
                                     labelId="category-select"
                                     id="category-select"
@@ -152,13 +151,12 @@ export default function AddTransaction() {
                             </FormControl>
 
                             <FormControl>
-                                <InputLabel id="demo-simple-select-label">Transaktionsart</InputLabel>
+                                <InputLabel id="transaction-label">Transaktionsart</InputLabel>
                                 <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
+                                    labelId="transaction-label"
+                                    id="transaction"
                                     value={isIncome}
-                                    label="Kategorie auswählen "
-
+                                    label="Kategorie auswählen"
                                     onChange={(e: any) => {
                                         setIsIncome(e.target.value)
                                     }}
@@ -180,12 +178,22 @@ export default function AddTransaction() {
                                         if (e.target.files !== null) {
                                             setPictureId(URL.createObjectURL(e.target.files[0]))
                                         }
-                                    }} hidden/>
+                                    }} hidden
+                                />
                             </Button>
+
                             <DialogActions>
-                                <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
-                                <Button variant='contained' color="success" type="submit"
-                                        onClick={handleClose}>Hinzufügen</Button>
+                                <Button
+                                    color="warning"
+                                    variant="contained"
+                                    onClick={handleClose}>Abbrechen
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    type="submit"
+                                    onClick={handleClose}>Hinzufügen
+                                </Button>
                             </DialogActions>
                         </Box>
                     </form>

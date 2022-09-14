@@ -21,9 +21,7 @@ public class TransactionService {
     private final TransactionRepo transactionRepo;
     private final RandomUUIDGenerator randomUUIDGenerator;
 
-
     public List<TransactionDto> getAllTransactions(String username) {
-
 
         return transactionRepo.findAll()
                 .stream()
@@ -42,7 +40,6 @@ public class TransactionService {
     }
 
     public Transaction addTransaction(TransactionCreationDto addNewTransactionDto, String userEmail) {
-
 
         Transaction transactionCreated = Transaction.builder()
                 .id(randomUUIDGenerator.getRandomId())
@@ -67,10 +64,11 @@ public class TransactionService {
         return false;
     }
 
-
     public Transaction updateTransaction(String id, TransactionCreationDto transactionUpdate) {
 
-        Transaction transactionToUpdate = transactionRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Transaction transactionToUpdate = transactionRepo
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         transactionToUpdate.setDescription(transactionUpdate.getDescription());
         transactionToUpdate.setAmount(transactionUpdate.getAmount());

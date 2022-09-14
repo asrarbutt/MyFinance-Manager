@@ -17,11 +17,9 @@ import {Button} from "@mui/material";
 import AuthContext from "../context/authentication/AuthContext";
 import {getFirstLetters} from "../util/Util";
 
-
 const MyNavBar = () => {
     const navigate = useNavigate();
     const {loggedInUser, logout} = useContext(AuthContext);
-
 
     useEffect(() => {
         if (loggedInUser === "anonymousUser") {
@@ -30,23 +28,23 @@ const MyNavBar = () => {
     }, [])// eslint-disable-line
 
     const goToLogin = () => {
-        navigate('/auth/login')
+        navigate("/auth/login")
         handleCloseNavMenu()
     }
+
     const goToRegister = () => {
-        navigate('/auth/register')
+        navigate("/auth/register")
         handleCloseNavMenu()
     }
 
     const goToLandingPage = () => {
         logout();
-        navigate('/')
+        navigate("/")
         handleCloseNavMenu()
     }
 
     const goToHomePage = () => {
-
-        navigate('/home')
+        navigate("/home")
         handleCloseNavMenu()
     }
 
@@ -56,6 +54,7 @@ const MyNavBar = () => {
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
+
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -144,7 +143,6 @@ const MyNavBar = () => {
                             flexGrow: 1,
                             fontFamily: 'monospace',
                             fontWeight: 500,
-
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
@@ -196,7 +194,6 @@ const MyNavBar = () => {
                                         onClose={handleCloseUserMenu}
                                     >
                                         <MenuItem onClick={goToLandingPage}>
-
                                             <Typography textAlign="center">Logout</Typography>
                                         </MenuItem>
                                     </Menu>

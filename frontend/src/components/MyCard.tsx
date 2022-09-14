@@ -16,7 +16,9 @@ export default function MyCard(props: MyCardProps) {
     return (
         <div className={`card ${props.allTransaction.isIncome ? "card-isIncome" : "card-expanse"}`}>
             <div className="card-descriptionAmount">
-                <p className="card-description">{props.allTransaction.description}</p>
+                <p className="card-description">
+                    {props.allTransaction.description}
+                </p>
                 <p className="card-amount">
                     {props.allTransaction.isIncome ?
                         `+ ${(convertAmountToGermanCurrencyStyle(props.allTransaction.amount))}`
@@ -26,7 +28,9 @@ export default function MyCard(props: MyCardProps) {
             </div>
             <div className="card-dateCategoryIcons">
                 <div className="card-date">
-                    <p>{dateFromInstant(props.allTransaction.transactionDate, "de-DE")}</p>
+                    <p>
+                        {dateFromInstant(props.allTransaction.transactionDate, "de-DE")}
+                    </p>
                 </div>
                 <div className="card-category">
                     <p>{props.allTransaction.category}</p>

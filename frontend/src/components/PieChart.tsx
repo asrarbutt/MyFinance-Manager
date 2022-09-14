@@ -6,7 +6,6 @@ import TransactionDto from "../model/TransactionDto";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 type PieChartProps = {
-
     transactionsType: string[],
     allTransactions: TransactionDto[];
     amounts: number[];

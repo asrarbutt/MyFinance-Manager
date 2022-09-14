@@ -56,7 +56,6 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();
-
         if (transactionToUpdate)
             updateTransaction(transactionToUpdate, props.allTransactions.id)
 
@@ -98,7 +97,6 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
 
                         }}>
                             <TextField
-
                                 autoFocus
                                 margin="dense"
                                 fullWidth
@@ -140,7 +138,6 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                     labelId="category-select"
                                     id="category-select"
                                     name={"category"}
-
                                     label="Kategorie auswählen "
                                     value={category}
                                     onChange={e => {
@@ -165,8 +162,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                     id="demo-simple-select"
                                     value={isIncome}
                                     name={"income"}
-                                    label="Type auswählen "
-
+                                    label="Type auswählen"
                                     onChange={(e: any) => {
                                         setIsIncome(e.target.value)
                                     }}
@@ -182,19 +178,29 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                 color="primary">
                                 {" "}
                                 <AddAPhotoIcon/> Bild Uploaden
-                                <input type="file"
-                                       name={"pictureId"}
-                                       onChange={(e) => {
-
-                                           if (e.target.files !== null) {
-                                               setPictureId(URL.createObjectURL(e.target.files[0]))
-                                           }
-                                       }} hidden/>
+                                <input
+                                    type="file"
+                                    name={"pictureId"}
+                                    onChange={(e) => {
+                                        if (e.target.files !== null) {
+                                            setPictureId(URL.createObjectURL(e.target.files[0]))
+                                        }
+                                    }} hidden/>
                             </Button>
                             <DialogActions>
-                                <Button color='warning' variant="contained" onClick={handleClose}>Zurück</Button>
-                                <Button variant='contained' color="success" type="submit"
-                                        onClick={handleClose}>Updaten</Button>
+                                <Button
+                                    color="warning"
+                                    variant="contained"
+                                    onClick={handleClose}
+                                >Zurück
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    type="submit"
+                                    onClick={handleClose}
+                                >Updaten
+                                </Button>
                             </DialogActions>
                         </Box>
                     </form>

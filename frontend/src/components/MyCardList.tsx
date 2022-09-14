@@ -18,19 +18,20 @@ export default function MyCardList(props: MyCardListProps) {
 
     const {deleteTransaction, allTransactions} = useContext(TransactionContext);
     const navigate = useNavigate();
-
     const [isIncome, setIsIncome] = useState<boolean>();
 
     return (
         <TransactionsContainerStyled>
             <div>
                 <div>
-                    <MenuButton variant={"myMenuBtn"} onClick={() => setIsIncome(undefined)}>Transaktion</MenuButton>
+                    <MenuButton
+                        variant={"myMenuBtn"} onClick={() => setIsIncome(undefined)}>Transaktion</MenuButton>
                     <MenuButton variant={"myMenuBtn"}
                                 onClick={() => navigate("/users/statistic")}>Statistik</MenuButton>
                     <MenuButton variant={"myMenuBtn"} onClick={() => setIsIncome(true)}>Einkommen</MenuButton>
                     <MenuButton variant={"myMenuBtn"} onClick={() => setIsIncome(false)}>Ausgaben</MenuButton>
                 </div>
+
                 <AddTransaction/>
             </div>
 

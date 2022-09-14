@@ -13,27 +13,32 @@ export default function AllRoutes() {
     return (
         <>
             <Routes>
-                <Route path={"*"} element={
-                    <Navigate to={"/"} replace/>
-                }/>
+                <Route
+                    path={"*"}
+                    element={<Navigate to={"/"} replace/>}
+                />
                 <Route
                     path={"/"}
                     element={<LandingPage/>}
                 />
                 <Route
                     path={"/home"}
-                    element={<Home
-                        sumOfExpanse={serviceHook.sumOfExpanse}
-                        sumOfIncome={serviceHook.sumOfIncome}/>}
+                    element={
+                        <Home
+                            sumOfExpanse={serviceHook.sumOfExpanse}
+                            sumOfIncome={serviceHook.sumOfIncome}
+                        />}
                 />
                 <Route
                     path={"/users/statistic"}
-                    element={<Statistic
-                        amounts={serviceHook.amounts}
-                        groupedCategory={serviceHook.groupedCategory}
-                        sumOfExpanse={serviceHook.sumOfExpanse}
-                        sumOfIncome={serviceHook.sumOfIncome}
-                        sumOfIncomeAndExpanse={serviceHook.sumOfIncomeAndExpanse}/>}
+                    element={
+                        <Statistic
+                            amounts={serviceHook.amounts}
+                            groupedCategory={serviceHook.groupedCategory}
+                            sumOfExpanse={serviceHook.sumOfExpanse}
+                            sumOfIncome={serviceHook.sumOfIncome}
+                            sumOfIncomeAndExpanse={serviceHook.sumOfIncomeAndExpanse}
+                        />}
                 />
                 <Route
                     path={"/auth/login"}

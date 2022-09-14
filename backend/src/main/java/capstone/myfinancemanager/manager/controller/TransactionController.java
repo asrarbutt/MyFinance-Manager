@@ -26,8 +26,7 @@ public class TransactionController {
     public List<TransactionDto> getAllTransactions() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
 
-        return transactionService
-                .getAllTransactions(principal.getName());
+        return transactionService.getAllTransactions(principal.getName());
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -37,7 +36,11 @@ public class TransactionController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(buildNewTransactionDto(transactionService.addTransaction(transactionCreation, principal.getName())));
+                .body(buildNewTransactionDto(
+                                transactionService
+                                        .addTransaction(transactionCreation, principal.getName())
+                        )
+                );
     }
 
     @DeleteMapping("/{id}")
@@ -47,8 +50,10 @@ public class TransactionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TransactionDto> updateTransaction(@PathVariable String id,
-                                                            @RequestBody TransactionCreationDto transactionUpdate) {
+    public ResponseEntity<TransactionDto> updateTransaction(
+            @PathVariable String id,
+            @RequestBody TransactionCreationDto transactionUpdate) {
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(buildNewTransactionDto(transactionService.updateTransaction(id, transactionUpdate)));
