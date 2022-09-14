@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import MainStyled from "./components/ui/Main.styled";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <MainStyled>
                 <AllRoutes/>
             </MainStyled>
+            <Footer/>
             <ToastContainer
                 position="top-right"
                 autoClose={2000}

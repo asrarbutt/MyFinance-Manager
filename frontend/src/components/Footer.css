@@ -10,6 +10,10 @@ footer {
     margin-top: 1rem;
 }
 
+.footer-content {
+    text-align: center;
+}
+
 .footer-content > p > a {
     margin: 10px auto;
     font-size: 1.2rem;

@@ -3,7 +3,6 @@ import {HomeContainerStyled} from "../components/ui/CommonContainer.styled";
 import {useContext, useEffect} from "react";
 import AuthContext from "../context/authentication/AuthContext";
 import {useNavigate} from "react-router-dom";
-import Footer from "../components/Footer";
 
 type HomeProps = {
     sumOfIncome: number,
@@ -27,7 +26,6 @@ export default function Home(props: HomeProps) {
                 sumOfExpanse={props.sumOfExpanse}
                 sumOfIncome={props.sumOfIncome}
             />
-            <Footer/>
         </HomeContainerStyled>
     )
 }
