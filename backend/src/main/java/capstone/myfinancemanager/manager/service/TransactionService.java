@@ -39,7 +39,10 @@ public class TransactionService {
                 .toList();
     }
 
-    public Transaction addTransaction(TransactionCreationDto addNewTransactionDto, String userEmail) {
+
+    public Transaction addTransaction(
+            TransactionCreationDto addNewTransactionDto,
+            String userEmail, String url) {
 
         Transaction transactionCreated = Transaction.builder()
                 .id(randomUUIDGenerator.getRandomId())
@@ -48,7 +51,7 @@ public class TransactionService {
                 .amount(addNewTransactionDto.getAmount())
                 .transactionDate(Instant.ofEpochMilli(addNewTransactionDto.getTransactionDate()))
                 .category(addNewTransactionDto.getCategory())
-                .pictureId(addNewTransactionDto.getPictureId())
+                .pictureId(url)
                 .isIncome(addNewTransactionDto.getIsIncome())
                 .build();
 
