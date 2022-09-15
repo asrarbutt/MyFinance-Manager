@@ -1,0 +1,18 @@
+.showImages-CardContainer {
+    margin-top: 5rem;
+}
+
+.showImages-card {
+    margin: 1rem;
+}
+
+.showImages-header {
+    text-align: left;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+}
+
+
+.showImages-card > img {
+    width: 60%;
+}
