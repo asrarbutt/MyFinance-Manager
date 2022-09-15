@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <footer>
             <div className="footer-content">
-                <p>copyright & copy;2022
+                <p>Copyright (c) 2022
                     <a
                         href="https://github.com/asrarbutt"
                         target="_blank"
