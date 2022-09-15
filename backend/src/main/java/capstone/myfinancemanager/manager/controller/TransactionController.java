@@ -32,7 +32,6 @@ public class TransactionController {
     @GetMapping
     public List<TransactionDto> getAllTransactions() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
-
         return transactionService
                 .getAllTransactions(principal.getName());
     }
@@ -44,12 +43,15 @@ public class TransactionController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(buildNewTransactionDto2(transactionService.addTransaction(transactionCreation, principal.getName()), pictureService.getFileUrl(inputFile, principal.getName())));
-    }
-
-    @PostMapping("/picture")
-    public String getUlr(@RequestPart("file") Optional<MultipartFile> inputFile) {
-        return pictureService.getFileUrl(inputFile, "");
+                .body(buildNewTransactionDto(
+                                transactionService
+                                        .addTransaction(
+                                                transactionCreation,
+                                                principal.getName(),
+                                                pictureService.getFileUrl(inputFile, principal.getName())
+                                        )
+                        )
+                );
     }
 
     @DeleteMapping("/{id}")
@@ -66,18 +68,6 @@ public class TransactionController {
                 .body(buildNewTransactionDto(transactionService.updateTransaction(id, transactionUpdate)));
     }
 
-    public TransactionDto buildNewTransactionDto2(Transaction transaction, String url) {
-        return TransactionDto.builder()
-                .id(transaction.getId())
-                .userEmail(transaction.getUserEmail())
-                .description(transaction.getDescription())
-                .amount(transaction.getAmount())
-                .transactionDate(transaction.getTransactionDate())
-                .category(transaction.getCategory())
-                .isIncome(transaction.getIsIncome())
-                .pictureId(url)
-                .build();
-    }
 
     public TransactionDto buildNewTransactionDto(Transaction transaction) {
         return TransactionDto.builder()
