@@ -30,6 +30,8 @@ export default function MyCardList(props: MyCardListProps) {
                                 onClick={() => navigate("/users/statistic")}>Statistik</MenuButton>
                     <MenuButton variant={"myMenuBtn"} onClick={() => setIsIncome(true)}>Einkommen</MenuButton>
                     <MenuButton variant={"myMenuBtn"} onClick={() => setIsIncome(false)}>Ausgaben</MenuButton>
+                    <MenuButton variant={"myMenuBtn"}
+                                onClick={() => navigate("/users/images")}>Images</MenuButton>
                 </div>
 
                 <AddTransaction/>

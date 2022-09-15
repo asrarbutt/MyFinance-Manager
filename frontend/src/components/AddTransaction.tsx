@@ -1,4 +1,4 @@
-import React, {FormEvent, useContext, useEffect, useState} from 'react';
+import React, {FormEvent, useContext, useEffect, useRef, useState} from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {LocalizationProvider} from "@mui/x-date-pickers";
@@ -24,7 +24,7 @@ import {AddIconStyled} from './ui/Icons.styled';
 
 export default function AddTransaction() {
 
-    const {setAllTransactions, allTransactions} = useContext(TransactionContext);
+    const {getAllTransactions} = useContext(TransactionContext);
     const [isIncome, setIsIncome] = useState<boolean>(true);
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
@@ -33,6 +33,7 @@ export default function AddTransaction() {
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
     const [newTransactionToAdd, setNewTransactionToAdd] = useState<TransactionCreationDto>();
+    const myinputRf = useRef<any>();
 
     useEffect(() => {
         setNewTransactionToAdd({
@@ -46,21 +47,35 @@ export default function AddTransaction() {
 
     }, [date, description, amount, isIncome, pictureId, category])
 
-    const submitHandler = (event: FormEvent) => {
+    const submitHandler = async (event: FormEvent) => {
         event.preventDefault();
         if (newTransactionToAdd)
-            addTransaction(newTransactionToAdd);
+            await addTransaction(newTransactionToAdd);
     }
 
     const addTransaction = (newTransaction: TransactionCreationDto) => {
 
-        return axios.post("/api/transactions", newTransaction)
-            .then(response => response.data)
-            .then(data => {
-                setAllTransactions([...allTransactions, data]);
+        const formData = new FormData();
+
+        formData.append('TransactionCreationDto', new Blob([JSON.stringify(newTransaction)], {type: "application/json"}));
+        formData.append("file", myinputRf.current.files[0]);
+        console.log(formData.get("TransactionCreationDto"))
+        console.log(formData.get("file"))
+
+        return axios.post("/api/transactions", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        })
+            .then(response => {
+                console.log(response.data)
+                return response.data;
+
             })
+            .then(getAllTransactions)
             .then(() => {
                 toast.success("Transaction added");
+                console.log(myinputRf.current.files[0])
                 setIsIncome(true);
                 setDate(null);
                 setCategory("");
@@ -174,6 +189,7 @@ export default function AddTransaction() {
                                 <AddAPhotoIcon/> Bild Uploaden
                                 <input
                                     type="file"
+                                    ref={myinputRf}
                                     onChange={(e) => {
                                         if (e.target.files !== null) {
                                             setPictureId(URL.createObjectURL(e.target.files[0]))

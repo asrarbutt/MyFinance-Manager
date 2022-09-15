@@ -23,6 +23,18 @@ const ButtonStyled = styled.button<{ variant: string }>`
         width: 10rem;
         font-weight: bold;`
   };
+  ${({variant}) =>
+      variant === "home" &&
+      css`
+        background: var(--MenuButtonColor);
+        color: Black;
+        box-shadow: 0 3px 5px 2px rgba(182, 31, 61, 0.3);
+        font-size: 1.5rem;
+        padding: 1rem;
+
+      `
+  };
+
 
   ${({variant}) =>
       variant === "addBtn" &&

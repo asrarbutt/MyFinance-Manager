@@ -4,7 +4,8 @@ import "./MyCard.css";
 import {convertAmountToGermanCurrencyStyle, dateFromInstant} from "../util/Util";
 import TransactionDto from "../model/TransactionDto";
 import UpdateTransaction from "./UpdateTransaction";
-import {DeleteIconStyled} from './ui/Icons.styled';
+import {DeleteIconStyled, EditImageIcon} from './ui/Icons.styled';
+import {Button} from '@mui/material';
 
 type MyCardProps = {
     allTransaction: TransactionDto;
@@ -36,9 +37,23 @@ export default function MyCard(props: MyCardProps) {
                     <p>{props.allTransaction.category}</p>
                 </div>
                 <div className="card-icon">
-                    <UpdateTransaction allTransactions={props.allTransaction}/>
-                    <DeleteIconStyled
-                        onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
+                    {props.allTransaction.pictureId !== ("" || "NO IMAGE" || undefined) ? (
+                        <>
+                            <Button href={props.allTransaction.pictureId}>
+                                <EditImageIcon/>
+                            </Button>
+                            <UpdateTransaction allTransactions={props.allTransaction}/>
+                            <DeleteIconStyled
+                                onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
+                        </>
+                    ) : (
+                        <>
+                            <UpdateTransaction allTransactions={props.allTransaction}/>
+                            <DeleteIconStyled
+                                onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
+                        </>
+                    )}
+
                 </div>
             </div>
         </div>

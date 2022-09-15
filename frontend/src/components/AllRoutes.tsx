@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import LandingPage from "../pages/LandingPage";
 import Statistic from "../pages/Statistic";
 import useStatistic from "../hooks/useStatistic";
+import ShowImages from "./ShowImages";
 
 export default function AllRoutes() {
 
@@ -47,6 +48,10 @@ export default function AllRoutes() {
                 <Route
                     path={"/auth/register"}
                     element={<RegistrationsPage/>}
+                />
+                <Route
+                    path={"/users/images"}
+                    element={<ShowImages/>}
                 />
             </Routes>
         </>
