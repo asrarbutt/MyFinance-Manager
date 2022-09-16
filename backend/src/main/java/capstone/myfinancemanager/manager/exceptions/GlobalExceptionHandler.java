@@ -47,4 +47,15 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = FileUploadException.class)
+    public ResponseEntity<Map<String, Object>> handleFileUploadException(FileUploadException exception) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("Timestamp", LocalDateTime.now());
+        responseBody.put("message", exception.getMessage());
+
+        return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
+    }
+
+
 }
