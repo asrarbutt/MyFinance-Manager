@@ -1,5 +1,6 @@
 package capstone.myfinancemanager.manager.service;
 
+import capstone.myfinancemanager.manager.exceptions.FileUploadException;
 import com.cloudinary.Cloudinary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,12 +26,12 @@ public class PictureService {
             if (file.isPresent()) {
                 File fileToUpload = File.createTempFile("file", null);
                 file.get().transferTo(fileToUpload);
-                Map response = cloudinary.uploader().upload(fileToUpload, Map.of());
+                var response = cloudinary.uploader().upload(fileToUpload, Map.of());
                 return response.get("url").toString();
             }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileUploadException(e.getMessage());
         }
         return "NO IMAGE";
     }
