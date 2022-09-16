@@ -7,6 +7,7 @@ import {MenuButton} from "./ui/Button.styled";
 import AddTransaction from "./AddTransaction";
 import {useNavigate} from "react-router-dom";
 import ShowIncomeExpanse from "./ShowIncomeExpanse";
+import {CardContainerStyled, MyMenuButtonContainerStyled} from "./ui/CommonContainer.styled";
 
 
 type MyCardListProps = {
@@ -22,20 +23,44 @@ export default function MyCardList(props: MyCardListProps) {
 
     return (
         <TransactionsContainerStyled>
-            <div>
+            <MyMenuButtonContainerStyled>
+
                 <div>
                     <MenuButton
-                        variant={"myMenuBtn"} onClick={() => setIsIncome(undefined)}>Transaktion</MenuButton>
-                    <MenuButton variant={"myMenuBtn"}
-                                onClick={() => navigate("/users/statistic")}>Statistik</MenuButton>
-                    <MenuButton variant={"myMenuBtn"} onClick={() => setIsIncome(true)}>Einkommen</MenuButton>
-                    <MenuButton variant={"myMenuBtn"} onClick={() => setIsIncome(false)}>Ausgaben</MenuButton>
-                    <MenuButton variant={"myMenuBtn"}
-                                onClick={() => navigate("/users/images")}>Images</MenuButton>
+                        variant={"myMenuBtn"}
+                        onClick={() => setIsIncome(undefined)}
+                    >
+                        Transaktion
+                    </MenuButton>
+                    <MenuButton
+                        variant={"myMenuBtn"}
+
+                        onClick={() => navigate("/users/statistic")}
+                    >
+                        Statistik
+                    </MenuButton>
+                    <MenuButton
+                        variant={"myMenuBtn"}
+                        onClick={() => setIsIncome(true)}
+                    >
+                        Einkommen
+                    </MenuButton>
+                    <MenuButton
+                        variant={"myMenuBtn"}
+                        onClick={() => setIsIncome(false)}
+                    >
+                        Ausgaben
+                    </MenuButton>
+                    <MenuButton
+                        variant={"myMenuBtn"}
+                        onClick={() => navigate("/users/images")}
+                    >
+                        Images
+                    </MenuButton>
                 </div>
 
                 <AddTransaction/>
-            </div>
+            </MyMenuButtonContainerStyled>
 
             <div><ShowIncomeExpanse
                 sumOfIncome={props.sumOfIncome}
@@ -53,28 +78,29 @@ export default function MyCardList(props: MyCardListProps) {
                         "Alle Ausgaben"
                 }
             </TitleStyled>
-            {
-                allTransactions.length !== 0 ? (
-                    allTransactions
-                        .filter(t => {
-                            if (isIncome === undefined) {
-                                return t;
-                            }
-                            if (isIncome) {
-                                return t.isIncome;
-                            }
-                            if (!isIncome) {
-                                return !t.isIncome
-                            }
-                            return false;
+            <CardContainerStyled>
+                {
+                    allTransactions.length !== 0 ? (
+                        allTransactions
+                            .filter(t => {
+                                if (isIncome === undefined) {
+                                    return t;
+                                }
+                                if (isIncome) {
+                                    return t.isIncome;
+                                }
+                                if (!isIncome) {
+                                    return !t.isIncome
+                                }
+                                return false;
 
-                        })
-
-                        .map(t =>
-                            <MyCard key={t.id} allTransaction={t} deleteTransaction={deleteTransaction}/>
-                        )
-                ) : (<p>Keine Transaktion vorhanden</p>)
-            }
+                            })
+                            .map(t =>
+                                <MyCard key={t.id} allTransaction={t} deleteTransaction={deleteTransaction}/>
+                            )
+                    ) : (<p>Keine Transaktion vorhanden</p>)
+                }
+            </CardContainerStyled>
         </TransactionsContainerStyled>
     );
 }
