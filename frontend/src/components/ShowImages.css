@@ -7,11 +7,15 @@
 }
 
 .showImages-header {
-    text-align: left;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     margin-top: 1rem;
+    text-align: center;
 }
 
+.showImages-header h1 {
+    text-align: left !important;
+    margin-top: 3rem;
+}
 
 .showImages-card > img {
     width: 60%;
