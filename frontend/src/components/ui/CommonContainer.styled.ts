@@ -12,6 +12,13 @@ export const HomeContainerStyled = styled(CommonContainerStyled)`
   align-content: center;
 `;
 
+export const MyMenuButtonContainerStyled = styled(CommonContainerStyled)`
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  margin: 0 1rem 0 1rem;
+`;
+
 export const MainContainer = styled(CommonContainerStyled)`
   align-items: center;
   flex-direction: column;
@@ -24,6 +31,10 @@ export const MainContainer = styled(CommonContainerStyled)`
   padding: 7rem 1rem;
 `;
 
+export const CardContainerStyled = styled(CommonContainerStyled)`
+  width: 95%;`
+;
+
 export const FormInputContainer = styled.form`
   display: flex;
   flex-direction: column;
@@ -33,3 +44,4 @@ export const FormInputContainer = styled.form`
   width: 100%;
   margin: 2rem 0 2rem 0;
 `;
+
