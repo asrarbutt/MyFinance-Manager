@@ -33,7 +33,7 @@ export default function AddTransaction() {
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
     const [newTransactionToAdd, setNewTransactionToAdd] = useState<TransactionCreationDto>();
-    const myinputRf = useRef<any>();
+    const imageRef = useRef<any>();
 
     useEffect(() => {
         setNewTransactionToAdd({
@@ -49,6 +49,7 @@ export default function AddTransaction() {
 
     const submitHandler = async (event: FormEvent) => {
         event.preventDefault();
+
         if (newTransactionToAdd)
             await addTransaction(newTransactionToAdd);
     }
@@ -57,25 +58,21 @@ export default function AddTransaction() {
 
         const formData = new FormData();
 
-        formData.append('TransactionCreationDto', new Blob([JSON.stringify(newTransaction)], {type: "application/json"}));
-        formData.append("file", myinputRf.current.files[0]);
-        console.log(formData.get("TransactionCreationDto"))
-        console.log(formData.get("file"))
+        formData.append('TransactionCreationDto',
+            new Blob([JSON.stringify(newTransaction)],
+                {type: "application/json"}));
+
+        formData.append("file", imageRef.current.files[0]);
 
         return axios.post("/api/transactions", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
         })
-            .then(response => {
-                console.log(response.data)
-                return response.data;
-
-            })
+            .then(response => response.data)
             .then(getAllTransactions)
             .then(() => {
                 toast.success("Transaction added");
-                console.log(myinputRf.current.files[0])
                 setIsIncome(true);
                 setDate(null);
                 setCategory("");
@@ -118,6 +115,7 @@ export default function AddTransaction() {
                                 fullWidth
                                 variant="standard"
                                 id="description"
+                                name="description"
                                 label="Beschreibung"
                                 onChange={e => setDescription(e.target.value)}
                             />
@@ -127,6 +125,7 @@ export default function AddTransaction() {
                                 fullWidth
                                 variant="standard"
                                 id="amount"
+                                name="amount"
                                 label="Betrag"
                                 onChange={e => setAmount(stringToNumberWithDot(e.target.value))}
                             />
@@ -148,8 +147,9 @@ export default function AddTransaction() {
                                 <Select
                                     labelId="category-select"
                                     id="category-select"
+                                    name="category"
                                     value={category}
-                                    label="Kategorie auswählen "
+                                    label="Kategorie auswählen"
                                     onChange={e => {
                                         setCategory(e.target.value);
                                     }}
@@ -186,10 +186,10 @@ export default function AddTransaction() {
                                 component="label"
                                 color="secondary">
                                 {" "}
-                                <AddAPhotoIcon/> Bild Uploaden
+                                <AddAPhotoIcon/>Bild Uploaden
                                 <input
                                     type="file"
-                                    ref={myinputRf}
+                                    ref={imageRef}
                                     onChange={(e) => {
                                         if (e.target.files !== null) {
                                             setPictureId(URL.createObjectURL(e.target.files[0]))
