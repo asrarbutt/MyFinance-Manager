@@ -1,4 +1,4 @@
-import React, {FormEvent, useContext, useEffect, useState} from 'react';
+import React, {FormEvent, useContext, useEffect, useRef, useState} from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {LocalizationProvider} from "@mui/x-date-pickers";
@@ -37,6 +37,7 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
     const [description, setDescription] = useState<string>(props.allTransactions.description || "");
     const [amount, setAmount] = useState<number>(props.allTransactions.amount || 0);
     const [transactionToUpdate, setTransactionToUpdate] = useState<TransactionCreationDto>();
+    const imageRef = useRef<any>();
 
     useEffect(() => {
         setTransactionToUpdate({
@@ -54,18 +55,27 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
         return <p>Nicht Gefunden</p>
     }
 
-    const submitHandler = (event: FormEvent) => {
+    const submitHandler = async (event: FormEvent) => {
         event.preventDefault();
         if (transactionToUpdate)
-            updateTransaction(transactionToUpdate, props.allTransactions.id)
+            await updateTransaction(transactionToUpdate, props.allTransactions.id)
 
     }
 
     const updateTransaction = (editTransaction: TransactionCreationDto, id: string) => {
-        axios.put(`/api/transactions/${id}`, editTransaction).then(() => {
-            toast.success("Transaction updated");
-            getAllTransactions();
-        })
+        const formData = new FormData();
+
+        formData.append('TransactionCreationDto',
+            new Blob([JSON.stringify(editTransaction)],
+                {type: "application/json"}));
+
+        formData.append("file", imageRef.current.files[0]);
+
+        return axios.put(`/api/transactions/${id}`, editTransaction)
+            .then(() => {
+                toast.success("Transaction updated");
+                getAllTransactions();
+            })
     }
 
     const handleClickOpen = () => {
@@ -94,16 +104,15 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                             marginTop: 6,
                             marginBottom: 7,
                             width: "70vmin"
-
                         }}>
                             <TextField
                                 autoFocus
                                 margin="dense"
                                 fullWidth
                                 variant="standard"
-                                id="standard-basic"
                                 label="Beschreibung"
-                                name={"description"}
+                                id="description"
+                                name="description"
                                 value={description}
                                 onChange={e => setDescription(e.target.value)}
                             />
@@ -112,9 +121,9 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                 margin="dense"
                                 fullWidth
                                 variant="standard"
-                                id="standard-basic"
                                 label="Betrag"
-                                name={"amount"}
+                                id="amount"
+                                name="amount"
                                 value={amount}
                                 onChange={e => setAmount(stringToNumberWithDot(e.target.value))}
                             />
@@ -133,12 +142,12 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                             </LocalizationProvider>
 
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Kategorie auswählen</InputLabel>
+                                <InputLabel id="category-select">Kategorie auswählen</InputLabel>
                                 <Select
                                     labelId="category-select"
                                     id="category-select"
-                                    name={"category"}
-                                    label="Kategorie auswählen "
+                                    name="category"
+                                    label="Kategorie auswählen"
                                     value={category}
                                     onChange={e => {
                                         setCategory(e.target.value);
@@ -156,12 +165,12 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                             </FormControl>
 
                             <FormControl>
-                                <InputLabel id="demo-simple-select-label">Transaktionsart</InputLabel>
+                                <InputLabel id="transaction-label">Transaktionsart</InputLabel>
                                 <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
+                                    labelId="transaction-label"
+                                    id="transaction"
+                                    name="transaction"
                                     value={isIncome}
-                                    name={"income"}
                                     label="Type auswählen"
                                     onChange={(e: any) => {
                                         setIsIncome(e.target.value)
@@ -177,29 +186,29 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
                                 component="label"
                                 color="primary">
                                 {" "}
-                                <AddAPhotoIcon/> Bild Uploaden
+                                <AddAPhotoIcon/>Bild Uploaden
                                 <input
                                     type="file"
                                     name={"pictureId"}
+                                    ref={imageRef}
                                     onChange={(e) => {
                                         if (e.target.files !== null) {
                                             setPictureId(URL.createObjectURL(e.target.files[0]))
                                         }
                                     }} hidden/>
                             </Button>
+
                             <DialogActions>
                                 <Button
                                     color="warning"
                                     variant="contained"
-                                    onClick={handleClose}
-                                >Zurück
+                                    onClick={handleClose}>Zurück
                                 </Button>
                                 <Button
                                     variant="contained"
                                     color="success"
                                     type="submit"
-                                    onClick={handleClose}
-                                >Updaten
+                                    onClick={handleClose}>Updaten
                                 </Button>
                             </DialogActions>
                         </Box>
