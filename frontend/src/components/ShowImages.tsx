@@ -14,18 +14,15 @@ export default function ShowImages() {
                 <ButtonStyled variant={"home"} onClick={() => navigate("/home")}>Home</ButtonStyled>
                 <h1>Bilder</h1>
             </div>
+
             {allTransactions.length !== 0 ? (
                 allTransactions.map(t =>
                     <div key={t.id} className="showImages-card">
-
-                        <img src={t.pictureId} alt="No Image"/>
-
-
+                        <img src={t.pictureId} alt=""/>
                     </div>
                 )
             ) : (<p>Keine Transaktion vorhanden</p>)
             }
-
         </div>
     )
 }
