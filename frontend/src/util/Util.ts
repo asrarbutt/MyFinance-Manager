@@ -32,4 +32,18 @@ export const getFirstLetters = (word: string) => {
         .join('');
 }
 
-export const incomeExpanseList: string[] = ["Strom/Gas", "Essen", "Einkauf", "Miete", "Kleidung", "Lebensmittel", "Geschenke", "Bildung", "Gesundheit", "Gehalt", "Andere"];
+export const incomeExpanseList: string[] =
+    [
+        "Strom/Gas",
+        "Essen",
+        "Einkauf",
+        "Miete",
+        "Kleidung",
+        "Lebensmittel",
+        "Geschenke",
+        "Bildung",
+        "Gesundheit",
+        "Gehalt",
+        "Andere"
+    ];
+export const transactionsTypeCategory: string[] = ["Einkommen", "Ausgaben"];

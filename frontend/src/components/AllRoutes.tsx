@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import LandingPage from "../pages/LandingPage";
 import Statistic from "../pages/Statistic";
 import useStatistic from "../hooks/useStatistic";
+import ShowImages from "./ShowImages";
 
 export default function AllRoutes() {
 
@@ -13,27 +14,32 @@ export default function AllRoutes() {
     return (
         <>
             <Routes>
-                <Route path={"*"} element={
-                    <Navigate to={"/"} replace/>
-                }/>
+                <Route
+                    path={"*"}
+                    element={<Navigate to={"/"} replace/>}
+                />
                 <Route
                     path={"/"}
                     element={<LandingPage/>}
                 />
                 <Route
                     path={"/home"}
-                    element={<Home
-                        sumOfExpanse={serviceHook.sumOfExpanse}
-                        sumOfIncome={serviceHook.sumOfIncome}/>}
+                    element={
+                        <Home
+                            sumOfExpanse={serviceHook.sumOfExpanse}
+                            sumOfIncome={serviceHook.sumOfIncome}
+                        />}
                 />
                 <Route
                     path={"/users/statistic"}
-                    element={<Statistic
-                        amounts={serviceHook.amounts}
-                        groupedCategory={serviceHook.groupedCategory}
-                        sumOfExpanse={serviceHook.sumOfExpanse}
-                        sumOfIncome={serviceHook.sumOfIncome}
-                        sumOfIncomeAndExpanse={serviceHook.sumOfIncomeAndExpanse}/>}
+                    element={
+                        <Statistic
+                            amounts={serviceHook.amounts}
+                            groupedCategory={serviceHook.groupedCategory}
+                            sumOfExpanse={serviceHook.sumOfExpanse}
+                            sumOfIncome={serviceHook.sumOfIncome}
+                            sumOfIncomeAndExpanse={serviceHook.sumOfIncomeAndExpanse}
+                        />}
                 />
                 <Route
                     path={"/auth/login"}
@@ -42,6 +48,10 @@ export default function AllRoutes() {
                 <Route
                     path={"/auth/register"}
                     element={<RegistrationsPage/>}
+                />
+                <Route
+                    path={"/users/images"}
+                    element={<ShowImages/>}
                 />
             </Routes>
         </>

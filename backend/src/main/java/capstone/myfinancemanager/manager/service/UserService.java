@@ -15,9 +15,7 @@ public class UserService {
 
     private final UserRepo userRepo;
     private final Timestamp timestamp;
-
     private final PasswordEncoder passwordEncoder;
-
 
     public UserService(UserRepo userRepo, Timestamp timestamp, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;

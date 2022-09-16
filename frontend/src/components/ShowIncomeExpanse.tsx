@@ -7,11 +7,15 @@ export default function ShowIncomeExpanse(props: { sumOfIncome: number, sumOfExp
             <div className="statistic-incomeExpanse">
                 <div className="statistic-showIncome">
                     <p>Einkommen</p>
-                    <p>{convertAmountToGermanCurrencyStyle(props.sumOfIncome)}</p>
+                    <p>
+                        {convertAmountToGermanCurrencyStyle(props.sumOfIncome)}
+                    </p>
                 </div>
                 <div className="statistic-showExpanse">
                     <p>Ausgaben</p>
-                    <p>{convertAmountToGermanCurrencyStyle(props.sumOfExpanse)}</p>
+                    <p>
+                        {convertAmountToGermanCurrencyStyle(props.sumOfExpanse)}
+                    </p>
                 </div>
             </div>
         </div>

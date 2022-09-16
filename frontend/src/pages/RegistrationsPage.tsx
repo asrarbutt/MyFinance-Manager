@@ -16,22 +16,21 @@ export default function RegistrationsPage() {
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-
         event.preventDefault();
 
-        if (validateEmail(userEmail) && validatePasswords(userPassword, userRepeatPassword)) {
+        if (validateEmail(userEmail) &&
+            validatePasswords(userPassword, userRepeatPassword)) {
 
-            register(userEmail, userName, userPassword, userRepeatPassword).then(() => {
-
-                setUserEmail("");
-                setUserName("");
-                setUserPassword("");
-                setUserRepeatPassword("");
-                setErrorMessage("")
-                toast.success("Account Created!")
-                navigate("/auth/login");
-
-            })
+            register(userEmail, userName, userPassword, userRepeatPassword)
+                .then(() => {
+                    setUserEmail("");
+                    setUserName("");
+                    setUserPassword("");
+                    setUserRepeatPassword("");
+                    setErrorMessage("")
+                    toast.success("Account Created!")
+                    navigate("/auth/login");
+                })
                 .catch(error => {
                     setErrorMessage(error.response.data.message)
                     console.log(error.response.data.message)
@@ -43,7 +42,6 @@ export default function RegistrationsPage() {
 
         let emailRegExpression = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-
 
         if (!emailRegExpression.match(inputEmail)) {
             setErrorMessage("Email ist not valid")
@@ -84,7 +82,7 @@ export default function RegistrationsPage() {
     }
 
     return (
-        <Container component='main' maxWidth="sm" className="signUp">
+        <Container component="main" maxWidth="sm" className="signUp">
             <CssBaseline>
 
                 <Box sx={{
@@ -94,22 +92,51 @@ export default function RegistrationsPage() {
                     alignItems: 'center',
                     paddingTop: '10rem'
                 }}>
-                    <Typography color={'primary'} variant='h3'>Registrieren</Typography>
-                    <Typography variant='h6'>schnell, einfach und kostenlos</Typography>
+                    <Typography color="primary" variant="h3">Registrieren</Typography>
+                    <Typography variant="h6">schnell, einfach und kostenlos</Typography>
                     {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                 </Box>
 
                 <form onSubmit={handleSubmit} className="signUp-form">
-                    <TextField required label="E-Mail" type="email" variant="filled" value={userEmail}
-                               onChange={(e) => setUserEmail(e.target.value)}/>
-                    <TextField required label="Name" type="name" variant="outlined" value={userName}
-                               onChange={(e) => setUserName(e.target.value)}/>
-                    <TextField required label="Password" type="password" variant="outlined" value={userPassword}
-                               onChange={(e) => setUserPassword(e.target.value)}/>
-                    <TextField required label="Repeat Password" type="password" variant="outlined"
-                               value={userRepeatPassword}
-                               onChange={(e) => setUserRepeatPassword(e.target.value)}/>
-                    <Button sx={{background: 'primary'}} type="submit" variant="contained">Register</Button>
+                    <TextField
+                        required
+                        label="E-Mail"
+                        type="email"
+                        variant="filled"
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                    />
+                    <TextField
+                        required
+                        label="Name"
+                        type="name"
+                        variant="outlined"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                    />
+                    <TextField
+                        required
+                        label="Password"
+                        type="password"
+                        variant="outlined"
+                        value={userPassword}
+                        onChange={(e) => setUserPassword(e.target.value)}
+                    />
+                    <TextField
+                        required
+                        label="Repeat Password"
+                        type="password"
+                        variant="outlined"
+                        value={userRepeatPassword}
+                        onChange={(e) => setUserRepeatPassword(e.target.value)}
+                    />
+                    <Button
+                        sx={{background: 'primary'}}
+                        type="submit"
+                        variant="contained"
+                    >Register
+                    </Button>
+
                     <Link to="/auth/login">Back to login</Link>
                 </form>
             </CssBaseline>

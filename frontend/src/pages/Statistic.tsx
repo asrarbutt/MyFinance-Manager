@@ -3,6 +3,7 @@ import "./Statistic.css"
 import {useContext} from "react";
 import TransactionContext from "../context/transaction/TransactionContext";
 import ShowIncomeExpanse from "../components/ShowIncomeExpanse";
+import {transactionsTypeCategory} from "../util/Util";
 
 type StatisticProps = {
     amounts: number[],
@@ -14,9 +15,7 @@ type StatisticProps = {
 
 export default function Statistic(props: StatisticProps) {
 
-    const transactionstypeCategory = ["Einkommen", "Ausgaben"]
     const {allTransactions} = useContext(TransactionContext);
-
     return (
         <div className="statistic">
             <header>
@@ -36,7 +35,6 @@ export default function Statistic(props: StatisticProps) {
                         {props.amounts.length !== 0 ? (
                                 <>
                                     <p>Ausgaben nach Kategorien</p>
-
                                     <PieChart
                                         allTransactions={allTransactions}
                                         transactionsType={props.groupedCategory}
@@ -53,7 +51,7 @@ export default function Statistic(props: StatisticProps) {
                                     <p>Einkommen und Ausgaben</p>
                                     <PieChart
                                         allTransactions={allTransactions}
-                                        transactionsType={transactionstypeCategory}
+                                        transactionsType={transactionsTypeCategory}
                                         amounts={props.sumOfIncomeAndExpanse}
                                     />
                                 </>

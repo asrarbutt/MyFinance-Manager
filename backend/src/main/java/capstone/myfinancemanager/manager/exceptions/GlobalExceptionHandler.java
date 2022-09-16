@@ -14,21 +14,24 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = UserExistsException.class)
-    public ResponseEntity<Map<String, Object>> handleUserFoundException() {
+    public Map<String, Object> mapBuilder(String string) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("message", string);
         responseBody.put("Timestamp", LocalDateTime.now());
-        responseBody.put("message", "User Exists. Please choose another E-Mail");
+        return responseBody;
+    }
 
+    @ExceptionHandler(value = UserExistsException.class)
+    public ResponseEntity<Map<String, Object>> handleUserFoundException(UserExistsException exception) {
+        Map<String, Object> responseBody = mapBuilder(exception.getMessage());
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handlePasswordValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, Object>> handlePasswordValidationExceptions(MethodArgumentNotValidException exception) {
 
         Map<String, Object> errors = new HashMap<>();
-
-        ex.getBindingResult().getFieldErrors().forEach(error -> {
+        exception.getBindingResult().getFieldErrors().forEach(error -> {
                     if (errors.containsKey(error.getField())) {
                         errors.put(error.getField(), String.format("%s, %s", errors.get(error.getField()), error.getDefaultMessage()));
                     } else {
@@ -40,11 +43,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = PasswordNotMatchException.class)
-    public ResponseEntity<Map<String, Object>> handlePasswordNotMatchException() {
-        Map<String, Object> responseBody = new LinkedHashMap<>();
-        responseBody.put("Timestamp", LocalDateTime.now());
-        responseBody.put("message", "Passwords do not match");
-
+    public ResponseEntity<Map<String, Object>> handlePasswordNotMatchException(PasswordNotMatchException exception) {
+        Map<String, Object> responseBody = mapBuilder(exception.getMessage());
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = FileUploadException.class)
+    public ResponseEntity<Map<String, Object>> handleFileUploadException(FileUploadException exception) {
+        Map<String, Object> responseBody = mapBuilder(exception.getMessage());
+        return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
+    }
+
+
 }

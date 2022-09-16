@@ -24,15 +24,14 @@ export default function LoginPage() {
         event.preventDefault();
 
         if (username === "" || password === "") {
-            toast.error("Please enter Username and Password")
+            toast.error("Please enter Username and Password");
         } else {
             login(username, password).then(() => {
                 setPassword("");
                 setUsername("");
-                toast.success("login successful")
+                toast.success("login successful");
                 getAllTransactions();
                 navigate("/home")
-
             }).catch(error => {
                 toast.error(error.message)
             })
@@ -44,6 +43,7 @@ export default function LoginPage() {
             <HomeContainerStyled>
                 <WelcomeTitle>Login</WelcomeTitle>
             </HomeContainerStyled>
+
             <FormInputContainer onSubmit={handleSubmit}>
                 <TextField
                     onChange={e => setUsername(e.target.value)}

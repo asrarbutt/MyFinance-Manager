@@ -8,10 +8,10 @@
 }
 
 .signUp-form {
-    margin-top: 2rem;
-    padding: 1rem;
     display: flex;
     flex-direction: column;
+    margin-top: 2rem;
+    padding: 1rem;
     min-height: 80%;
     min-width: 80%;
 }

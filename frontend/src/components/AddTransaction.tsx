@@ -1,4 +1,4 @@
-import React, {FormEvent, useContext, useEffect, useState} from 'react';
+import React, {FormEvent, useContext, useEffect, useRef, useState} from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {LocalizationProvider} from "@mui/x-date-pickers";
@@ -24,7 +24,7 @@ import {AddIconStyled} from './ui/Icons.styled';
 
 export default function AddTransaction() {
 
-    const {setAllTransactions, allTransactions} = useContext(TransactionContext);
+    const {getAllTransactions} = useContext(TransactionContext);
     const [isIncome, setIsIncome] = useState<boolean>(true);
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
@@ -33,6 +33,7 @@ export default function AddTransaction() {
     const [description, setDescription] = useState<string>("");
     const [amount, setAmount] = useState<number>(0);
     const [newTransactionToAdd, setNewTransactionToAdd] = useState<TransactionCreationDto>();
+    const imageRef = useRef<any>();
 
     useEffect(() => {
         setNewTransactionToAdd({
@@ -46,20 +47,30 @@ export default function AddTransaction() {
 
     }, [date, description, amount, isIncome, pictureId, category])
 
-    const submitHandler = (event: FormEvent) => {
+    const submitHandler = async (event: FormEvent) => {
         event.preventDefault();
 
         if (newTransactionToAdd)
-            addTransaction(newTransactionToAdd);
+            await addTransaction(newTransactionToAdd);
     }
 
     const addTransaction = (newTransaction: TransactionCreationDto) => {
 
-        return axios.post("/api/transactions", newTransaction)
+        const formData = new FormData();
+
+        formData.append('TransactionCreationDto',
+            new Blob([JSON.stringify(newTransaction)],
+                {type: "application/json"}));
+
+        formData.append("file", imageRef.current.files[0]);
+
+        return axios.post("/api/transactions", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        })
             .then(response => response.data)
-            .then(data => {
-                setAllTransactions([...allTransactions, data]);
-            })
+            .then(getAllTransactions)
             .then(() => {
                 toast.success("Transaction added");
                 setIsIncome(true);
@@ -70,6 +81,7 @@ export default function AddTransaction() {
             })
             .catch(error => toast(error));
     }
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -95,14 +107,15 @@ export default function AddTransaction() {
                             alignItems: "space-between",
                             marginTop: 6,
                             marginBottom: 7,
-                            width: '70vmin'
+                            width: "70vmin"
                         }}>
                             <TextField
                                 autoFocus
                                 margin="dense"
                                 fullWidth
                                 variant="standard"
-                                id="standard-basic"
+                                id="description"
+                                name="description"
                                 label="Beschreibung"
                                 onChange={e => setDescription(e.target.value)}
                             />
@@ -111,7 +124,8 @@ export default function AddTransaction() {
                                 margin="dense"
                                 fullWidth
                                 variant="standard"
-                                id="standard-basic"
+                                id="amount"
+                                name="amount"
                                 label="Betrag"
                                 onChange={e => setAmount(stringToNumberWithDot(e.target.value))}
                             />
@@ -124,18 +138,18 @@ export default function AddTransaction() {
                                     onChange={(newValue) => {
                                         setDate(newValue);
                                     }}
-                                    renderInput={(params) => <TextField
-                                        {...params} />}
+                                    renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
 
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Kategorie auswählen</InputLabel>
+                                <InputLabel id="category-select">Kategorie auswählen</InputLabel>
                                 <Select
                                     labelId="category-select"
                                     id="category-select"
+                                    name="category"
                                     value={category}
-                                    label="Kategorie auswählen "
+                                    label="Kategorie auswählen"
                                     onChange={e => {
                                         setCategory(e.target.value);
                                     }}
@@ -152,13 +166,12 @@ export default function AddTransaction() {
                             </FormControl>
 
                             <FormControl>
-                                <InputLabel id="demo-simple-select-label">Transaktionsart</InputLabel>
+                                <InputLabel id="transaction-label">Transaktionsart</InputLabel>
                                 <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
+                                    labelId="transaction-label"
+                                    id="transaction"
                                     value={isIncome}
-                                    label="Kategorie auswählen "
-
+                                    label="Kategorie auswählen"
                                     onChange={(e: any) => {
                                         setIsIncome(e.target.value)
                                     }}
@@ -173,19 +186,30 @@ export default function AddTransaction() {
                                 component="label"
                                 color="secondary">
                                 {" "}
-                                <AddAPhotoIcon/> Bild Uploaden
+                                <AddAPhotoIcon/>Bild Uploaden
                                 <input
                                     type="file"
+                                    ref={imageRef}
                                     onChange={(e) => {
                                         if (e.target.files !== null) {
                                             setPictureId(URL.createObjectURL(e.target.files[0]))
                                         }
-                                    }} hidden/>
+                                    }} hidden
+                                />
                             </Button>
+
                             <DialogActions>
-                                <Button color='warning' variant="contained" onClick={handleClose}>Abbrechen</Button>
-                                <Button variant='contained' color="success" type="submit"
-                                        onClick={handleClose}>Hinzufügen</Button>
+                                <Button
+                                    color="warning"
+                                    variant="contained"
+                                    onClick={handleClose}>Abbrechen
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    type="submit"
+                                    onClick={handleClose}>Hinzufügen
+                                </Button>
                             </DialogActions>
                         </Box>
                     </form>

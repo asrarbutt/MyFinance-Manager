@@ -3,5 +3,4 @@ export default interface UserRegisterData {
     name: string,
     password: string,
     repeatPassword: string;
-
 }
