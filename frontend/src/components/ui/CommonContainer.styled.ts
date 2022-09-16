@@ -32,7 +32,9 @@ export const MainContainer = styled(CommonContainerStyled)`
 `;
 
 export const CardContainerStyled = styled(CommonContainerStyled)`
-  width: 95%;`
+  flex-direction: column;
+  width: 95%;
+  height: auto;`
 ;
 
 export const FormInputContainer = styled.form`
