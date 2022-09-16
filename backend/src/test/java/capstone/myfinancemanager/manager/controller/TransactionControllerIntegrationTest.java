@@ -1,23 +1,37 @@
 package capstone.myfinancemanager.manager.controller;
 
+import capstone.myfinancemanager.manager.model.RandomUUIDGenerator;
+import capstone.myfinancemanager.manager.model.Timestamp;
 import capstone.myfinancemanager.manager.model.Transaction;
 import capstone.myfinancemanager.manager.model.dto.TransactionCreationDto;
+import capstone.myfinancemanager.manager.respository.TransactionRepo;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Uploader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -33,8 +47,41 @@ class TransactionControllerIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    @MockBean
+    private Cloudinary cloudinary;
+
+    @MockBean
+    private Uploader uploader;
+    @Autowired
+    private TransactionRepo transactionRepo;
+
+    @MockBean
+    private RandomUUIDGenerator randomUUIDGenerator;
+
+    @MockBean
+    private Timestamp timestampService;
+
+    private final Instant testDate = Instant.parse("2022-08-23T09:22:41.255023Z");
+    private final String randomTestId = "1";
+
+    Transaction transaction1 = Transaction.builder()
+            .id(randomTestId)
+            .description("Essen")
+            .amount(25.0)
+            .transactionDate(testDate)
+            .category("TestCategory")
+            .userEmail("test@test.com")
+            .isIncome(false)
+            .pictureId("url").build();
+
+
+    @BeforeEach
+    public void clearDb() {
+        transactionRepo.deleteAll();
+    }
+
     protected RequestPostProcessor myTestUserWithEmail() {
-        return user("a@a.com").password("123456");
+        return user("asrar@gmail..com").password("Asrar1");
     }
 
     @Test
@@ -43,7 +90,6 @@ class TransactionControllerIntegrationTest {
     void getAllTransactions() throws Exception {
 
         mockMvc.perform(get("/api/users/login")).andExpect(content().string("test@test.com"));
-
         mockMvc
                 .perform(
                         MockMvcRequestBuilders.get("/api/transactions")
@@ -54,34 +100,69 @@ class TransactionControllerIntegrationTest {
 
     @Test
     @DirtiesContext
-    void addTransaction() throws Exception {
+    void addTransactionWithoutFile() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/transactions")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                    "userEmail": "a@a.com",
-                                    "description": "5",
-                                    "amount": 123.2,
-                                    "transactionDate": "1661866382913",
-                                    "category": "Essen",
-                                    "pictureId": "url",
-                                    "isIncome": true
-                                }
-                                """)
-                        .with(myTestUserWithEmail()).with(csrf())
-                ).andExpect(status().is(201))
-                .andExpect(content().json("""
-                         {
-                                    "userEmail": "a@a.com",
-                                    "description": "5",
-                                    "amount": 123.2,
-                                    "transactionDate": "2022-08-30T13:33:02.913Z",
-                                    "category": "Essen",
-                                    "pictureId": "url",
-                                    "isIncome": true
-                                }
-                        """));
+        byte[] fileContent = "bar".getBytes(StandardCharsets.UTF_8);
+        MockMultipartFile filePart = new MockMultipartFile("file", "orig", null, fileContent);
+        byte[] json = """ 
+                 {
+                "userEmail": "a@a.com",
+                "description": "5",
+                "amount": 123.2,
+                "transactionDate": "1661866382913",
+                "category": "Essen",
+                 "pictureId": "url",
+                 "isIncome": true
+                }
+                """.getBytes(StandardCharsets.UTF_8);
+
+        MockMultipartFile jsonPart = new MockMultipartFile("TransactionCreationDto", "TransactionCreationDto", "application/json", json);
+        mockMvc.perform(multipart("/api/transactions")
+
+                        .file(jsonPart)
+                        .with(myTestUserWithEmail())
+                        .with(csrf()))
+                .andExpect(status().is(201));
+    }
+
+    @Test
+    @DirtiesContext
+    void addTransactionWithFile() throws Exception {
+
+        byte[] fileContent = "bar".getBytes(StandardCharsets.UTF_8);
+        MockMultipartFile firstFile = new MockMultipartFile(
+                "file", "sawIcon.png",
+                MediaType.TEXT_PLAIN_VALUE,
+                "Hello, World!".getBytes());
+
+        byte[] json = """ 
+                 {
+                "userEmail": "a@a.com",
+                "description": "5",
+                "amount": 123.2,
+                "transactionDate": "1661866382913",
+                "category": "Essen",
+                 "pictureId": "url",
+                 "isIncome": true
+                }
+                """.getBytes(StandardCharsets.UTF_8);
+
+        MockMultipartFile jsonPart = new MockMultipartFile("TransactionCreationDto", "TransactionCreationDto", "application/json", json);
+
+        when(cloudinary.uploader()).thenReturn(uploader);
+        when(uploader
+                .upload(any(File.class),
+                        anyMap()
+                )
+        ).thenReturn(Map.of("url", "hallo", "public_id", "bla"));
+
+
+        mockMvc.perform(multipart("/api/transactions")
+                        .file(firstFile)
+                        .file(jsonPart)
+                        .with(myTestUserWithEmail())
+                        .with(csrf()))
+                .andExpect(status().is(201));
     }
 
     @DirtiesContext
@@ -89,23 +170,10 @@ class TransactionControllerIntegrationTest {
     @WithMockUser("test@test.com")
     void deleteTransaction() throws Exception {
 
-        String saveResult = mockMvc.perform(post(
-                "/api/transactions").with(csrf())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                           {
-                                    "description": "5",
-                                    "amount": 123.2,
-                                    "transactionDate": "1661866382913",
-                                    "category": "Essen",
-                                    "pictureId": "url",
-                                    "isIncome": true
-                                }
-                        """).with(csrf())
-        ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
-
-        Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
-        String id = saveResultTransaction.getId();
+        when(randomUUIDGenerator.getRandomId()).thenReturn(randomTestId);
+        when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
+        Transaction transactionResponse = transactionRepo.save(transaction1);
+        String id = transactionResponse.getId();
 
         mockMvc.perform(delete("http://localhost:8080/api/transactions/" + id).with(csrf()))
                 .andExpect(status().is(204));
@@ -131,27 +199,9 @@ class TransactionControllerIntegrationTest {
     @DirtiesContext
     @WithMockUser("test@test.com")
     void updateTransactionTest() throws Exception {
-        String saveResult = mockMvc.perform(post(
-                "/api/transactions").with(csrf())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                           {
-                                    "userEmail": "a@a.com",
-                                    "description": "5",
-                                    "amount": 123.2,
-                                    "transactionDate": "1661866382913",
-                                    "category": "Essen",
-                                    "pictureId": "url",
-                                    "isIncome": true
-                                }
-                        """)
-        ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
-
-        Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
-        String id = saveResultTransaction.getId();
 
         TransactionCreationDto transactionCreationDto = TransactionCreationDto.builder()
-                .userEmail(saveResultTransaction.getUserEmail())
+                .userEmail(transaction1.getUserEmail())
                 .description("Heute ist sehr schön")
                 .amount(159)
                 .transactionDate(Long.parseLong("1661866382913"))
@@ -160,8 +210,11 @@ class TransactionControllerIntegrationTest {
                 .isIncome(false)
                 .build();
 
+        Transaction transactionResponse = transactionRepo.save(transaction1);
+        String id = transactionResponse.getId();
+
         String updatedResult = mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/transactions/" + saveResultTransaction.getId()).with(csrf())
+                        MockMvcRequestBuilders.put("/api/transactions/" + id).with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(transactionCreationDto))
                 )
@@ -169,34 +222,17 @@ class TransactionControllerIntegrationTest {
                 .andReturn().getResponse().getContentAsString();
 
         Transaction actualPlant = objectMapper.readValue(updatedResult, Transaction.class);
-        Assertions.assertEquals(saveResultTransaction.getId(), actualPlant.getId());
+        Assertions.assertEquals(transaction1.getId(), actualPlant.getId());
     }
 
     @Test
     @DirtiesContext
     @WithMockUser("test@test.com")
     void updateTransactionDoNotExistTest() throws Exception {
-        String saveResult = mockMvc.perform(post(
-                "/api/transactions").with(csrf())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                           {
-                                    "userEmail": "a@a.com",
-                                    "description": "5",
-                                    "amount": 123.2,
-                                    "transactionDate": "1661866382913",
-                                    "category": "Essen",
-                                    "pictureId": "url",
-                                    "isIncome": true
-                                }
-                        """)
-        ).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-        Transaction saveResultTransaction = objectMapper.readValue(saveResult, Transaction.class);
-        String id = saveResultTransaction.getId();
-
+        transactionRepo.save(transaction1);
         TransactionCreationDto transactionCreationDto = TransactionCreationDto.builder()
-                .userEmail(saveResultTransaction.getUserEmail())
+                .userEmail(transaction1.getUserEmail())
                 .description("Heute ist sehr schön")
                 .amount(159)
                 .transactionDate(Long.parseLong("1661866382913"))
