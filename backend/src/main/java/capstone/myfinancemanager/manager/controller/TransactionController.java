@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -38,18 +37,17 @@ public class TransactionController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<TransactionDto> addTransaction(@RequestPart(value = "TransactionCreationDto") TransactionCreationDto transactionCreation, @RequestParam(value = "file") Optional<MultipartFile> inputFile) throws IOException {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestPart(value = "TransactionCreationDto") TransactionCreationDto transactionCreation, @RequestPart(value = "file") Optional<MultipartFile> inputFile) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(buildNewTransactionDto(
-                                transactionService
-                                        .addTransaction(
-                                                transactionCreation,
-                                                principal.getName(),
-                                                pictureService.getFileUrl(inputFile, principal.getName())
-                                        )
+                        transactionService
+                                .addTransaction(
+                                        transactionCreation,
+                                        principal.getName(),
+                                        pictureService.getFileUrl(inputFile)
+                                )
                         )
                 );
     }
