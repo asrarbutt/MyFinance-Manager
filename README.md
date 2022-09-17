@@ -25,4 +25,22 @@ Backend:
 
 # Screenshots
 
-![](frontend/public/Images/capstone(2).jpg)
+### zum Testen:
+
+#### Email: peter@gmail.com
+
+#### password: Peter123
+
+![](frontend/public/Images/register.png)
+
+![](frontend/public/Images/login.png)
+
+![](frontend/public/Images/Main.png)
+
+![](frontend/public/Images/add transaction.png)
+
+![](frontend/public/Images/update.png)
+
+![](frontend/public/Images/statistic.png)
+
+![](frontend/public/Images/showImages.png)
