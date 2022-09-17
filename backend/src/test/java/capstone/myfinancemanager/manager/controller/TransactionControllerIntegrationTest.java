@@ -81,7 +81,7 @@ class TransactionControllerIntegrationTest {
     }
 
     protected RequestPostProcessor myTestUserWithEmail() {
-        return user("asrar@gmail..com").password("Asrar1");
+        return user("a@gmail.com").password("Peter55");
     }
 
     @Test
