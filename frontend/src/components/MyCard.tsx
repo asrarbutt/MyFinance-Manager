@@ -53,7 +53,6 @@ export default function MyCard(props: MyCardProps) {
                                 onClick={() => props.deleteTransaction(props.allTransaction.id)}/>
                         </>
                     )}
-
                 </div>
             </div>
         </div>

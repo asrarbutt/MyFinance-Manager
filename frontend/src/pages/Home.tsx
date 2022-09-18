@@ -10,6 +10,7 @@ type HomeProps = {
 }
 
 export default function Home(props: HomeProps) {
+
     const {loggedInUser} = useContext(AuthContext);
     const navigate = useNavigate();
 

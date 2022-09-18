@@ -1,7 +1,6 @@
 import React, {createContext} from "react";
 import TransactionDto from "../../model/TransactionDto";
 
-
 export type ITransactionsContext = {
 
     deleteTransaction: (id: string) => void;
@@ -11,5 +10,4 @@ export type ITransactionsContext = {
 }
 
 export const TransactionContext = createContext<ITransactionsContext>({} as ITransactionsContext);
-
 export default TransactionContext;

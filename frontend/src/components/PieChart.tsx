@@ -49,7 +49,10 @@ export default function PieChart(props: PieChartProps) {
     };
 
     return (
-        <div style={{height: '220px', width: '300px'}}>
+        <div style={{
+            height: '220px',
+            width: '300px'
+        }}>
             <Pie data={data}/>
         </div>
     );

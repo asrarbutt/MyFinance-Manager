@@ -34,8 +34,8 @@ export const MainContainer = styled(CommonContainerStyled)`
 export const CardContainerStyled = styled(CommonContainerStyled)`
   flex-direction: column;
   width: 95%;
-  height: auto;`
-;
+  height: auto;
+`;
 
 export const FormInputContainer = styled.form`
   display: flex;

@@ -9,7 +9,6 @@ import {useNavigate} from "react-router-dom";
 import ShowIncomeExpanse from "./ShowIncomeExpanse";
 import {CardContainerStyled, MyMenuButtonContainerStyled} from "./ui/CommonContainer.styled";
 
-
 type MyCardListProps = {
     sumOfIncome: number,
     sumOfExpanse: number
@@ -24,7 +23,6 @@ export default function MyCardList(props: MyCardListProps) {
     return (
         <TransactionsContainerStyled>
             <MyMenuButtonContainerStyled>
-
                 <div>
                     <MenuButton
                         variant={"myMenuBtn"}

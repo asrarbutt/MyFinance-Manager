@@ -2,7 +2,11 @@ export const dateFromInstant = (instant: number | null, locale: string) => {
 
     if (instant !== null) {
         const date = new Date(instant);
-        const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'numeric', day: 'numeric'};
+        const options: Intl.DateTimeFormatOptions = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        };
         return date.toLocaleDateString((locale) ? locale : undefined, options)
     }
 }
@@ -21,7 +25,13 @@ export const convertDateToNumber = (date: Date | null) => {
 }
 
 export const convertAmountToGermanCurrencyStyle = (amount: number) => {
-    return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(amount);
+    return new Intl.NumberFormat(
+        'de-DE',
+        {
+            style: 'currency',
+            currency: 'EUR'
+        })
+        .format(amount);
 
 }
 

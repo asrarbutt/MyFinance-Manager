@@ -71,7 +71,14 @@ const MyNavBar = () => {
         <AppBar position="fixed">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                    <AdbIcon
+                        sx={{
+                            display: {
+                                xs: 'none',
+                                md: 'flex'
+                            },
+                            mr: 1
+                        }}/>
                     <Typography
                         variant="h6"
                         noWrap
@@ -90,7 +97,10 @@ const MyNavBar = () => {
                         MyFinance-Manager
                     </Typography>
 
-                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                    <Box sx={{
+                        flexGrow: 1,
+                        display: {xs: 'flex', md: 'none'}
+                    }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -116,7 +126,10 @@ const MyNavBar = () => {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: {xs: 'block', md: 'none'},
+                                display: {
+                                    xs: 'block',
+                                    md: 'none'
+                                },
                             }}
                         >
                             <MenuItem onClick={goToLogin}>
@@ -131,7 +144,13 @@ const MyNavBar = () => {
                             </MenuItem>
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
+                    <AdbIcon sx={{
+                        display: {
+                            xs: 'flex',
+                            md: 'none'
+                        },
+                        mr: 1
+                    }}/>
                     <Typography
                         variant="h5"
                         noWrap
@@ -149,15 +168,27 @@ const MyNavBar = () => {
                     >
                         MyFinance-Manager
                     </Typography>
-                    <Box sx={{flexGrow: 1, justifyContent: 'center', display: {xs: 'none', md: 'flex'}}}>
+                    <Box sx={{
+                        flexGrow: 1,
+                        justifyContent: 'center',
+                        display: {xs: 'none', md: 'flex'}
+                    }}>
                         <Button
                             onClick={goToHomePage}
-                            sx={{my: 2, color: 'white', display: 'block'}}
+                            sx={{
+                                my: 2,
+                                color: 'white',
+                                display: 'block'
+                            }}
                         >Home
                         </Button>
                         <Button
                             onClick={goToRegister}
-                            sx={{my: 2, color: 'white', display: 'block'}}
+                            sx={{
+                                my: 2,
+                                color: 'white',
+                                display: 'block'
+                            }}
                         > Registrieren
                         </Button>
                     </Box>
@@ -166,7 +197,11 @@ const MyNavBar = () => {
                         loggedInUser === "anonymousUser" ? (
                                 <Button
                                     onClick={goToLogin}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
+                                    sx={{
+                                        my: 2,
+                                        color: 'white',
+                                        display: 'block'
+                                    }}
                                 >Login
                                 </Button>
                             ) :

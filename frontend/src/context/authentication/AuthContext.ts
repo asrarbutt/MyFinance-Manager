@@ -1,6 +1,7 @@
 import React, {createContext} from "react";
 
 export type IUserContext = {
+
     register: (email: string, name: string, password: string, repeatPassword: string) => Promise<Response>;
     login: (username: string, password: string) => Promise<void>;
     setLoggedInUser: React.Dispatch<React.SetStateAction<string>>;
