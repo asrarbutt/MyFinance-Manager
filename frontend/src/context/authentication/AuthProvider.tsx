@@ -39,7 +39,6 @@ export default function AuthProvider({children}: Param) {
                 setLoggedInUser(response.data)
                 return response.data
             })
-
     }
 
     const fetchMe = () => {
@@ -57,9 +56,15 @@ export default function AuthProvider({children}: Param) {
             .then(() => setLoggedInUser("anonymousUser"))
     }
 
-
     return (
-        <AuthContext.Provider value={{register, login, logout, loggedInUser, setLoggedInUser}}>
+        <AuthContext.Provider
+            value={{
+                register,
+                login,
+                logout,
+                loggedInUser,
+                setLoggedInUser
+            }}>
             {children}
         </AuthContext.Provider>
     )

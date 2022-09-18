@@ -14,11 +14,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AppUserDetailsService appUserDetailsService;
 
     public SecurityConfig(AppUserDetailsService appUserDetailsService) {
+
         this.appUserDetailsService = appUserDetailsService;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
         auth.userDetailsService(appUserDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }

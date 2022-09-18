@@ -32,7 +32,12 @@ export default function TransactionProvider({children}: Param) {
 
     return (
         <TransactionContext.Provider
-            value={{deleteTransaction, setAllTransactions, allTransactions, getAllTransactions}}>
+            value={{
+                deleteTransaction,
+                setAllTransactions,
+                allTransactions,
+                getAllTransactions
+            }}>
             {children}
         </TransactionContext.Provider>
     )

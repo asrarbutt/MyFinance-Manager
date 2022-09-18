@@ -26,13 +26,14 @@ export default function LoginPage() {
         if (username === "" || password === "") {
             toast.error("Please enter Username and Password");
         } else {
-            login(username, password).then(() => {
-                setPassword("");
-                setUsername("");
-                toast.success("login successful");
-                getAllTransactions();
-                navigate("/home")
-            }).catch(error => {
+            login(username, password)
+                .then(() => {
+                    setPassword("");
+                    setUsername("");
+                    toast.success("login successful");
+                    getAllTransactions();
+                    navigate("/home")
+                }).catch(error => {
                 toast.error(error.message)
             })
         }

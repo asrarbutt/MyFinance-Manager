@@ -92,10 +92,16 @@ export default function AddTransaction() {
 
     return (
         <div>
-            <MenuButton variant="addBtn" onClick={handleClickOpen}>
+            <MenuButton
+                variant="addBtn"
+                onClick={handleClickOpen}>
                 <AddIconStyled></AddIconStyled>
             </MenuButton>
-            <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
+
+            <Dialog
+                maxWidth={"xl"}
+                open={open}
+                onClose={handleClose}>
                 <DialogTitle>Neue Transaktion erstellen</DialogTitle>
                 <DialogContent>
                     <form onSubmit={submitHandler}>

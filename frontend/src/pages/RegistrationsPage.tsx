@@ -21,7 +21,11 @@ export default function RegistrationsPage() {
         if (validateEmail(userEmail) &&
             validatePasswords(userPassword, userRepeatPassword)) {
 
-            register(userEmail, userName, userPassword, userRepeatPassword)
+            register(
+                userEmail,
+                userName,
+                userPassword,
+                userRepeatPassword)
                 .then(() => {
                     setUserEmail("");
                     setUserName("");
@@ -82,9 +86,12 @@ export default function RegistrationsPage() {
     }
 
     return (
-        <Container component="main" maxWidth="sm" className="signUp">
-            <CssBaseline>
+        <Container
+            component="main"
+            maxWidth="sm"
+            className="signUp">
 
+            <CssBaseline>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -92,9 +99,20 @@ export default function RegistrationsPage() {
                     alignItems: 'center',
                     paddingTop: '10rem'
                 }}>
-                    <Typography color="primary" variant="h3">Registrieren</Typography>
-                    <Typography variant="h6">schnell, einfach und kostenlos</Typography>
-                    {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
+                    <Typography
+                        color="primary"
+                        variant="h3"
+                    >Registrieren
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                    >schnell, einfach und kostenlos
+                    </Typography>
+                    {errorMessage &&
+                        <Alert severity="error"
+                        >{errorMessage}
+                        </Alert>}
                 </Box>
 
                 <form onSubmit={handleSubmit} className="signUp-form">

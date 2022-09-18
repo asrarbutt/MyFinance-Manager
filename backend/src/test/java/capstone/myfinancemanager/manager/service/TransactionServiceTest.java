@@ -153,5 +153,4 @@ class TransactionServiceTest {
         verify(transactionRepo).save(transaction1);
         Assertions.assertEquals(transaction1.getId(), acutalTansaction.getId());
     }
-
 }

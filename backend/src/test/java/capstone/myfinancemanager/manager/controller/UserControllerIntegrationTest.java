@@ -52,7 +52,7 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                          "email": "testemail@gmail.com",
+                                         "email": "testemail@gmail.com",
                                          "name": "testname",
                                          "password": "test-password",
                                          "repeatPassword": "test-password"
@@ -61,7 +61,6 @@ class UserControllerIntegrationTest {
                 )
                 .andExpect(status().is(201))
                 .andReturn();
-
 
         String content = result.getResponse().getContentAsString();
         Assertions.assertTrue(content.contains("testname"));
@@ -75,10 +74,10 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                     "email": "testemail@gmail.com",
-                                         "name": "testname",
-                                         "password": "test-password",
-                                         "repeatPassword": "test-password"
+                                      "email": "testemail@gmail.com",
+                                      "name": "testname",
+                                      "password": "test-password",
+                                      "repeatPassword": "test-password"
                                 }
                                  """)
                 )
@@ -138,7 +137,7 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                          "email": "testemail@gmail.com",
+                                         "email": "testemail@gmail.com",
                                          "name": "testname",
                                          "password": "",
                                          "repeatPassword": ""
@@ -165,7 +164,7 @@ class UserControllerIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("""
                                  {
-                                     "email": "<ID>",
+                                         "email": "<ID>",
                                          "name": "testname",
                                          "password": "test-password",
                                          "repeatPassword": "test-password"

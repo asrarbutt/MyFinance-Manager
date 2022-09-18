@@ -21,14 +21,16 @@ import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
-
     private final UserRepo userRepo = mock(UserRepo.class);
-
     AppUserDetailsService appUserDetailsService = new AppUserDetailsService(userRepo);
     private final Timestamp timestampService = mock(Timestamp.class);
     private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
     private final UserService userService = new UserService(userRepo, timestampService, passwordEncoder);
-    private final UserDto newUserDto = new UserDto("testuser@test.com", "testusername", "test-password", "test-password");
+    private final UserDto newUserDto = new UserDto(
+            "testuser@test.com",
+            "testusername",
+            "test-password",
+            "test-password");
     private final User registeredUserWithDate = User.builder()
             .email(newUserDto.getEmail())
             .name(newUserDto.getName())
@@ -36,7 +38,11 @@ class UserServiceTest {
             .userRegistrationDate(Instant.parse("2022-08-23T09:22:41.255023Z"))
             .build();
 
-    private final UserDto userWithNotMatchPassword = new UserDto("testuser@test.com", "testusername", "test-password", "test-password1");
+    private final UserDto userWithNotMatchPassword = new UserDto(
+            "testuser@test.com",
+            "testusername",
+            "test-password",
+            "test-password1");
 
     @Test
     void shouldCreateUser() {
@@ -84,7 +90,6 @@ class UserServiceTest {
                 passwordNotMatchException
                         .getMessage()
                         .contains("Passwords do not match"));
-
     }
 
     @Test
@@ -99,13 +104,11 @@ class UserServiceTest {
 
         //then
         assertEquals("User Exists. Please choose another E-Mail", exception.getMessage());
-
     }
-
 
     @Test
     void loadUserByUsername_UserExistsTest() {
-        //given
+
         //When
         when(passwordEncoder.encode(newUserDto.getPassword())).thenReturn("password_encode");
         when(timestampService.now()).thenReturn(Instant.parse("2022-08-23T09:22:41.255023Z"));
@@ -114,10 +117,6 @@ class UserServiceTest {
 
         String actualUsername = appUserDetailsService.loadUserByUsername(newUserDto.getEmail()).getUsername();
 
-
-        //then
         Assertions.assertEquals(newUserDto.getEmail(), actualUsername);
-        //then
-
     }
 }

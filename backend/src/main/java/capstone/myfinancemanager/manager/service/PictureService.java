@@ -13,9 +13,7 @@ import java.util.Optional;
 @Service
 public class PictureService {
 
-
     private final Cloudinary cloudinary;
-
 
     public PictureService(Cloudinary cloudinary) {
         this.cloudinary = cloudinary;
@@ -35,5 +33,4 @@ public class PictureService {
         }
         return "NO IMAGE";
     }
-
 }

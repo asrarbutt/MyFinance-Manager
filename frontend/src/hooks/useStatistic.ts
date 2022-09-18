@@ -32,5 +32,11 @@ export default function useStatistic() {
 
     const sumOfIncomeAndExpanse = Array.of(sumOfIncome, sumOfExpanse);
 
-    return {amounts, groupedCategory, sumOfExpanse, sumOfIncome, sumOfIncomeAndExpanse}
+    return {
+        amounts,
+        groupedCategory,
+        sumOfExpanse,
+        sumOfIncome,
+        sumOfIncomeAndExpanse
+    }
 }

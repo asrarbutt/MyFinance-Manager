@@ -57,9 +57,9 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
 
     const submitHandler = async (event: FormEvent) => {
         event.preventDefault();
+
         if (transactionToUpdate)
             await updateTransaction(transactionToUpdate, props.allTransactions.id)
-
     }
 
     const updateTransaction = (editTransaction: TransactionCreationDto, id: string) => {
@@ -91,7 +91,10 @@ export default function UpdateTransaction(props: UpdateTransactionProps) {
             <Button onClick={handleClickOpen}>
                 <EditIconStyled/>
             </Button>
-            <Dialog maxWidth={"xl"} open={open} onClose={handleClose}>
+            <Dialog
+                maxWidth={"xl"}
+                open={open}
+                onClose={handleClose}>
                 <DialogTitle>Update Transaktion</DialogTitle>
                 <DialogContent>
                     <form onSubmit={submitHandler}>

@@ -15,6 +15,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     public Map<String, Object> mapBuilder(String string) {
+
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("message", string);
         responseBody.put("Timestamp", LocalDateTime.now());
@@ -23,6 +24,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = UserExistsException.class)
     public ResponseEntity<Map<String, Object>> handleUserFoundException(UserExistsException exception) {
+
         Map<String, Object> responseBody = mapBuilder(exception.getMessage());
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
@@ -44,15 +46,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = PasswordNotMatchException.class)
     public ResponseEntity<Map<String, Object>> handlePasswordNotMatchException(PasswordNotMatchException exception) {
+
         Map<String, Object> responseBody = mapBuilder(exception.getMessage());
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = FileUploadException.class)
     public ResponseEntity<Map<String, Object>> handleFileUploadException(FileUploadException exception) {
+
         Map<String, Object> responseBody = mapBuilder(exception.getMessage());
         return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
     }
-
-
 }

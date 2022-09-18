@@ -6,7 +6,7 @@ const TransactionsContainerStyled = styled.section`
   justify-content: center;
   align-items: center;
   max-width: 50rem;
-  margin-top: 5rem;`
-;
+  margin-top: 5rem;
+`;
 
 export default TransactionsContainerStyled;

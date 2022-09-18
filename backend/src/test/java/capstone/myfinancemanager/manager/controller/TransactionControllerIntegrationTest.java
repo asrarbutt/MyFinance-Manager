@@ -89,7 +89,9 @@ class TransactionControllerIntegrationTest {
     @WithMockUser("test@test.com")
     void getAllTransactions() throws Exception {
 
-        mockMvc.perform(get("/api/users/login")).andExpect(content().string("test@test.com"));
+        mockMvc.perform(get("/api/users/login"))
+                .andExpect(content()
+                        .string("test@test.com"));
         mockMvc
                 .perform(
                         MockMvcRequestBuilders.get("/api/transactions")
@@ -103,7 +105,11 @@ class TransactionControllerIntegrationTest {
     void addTransactionWithoutFile() throws Exception {
 
         byte[] fileContent = "bar".getBytes(StandardCharsets.UTF_8);
-        MockMultipartFile filePart = new MockMultipartFile("file", "orig", null, fileContent);
+        MockMultipartFile filePart = new MockMultipartFile(
+                "file",
+                "orig",
+                null, fileContent);
+
         byte[] json = """ 
                  {
                 "userEmail": "a@a.com",
@@ -116,9 +122,13 @@ class TransactionControllerIntegrationTest {
                 }
                 """.getBytes(StandardCharsets.UTF_8);
 
-        MockMultipartFile jsonPart = new MockMultipartFile("TransactionCreationDto", "TransactionCreationDto", "application/json", json);
-        mockMvc.perform(multipart("/api/transactions")
+        MockMultipartFile jsonPart = new MockMultipartFile(
+                "TransactionCreationDto",
+                "TransactionCreationDto",
+                "application/json",
+                json);
 
+        mockMvc.perform(multipart("/api/transactions")
                         .file(jsonPart)
                         .with(myTestUserWithEmail())
                         .with(csrf()))
@@ -131,7 +141,8 @@ class TransactionControllerIntegrationTest {
 
         byte[] fileContent = "bar".getBytes(StandardCharsets.UTF_8);
         MockMultipartFile firstFile = new MockMultipartFile(
-                "file", "sawIcon.png",
+                "file",
+                "sawIcon.png",
                 MediaType.TEXT_PLAIN_VALUE,
                 "Hello, World!".getBytes());
 
@@ -147,7 +158,11 @@ class TransactionControllerIntegrationTest {
                 }
                 """.getBytes(StandardCharsets.UTF_8);
 
-        MockMultipartFile jsonPart = new MockMultipartFile("TransactionCreationDto", "TransactionCreationDto", "application/json", json);
+        MockMultipartFile jsonPart = new MockMultipartFile(
+                "TransactionCreationDto",
+                "TransactionCreationDto",
+                "application/json",
+                json);
 
         when(cloudinary.uploader()).thenReturn(uploader);
         when(uploader

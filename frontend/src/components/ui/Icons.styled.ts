@@ -22,10 +22,9 @@ export const EditIconStyled = styled(ModeIcon)`
   font-weight: bold;
   color: var(--FontColor);
 `;
+
 export const EditImageIcon = styled(ImageIcon)`
   font-size: 1.8rem !important;
   font-weight: bold;
   color: var(--FontColor);
 `;
-
-
